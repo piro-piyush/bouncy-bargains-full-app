@@ -3,6 +3,7 @@ import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen(
@@ -10,9 +11,11 @@ class SuccessScreen extends StatelessWidget {
       required this.image,
       required this.title,
       required this.subTitle,
-      required this.onPressed});
+      required this.onPressed,
+      this.isLottie = false});
 
   final String image, title, subTitle;
+  final bool isLottie;
   final VoidCallback onPressed;
 
   @override
@@ -24,9 +27,12 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               // Image
-              Image(
-                  width: XHelperFunctions.screenWidth() * 0.6,
-                  image: AssetImage(image)),
+              isLottie
+                  ? Lottie.asset(image,
+                      width: XHelperFunctions.screenWidth() * 0.6)
+                  : Image(
+                      width: XHelperFunctions.screenWidth() * 0.6,
+                      image: AssetImage(image)),
               const SizedBox(
                 height: XSizes.spaceBtwSections,
               ),

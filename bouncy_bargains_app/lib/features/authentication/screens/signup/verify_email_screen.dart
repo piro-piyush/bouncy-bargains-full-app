@@ -1,25 +1,31 @@
-import 'package:bouncy_bargain/common/widgets/success_screen/success_screen.dart';
-import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
+import 'package:bouncy_bargain/data/repositories/authentication/authentication_repository.dart';
+import 'package:bouncy_bargain/features/authentication/controllers/signup/verify_email_controller.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/helpers/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
-  const VerifyEmailScreen({super.key});
+  const VerifyEmailScreen({super.key, required this.email});
+
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VerifyEmailController());
     return Scaffold(
+      // The close icon in the app bar is used to log out the user and redirect them to login screen.
+      // This approach is taken to handle scenarios where the user enters the registration process
+      // and the data is stored. Upon reopening the app , it checks if the email is verified.
+      // If not verified, the app always navigate to the verification process.
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () => Get.offAll(() => const LoginScreen()),
+              onPressed: () => AuthenticationRepository.instance.logout(),
               icon: const Icon(CupertinoIcons.clear))
         ],
       ),
@@ -46,7 +52,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 height: XSizes.spaceBtwItems,
               ),
               Text(
-                "support@bouncy_bargain@gmail.com",
+                email ?? "",
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
@@ -66,14 +72,7 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => SuccessScreen(
-                            image: XImages.staticSuccessIllustration,
-                            title: XTexts.yourAccountCreatedTitle,
-                            subTitle: XTexts.yourAccountCreatedSubTitle,
-                            onPressed: () => Get.to(() => const LoginScreen()),
-                          ));
-                    },
+                    onPressed: () => controller.checkEmailVerificationStatus(),
                     child: const Text(XTexts.xContinue)),
               ),
               const SizedBox(
@@ -82,7 +81,7 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => controller.sendEmailVerification(),
                   child: const Text(XTexts.resendEmail),
                 ),
               ),
