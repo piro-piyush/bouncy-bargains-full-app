@@ -1,12 +1,14 @@
 import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnboardingController extends GetxController {
   static OnboardingController get instance => Get.find();
 
   /// Variables
   final pageController = PageController();
+  final storage = GetStorage();
   Rx<int> currentPageIndex = 0.obs;
 
   // Update current index when page scroll.
@@ -21,6 +23,8 @@ class OnboardingController extends GetxController {
   //  Update current index and jump to next page
   void nextPage() {
     if (currentPageIndex.value == 2) {
+      // Making local storage variable to false so we can't see onboarding screen if we have skipped once
+      storage.write('isFirstTime', false);
       Get.offAll(const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;
@@ -32,6 +36,9 @@ class OnboardingController extends GetxController {
   void skipPage() {
     currentPageIndex.value = 2;
     pageController.jumpToPage(2);
+
+    // Making local storage variable to false so we can't see onboarding screen if we have skipped once
+    storage.write('isFirstTime', false);
     Get.to(const LoginScreen());
   }
 }
