@@ -47,8 +47,8 @@ class AuthenticationRepository extends GetxController {
       throw XFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw XFirebaseException(e.code).message;
-    } on FormatException catch (e) {
-      throw XFormatException;
+    } on FormatException catch (_) {
+      throw const XFormatException();
     } on PlatformException catch (e) {
       throw XPlatformException(e.code).message;
     } catch (e) {

@@ -1,6 +1,5 @@
 import 'package:bouncy_bargain/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:bouncy_bargain/features/authentication/screens/signup/widgets/terms_and%20_conditions_checkbox.dart';
-import 'package:bouncy_bargain/features/authentication/screens/signup/verify_email_screen.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/validators/validation.dart';
