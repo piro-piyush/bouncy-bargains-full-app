@@ -1,5 +1,11 @@
 import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
 import 'package:bouncy_bargain/features/authentication/screens/onboarding/onboarding_screen.dart';
+import 'package:bouncy_bargain/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:bouncy_bargain/utils/exceptions/firebase_exceptions.dart';
+import 'package:bouncy_bargain/utils/exceptions/format_exceptions.dart';
+import 'package:bouncy_bargain/utils/exceptions/platform_exceptions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,6 +15,7 @@ class AuthenticationRepository extends GetxController {
 
   // Variables
   final deviceStorage = GetStorage();
+  final _auth = FirebaseAuth.instance;
 
   // Called from main.dart on app launch
   @override
@@ -31,6 +38,23 @@ class AuthenticationRepository extends GetxController {
   /// [EmailAuthentication] - SignIn
 
   /// [EmailAuthentication] - Register
+  Future<UserCredential> registerWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      return await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw XFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw XFirebaseException(e.code).message;
+    } on FormatException catch (e) {
+      throw XFormatException;
+    } on PlatformException catch (e) {
+      throw XPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   /// [ReAuthenticate] - ReAuthenticate User
 

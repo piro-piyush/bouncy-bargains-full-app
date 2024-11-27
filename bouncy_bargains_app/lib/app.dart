@@ -4,6 +4,8 @@ import 'package:bouncy_bargain/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'bindings/general_bindings.dart';
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -16,7 +18,7 @@ class App extends StatelessWidget {
         darkTheme: XAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         // Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
-        // initialBinding: GeneralBindings(),
+        initialBinding: GeneralBindings(),
         home: const Scaffold(
           backgroundColor: XColors.primary,
           body: Center(

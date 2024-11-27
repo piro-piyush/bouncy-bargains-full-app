@@ -3,7 +3,6 @@ import 'package:bouncy_bargain/common/widgets/login_signup/social_buttons.dart';
 import 'package:bouncy_bargain/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
-import 'package:bouncy_bargain/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 
@@ -12,7 +11,6 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = XHelperFunctions.isDarkMode(context);
 
     return Scaffold(
       appBar: AppBar(),
