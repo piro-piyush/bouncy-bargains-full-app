@@ -1,7 +1,9 @@
+import 'package:bouncy_bargain/features/authentication/controllers/login/login_controller.dart';
 import 'package:bouncy_bargain/utils/constants/colors.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class XSocialButtons extends StatelessWidget {
   const XSocialButtons({
@@ -10,6 +12,7 @@ class XSocialButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -18,7 +21,7 @@ class XSocialButtons extends StatelessWidget {
               border: Border.all(color: XColors.grey),
               borderRadius: BorderRadius.circular(100)),
           child: IconButton(
-              onPressed: () {},
+              onPressed: () =>controller.googleSignIn(),
               icon: const Image(
                   width: XSizes.iconMd,
                   height: XSizes.iconMd,

@@ -1,4 +1,5 @@
 import 'package:bouncy_bargain/data/repositories/authentication/authentication_repository.dart';
+import 'package:bouncy_bargain/features/personalization/controllers/user_controller.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/helpers/network_manager.dart';
 import 'package:bouncy_bargain/utils/popups/full_screen_loader.dart';
@@ -53,8 +54,7 @@ class LoginController extends GetxController {
         localStorage.write("REMEMBER_ME_PASSWORD", password.text.trim());
       }
 
-      final userCredentials = await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      final userCredentials = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Remove Loader
       XFullScreenLoader.stopLoading();
@@ -64,6 +64,39 @@ class LoginController extends GetxController {
     } catch (e) {
       XFullScreenLoader.stopLoading();
       XLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  // Google SignIn authentication
+  Future<void> googleSignIn() async {
+    try {
+      // Start loading
+      XFullScreenLoader.openLoadingDialog(
+        'Logging you in...',
+        XImages.docerAnimation,
+      );
+
+      // Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        XFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //Google Authentication
+      final userCredentials =
+          await AuthenticationRepository.instance.signInWithGoogle();
+
+      // Save user Record
+      await UserController.instance.saveUserRecord(userCredentials);
+
+      // Remove Loader
+      XFullScreenLoader.stopLoading();
+    } catch (e) {
+      // Remove Loader
+      XFullScreenLoader.stopLoading();
+
+      XLoaders.errorSnackBar(title: "Oh Snap", message: e.toString());
     }
   }
 }

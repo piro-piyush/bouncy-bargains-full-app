@@ -16,7 +16,7 @@ class App extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: XAppTheme.lightTheme,
         darkTheme: XAppTheme.darkTheme,
-        debugShowCheckedModeBanner: false,
+        // debugShowCheckedModeBanner: false,
         // Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
         initialBinding: GeneralBindings(),
         home: const Scaffold(
