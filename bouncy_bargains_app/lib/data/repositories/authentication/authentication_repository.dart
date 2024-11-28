@@ -49,7 +49,8 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Email & Password sign-in ------------------*/
 
   /// [EmailAuthentication] - Login
-  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(
+      String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -67,7 +68,8 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [EmailAuthentication] - Register
-  Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> registerWithEmailAndPassword(
+      String email, String password) async {
     try {
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -104,6 +106,21 @@ class AuthenticationRepository extends GetxController {
   /// [ReAuthenticate] - ReAuthenticate User
 
   /// [EmailAuthentication] - Forget Password
+  Future<void> sendPasswordResetEmail(String email,) async {
+      try {
+        await _auth.sendPasswordResetEmail(email: email);
+      } on FirebaseAuthException catch (e) {
+        throw XFirebaseAuthException(e.code).message;
+      } on FirebaseException catch (e) {
+        throw XFirebaseException(e.code).message;
+      } on FormatException catch (_) {
+        throw const XFormatException();
+      } on PlatformException catch (e) {
+        throw XPlatformException(e.code).message;
+      } catch (e) {
+        throw 'Something went wrong. Please try again';
+      }
+    }
 
 /*-------------------------------- Federated identity & social sign-in ------------------*/
 
@@ -123,7 +140,6 @@ class AuthenticationRepository extends GetxController {
 
       // Once signed in , return the user credential
       return await _auth.signInWithCredential(credentials);
-
     } on FirebaseAuthException catch (e) {
       throw XFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -145,8 +161,8 @@ class AuthenticationRepository extends GetxController {
   /// [LogoutUser] - Valid for any Authentication
   Future<void> logout() async {
     try {
-      await _auth.signOut();
       await GoogleSignIn().signOut();
+      await _auth.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw XFirebaseAuthException(e.code).message;

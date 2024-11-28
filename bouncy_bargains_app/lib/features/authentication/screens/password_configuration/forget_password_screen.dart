@@ -1,6 +1,7 @@
-import 'package:bouncy_bargain/features/authentication/screens/password_configuration/reset_password_screen.dart';
+import 'package:bouncy_bargain/features/authentication/controllers/forget_password/forget_password_controller.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
+import 'package:bouncy_bargain/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,6 +11,7 @@ class ForgetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgetPasswordController());
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -34,10 +36,15 @@ class ForgetPasswordScreen extends StatelessWidget {
             ),
 
             // Text Field
-            TextFormField(
-              decoration: const InputDecoration(
-                  labelText: XTexts.email,
-                  prefixIcon: Icon(Iconsax.direct_right)),
+            Form(
+              key: controller.forgetPasswordFormKey,
+              child: TextFormField(
+                controller: controller.email,
+                validator: XValidator.validateEmail,
+                decoration: const InputDecoration(
+                    labelText: XTexts.email,
+                    prefixIcon: Icon(Iconsax.direct_right)),
+              ),
             ),
             const SizedBox(
               height: XSizes.spaceBtwSections,
@@ -47,7 +54,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => Get.off(() => const ResetPasswordScreen()),
+                    onPressed: () => controller.sendPasswordResetEmail(),
                     child: const Text(XTexts.submit)))
           ],
         ),

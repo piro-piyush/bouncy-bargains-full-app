@@ -1,3 +1,5 @@
+import 'package:bouncy_bargain/features/authentication/controllers/forget_password/forget_password_controller.dart';
+import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
@@ -7,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,14 @@ class ResetPasswordScreen extends StatelessWidget {
 
             // Title & Subtitle
             Text(
+              email,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: XSizes.spaceBtwItems,
+            ),
+            Text(
               XTexts.changeYourPasswordTitle,
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
@@ -54,7 +66,8 @@ class ResetPasswordScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text(XTexts.done)),
+                  onPressed: () => Get.offAll(() => const LoginScreen()),
+                  child: const Text(XTexts.done)),
             ),
             const SizedBox(
               height: XSizes.spaceBtwItems,
@@ -62,7 +75,8 @@ class ResetPasswordScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => ForgetPasswordController.instance
+                    .resendPasswordResetEmail(email),
                 child: const Text(XTexts.resendEmail),
               ),
             ),
