@@ -49,8 +49,7 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Email & Password sign-in ------------------*/
 
   /// [EmailAuthentication] - Login
-  Future<UserCredential> loginWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -68,8 +67,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [EmailAuthentication] - Register
-  Future<UserCredential> registerWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -125,6 +123,7 @@ class AuthenticationRepository extends GetxController {
 
       // Once signed in , return the user credential
       return await _auth.signInWithCredential(credentials);
+
     } on FirebaseAuthException catch (e) {
       throw XFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

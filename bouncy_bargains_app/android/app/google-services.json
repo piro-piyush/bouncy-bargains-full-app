@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:604269957403:android:c0db884b3a0dbc64bf03be",
+        "mobilesdk_app_id": "1:604269957403:android:beca6d6b2f290c7bbf03be",
         "android_client_info": {
-          "package_name": "com.example.bouncy_bargain"
+          "package_name": "com.example.bouncy_bargains"
         }
       },
       "oauth_client": [

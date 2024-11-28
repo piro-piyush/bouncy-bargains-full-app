@@ -1,6 +1,6 @@
 {
-    "name": "bouncy_bargain",
-    "short_name": "bouncy_bargain",
+    "name": "bouncy_bargains",
+    "short_name": "bouncy_bargains",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

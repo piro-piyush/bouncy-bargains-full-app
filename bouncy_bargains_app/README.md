@@ -1,4 +1,4 @@
-# bouncy_bargain
+# bouncy_bargains
 
 A new Flutter project.
 

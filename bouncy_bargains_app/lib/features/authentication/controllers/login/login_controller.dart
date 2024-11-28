@@ -21,12 +21,20 @@ class LoginController extends GetxController {
   final localStorage = GetStorage();
 
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final userController = Get.put(UserController());
 
   @override
   void onInit() {
-    email.text = localStorage.read("REMEMBER_ME_EMAIL");
-    password.text = localStorage.read("REMEMBER_ME_PASSWORD");
     super.onInit();
+    // Check if "REMEMBER_ME" was previously saved in local storage
+    final storedRememberMe = localStorage.read("REMEMBER_ME") ?? false;
+
+    // If "REMEMBER_ME" was saved, set the rememberMe variable and populate email/password
+    if (storedRememberMe) {
+      rememberMe.value = true;
+      email.text = localStorage.read("REMEMBER_ME_EMAIL") ?? '';
+      password.text = localStorage.read("REMEMBER_ME_PASSWORD") ?? '';
+    }
   } // Form key for form validation
 
   // Email and password login
@@ -50,11 +58,20 @@ class LoginController extends GetxController {
 
       // Save Data if Remember me is selected
       if (rememberMe.value) {
+        localStorage.write(
+            "REMEMBER_ME", true); // Save the "Remember me" status
         localStorage.write("REMEMBER_ME_EMAIL", email.text.trim());
         localStorage.write("REMEMBER_ME_PASSWORD", password.text.trim());
+      } else {
+        localStorage
+            .remove("REMEMBER_ME"); // If not selected, remove the saved data
+        localStorage.remove("REMEMBER_ME_EMAIL");
+        localStorage.remove("REMEMBER_ME_PASSWORD");
       }
 
-      final userCredentials = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      // Login user with Email & password Authentication
+      final userCredentials = await AuthenticationRepository.instance
+          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Remove Loader
       XFullScreenLoader.stopLoading();
@@ -88,10 +105,13 @@ class LoginController extends GetxController {
           await AuthenticationRepository.instance.signInWithGoogle();
 
       // Save user Record
-      await UserController.instance.saveUserRecord(userCredentials);
+      await userController.saveUserRecord(userCredentials);
 
       // Remove Loader
       XFullScreenLoader.stopLoading();
+
+      // Redirect
+      AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       // Remove Loader
       XFullScreenLoader.stopLoading();

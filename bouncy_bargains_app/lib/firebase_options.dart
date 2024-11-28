@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBpXGkbushli6IIDUE3Ql6rXquCtDcvteo',
-    appId: '1:604269957403:android:c0db884b3a0dbc64bf03be',
+    appId: '1:604269957403:android:beca6d6b2f290c7bbf03be',
     messagingSenderId: '604269957403',
     projectId: 'chit-chat-app-81a16',
     databaseURL: 'https://chit-chat-app-81a16-default-rtdb.firebaseio.com',

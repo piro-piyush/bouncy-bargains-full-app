@@ -1,4 +1,4 @@
-package com.example.bouncy_bargain
+package com.example.bouncy_bargains
 
 import io.flutter.embedding.android.FlutterActivity
 
