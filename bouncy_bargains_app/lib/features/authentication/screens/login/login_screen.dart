@@ -7,6 +7,7 @@ import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
 
 class LoginScreen extends StatelessWidget {

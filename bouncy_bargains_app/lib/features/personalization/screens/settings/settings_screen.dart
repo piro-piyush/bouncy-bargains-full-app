@@ -3,6 +3,8 @@ import 'package:bouncy_bargain/common/widgets/custom_shapes/containers/primary_h
 import 'package:bouncy_bargain/common/widgets/list_tile/settings_menu_tile.dart';
 import 'package:bouncy_bargain/common/widgets/list_tile/user_profile_tile.dart';
 import 'package:bouncy_bargain/common/widgets/texts/section_heading.dart';
+import 'package:bouncy_bargain/data/repositories/authentication/authentication_repository.dart';
+import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
 import 'package:bouncy_bargain/features/personalization/screens/address/address_screen.dart';
 import 'package:bouncy_bargain/features/personalization/screens/profile/profile_screen.dart';
 import 'package:bouncy_bargain/features/shop/screens/cart/cart_screen.dart';
@@ -155,7 +157,10 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                        onPressed: () {}, child: const Text('Logout')),
+                        onPressed: () {
+                          AuthenticationRepository.instance.logout();
+                        },
+                        child: const Text('Logout')),
                   ),
                   const SizedBox(
                     height: XSizes.spaceBtwSections * 2.5,
