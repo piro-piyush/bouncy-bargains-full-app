@@ -2,7 +2,7 @@ import 'package:bouncy_bargain/common/widgets/appbar/appbar.dart';
 import 'package:bouncy_bargain/common/widgets/images/x_circular_image.dart';
 import 'package:bouncy_bargain/common/widgets/texts/section_heading.dart';
 import 'package:bouncy_bargain/features/personalization/controllers/user_controller.dart';
-import 'package:bouncy_bargain/features/personalization/screens/profile/change_name.dart';
+import 'package:bouncy_bargain/features/personalization/screens/profile/widgets/change_name.dart';
 import 'package:bouncy_bargain/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
@@ -126,7 +126,9 @@ class ProfileScreen extends StatelessWidget {
 
                   Center(
                     child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.deleteAccountWarningPopup();
+                        },
                         child: const Text(
                           'Close Account',
                           style: TextStyle(color: Colors.red),

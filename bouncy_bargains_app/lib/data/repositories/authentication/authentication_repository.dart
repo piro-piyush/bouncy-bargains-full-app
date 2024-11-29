@@ -1,3 +1,4 @@
+import 'package:bouncy_bargain/data/repositories/user/user_repository.dart';
 import 'package:bouncy_bargain/features/authentication/screens/login/login_screen.dart';
 import 'package:bouncy_bargain/features/authentication/screens/onboarding/onboarding_screen.dart';
 import 'package:bouncy_bargain/features/authentication/screens/signup/verify_email_screen.dart';
@@ -22,7 +23,7 @@ class AuthenticationRepository extends GetxController {
   final _auth = FirebaseAuth.instance;
 
   // Get authenticated user data
-  User? get authUser  =>_auth.currentUser;
+  User? get authUser => _auth.currentUser;
 
   // Called from main.dart on app launch
   @override
@@ -52,8 +53,7 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Email & Password sign-in ------------------*/
 
   /// [EmailAuthentication] - Login
-  Future<UserCredential> loginWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -71,8 +71,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [EmailAuthentication] - Register
-  Future<UserCredential> registerWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -107,23 +106,43 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [ReAuthenticate] - ReAuthenticate User
+  Future<void> reAuthenticateEmailAndPasswordUser(String email, String password) async {
+    try {
+      // Create a credential
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      // ReAuthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw XFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw XFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const XFormatException();
+    } on PlatformException catch (e) {
+      throw XPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   /// [EmailAuthentication] - Forget Password
   Future<void> sendPasswordResetEmail(String email,) async {
-      try {
-        await _auth.sendPasswordResetEmail(email: email);
-      } on FirebaseAuthException catch (e) {
-        throw XFirebaseAuthException(e.code).message;
-      } on FirebaseException catch (e) {
-        throw XFirebaseException(e.code).message;
-      } on FormatException catch (_) {
-        throw const XFormatException();
-      } on PlatformException catch (e) {
-        throw XPlatformException(e.code).message;
-      } catch (e) {
-        throw 'Something went wrong. Please try again';
-      }
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw XFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw XFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const XFormatException();
+    } on PlatformException catch (e) {
+      throw XPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
     }
+  }
 
 /*-------------------------------- Federated identity & social sign-in ------------------*/
 
@@ -181,4 +200,20 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [DeleteUser] - Remove User Auth and Firestore Account
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw XFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw XFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const XFormatException();
+    } on PlatformException catch (e) {
+      throw XPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }
