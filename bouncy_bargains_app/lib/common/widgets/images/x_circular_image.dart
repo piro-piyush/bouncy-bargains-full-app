@@ -29,8 +29,8 @@ class XCircularImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = XHelperFunctions.isDarkMode(context);
     return Container(
-        height: width,
-        width: height,
+        height: height,
+        width: width,
         padding: EdgeInsets.all(padding),
         decoration: BoxDecoration(
           color: backgroundColor ?? (dark ? XColors.black : XColors.white),
@@ -38,24 +38,25 @@ class XCircularImage extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
-          child: Center(
-            child: isNetworkImage
-                ? CachedNetworkImage(
-                    imageUrl: image,
-                    fit: fit,
-                    color: overlayColor,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        const XShimmerEffect(
-                          width: 56,
-                          height: 56,
-                        ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error))
-                : Image(
-                    fit: fit,
-                    image: AssetImage(image),
-                    color: overlayColor,
-                  ),
-          ),
+          child: isNetworkImage
+              ? CachedNetworkImage(
+                  imageUrl: image,
+                  fit: fit,
+              width: width,
+              height: height,
+                  color: overlayColor,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      XShimmerEffect(
+                        width: width,
+                        height: height,
+                        radius: 80,
+                      ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error))
+              : Image(
+                  fit: fit,
+                  image: AssetImage(image),
+                  color: overlayColor,
+                ),
         ));
   }
 }
