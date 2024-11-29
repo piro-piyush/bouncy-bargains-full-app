@@ -23,6 +23,7 @@ class ProfileScreen extends StatelessWidget {
         showBackArrow: true,
       ),
       // Body
+      // backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.all(XSizes.defaultSpace),
@@ -37,12 +38,14 @@ class ProfileScreen extends StatelessWidget {
                         Obx(() {
                           if (controller.imageUploading.value) {
                             return const XShimmerEffect(
-                              width: 56,
-                              height: 56,
-                              radius: 56,
+                              width: 80,
+                              height: 80,
+                              radius: 80,
                             );
                           } else {
                             return XCircularImage(
+                              padding: 0,
+                              fit: BoxFit.cover,
                               image: controller.user.value.profilePicture != ""
                                   ? controller.user.value.profilePicture
                                   : XImages.user,
