@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   XProfileMenu(
                     title: 'Phone Number',
-                    value: controller.user.value.phoneNumber,
+                    value: controller.user.value.phoneNumber == ""? "Not available":controller.user.value.phoneNumber,
                     onPressed: () {},
                   ),
                   XProfileMenu(
