@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bouncy_bargain/data/repositories/authentication/authentication_repository.dart';
@@ -7,7 +6,6 @@ import 'package:bouncy_bargain/utils/exceptions/firebase_exceptions.dart';
 import 'package:bouncy_bargain/utils/exceptions/format_exceptions.dart';
 import 'package:bouncy_bargain/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
