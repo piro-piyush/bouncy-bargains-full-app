@@ -33,10 +33,14 @@ class ProfileScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        const XCircularImage(
-                          image: XImages.user,
+                        XCircularImage(
+                          image: controller.user.value.profilePicture != ""
+                              ? controller.user.value.profilePicture
+                              : XImages.user,
                           width: 80,
                           height: 80,
+                          isNetworkImage:
+                              controller.user.value.profilePicture != "",
                         ),
                         TextButton(
                             onPressed: () {},

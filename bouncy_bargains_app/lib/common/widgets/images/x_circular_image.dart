@@ -34,12 +34,16 @@ class XCircularImage extends StatelessWidget {
         color: backgroundColor ?? (dark ? XColors.black : XColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Image(
-        fit: fit,
-        image: isNetworkImage
-            ?  NetworkImage(image)
-            :  AssetImage(image) as ImageProvider,
-        color: overlayColor,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        // You can remove clipRREct if there is any problem
+        child: Image(
+          fit: fit,
+          image: isNetworkImage
+              ?  NetworkImage(image)
+              :  AssetImage(image) as ImageProvider,
+          color: overlayColor,
+        ),
       ),
     );
   }

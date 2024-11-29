@@ -19,11 +19,14 @@ class XUserProfileTile extends StatelessWidget {
     final controller = UserController.instance;
     return Obx(
       () => ListTile(
-        leading: const XCircularImage(
-          image: XImages.user,
+        leading: XCircularImage(
+          image: controller.user.value.profilePicture != ""
+              ? controller.user.value.profilePicture
+              : XImages.user,
           width: 50,
           height: 50,
           padding: 0,
+          isNetworkImage: controller.user.value.profilePicture != "",
         ),
         title: Text(
           controller.user.value.fullName,

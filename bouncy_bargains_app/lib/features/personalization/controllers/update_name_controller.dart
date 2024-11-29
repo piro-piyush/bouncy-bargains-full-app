@@ -6,6 +6,7 @@ import 'package:bouncy_bargain/utils/helpers/network_manager.dart';
 import 'package:bouncy_bargain/utils/popups/full_screen_loader.dart';
 import 'package:bouncy_bargain/utils/popups/loaders.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UpdateNameController extends GetxController {
@@ -67,8 +68,11 @@ class UpdateNameController extends GetxController {
       XLoaders.successSnackBar(
           title: 'Congratulations', message: 'You name has been updated');
 
+      userController.user.refresh(); // Explicitly notify listeners
+
       // Move to previous screen
-      Get.off(() => const ProfileScreen());
+      Get.off(() => ProfileScreen());
+
     } catch (e) {
       // Remove the loader
       XFullScreenLoader.stopLoading();
