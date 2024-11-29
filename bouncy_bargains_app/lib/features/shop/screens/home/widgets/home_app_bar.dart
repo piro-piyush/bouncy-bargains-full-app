@@ -42,7 +42,8 @@ class XHomeAppBar extends StatelessWidget {
                     .apply(color: XColors.white),
               );
             }
-          })
+          }
+          )
         ],
       ),
       actions: [
