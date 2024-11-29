@@ -38,7 +38,8 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: dark ? Colors.white : XColors.dark,
               )
             : leadingIcon != null
-                ? IconButton(onPressed: () => leadingOnPressed, icon: Icon(leadingIcon))
+                ? IconButton(
+                    onPressed: () => leadingOnPressed, icon: Icon(leadingIcon))
                 : null,
         title: title,
         centerTitle: centerTitle,
