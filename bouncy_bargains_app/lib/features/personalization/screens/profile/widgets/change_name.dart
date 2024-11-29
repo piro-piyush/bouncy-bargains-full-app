@@ -1,6 +1,5 @@
 import 'package:bouncy_bargain/common/widgets/appbar/appbar.dart';
 import 'package:bouncy_bargain/features/personalization/controllers/update_name_controller.dart';
-import 'package:bouncy_bargain/features/personalization/controllers/user_controller.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/validators/validation.dart';
