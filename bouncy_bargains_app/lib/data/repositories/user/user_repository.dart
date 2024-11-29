@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bouncy_bargain/data/repositories/authentication/authentication_repository.dart';
 import 'package:bouncy_bargain/features/personalization/models/user_model.dart';
 import 'package:bouncy_bargain/utils/exceptions/firebase_exceptions.dart';
