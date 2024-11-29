@@ -6,6 +6,7 @@ import 'package:bouncy_bargain/features/personalization/screens/profile/widgets/
 import 'package:bouncy_bargain/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
+import 'package:bouncy_bargain/utils/shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -33,17 +34,29 @@ class ProfileScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        XCircularImage(
-                          image: controller.user.value.profilePicture != ""
-                              ? controller.user.value.profilePicture
-                              : XImages.user,
-                          width: 80,
-                          height: 80,
-                          isNetworkImage:
-                              controller.user.value.profilePicture != "",
-                        ),
+                        Obx(() {
+                          if (controller.imageUploading.value) {
+                            return const XShimmerEffect(
+                              width: 56,
+                              height: 56,
+                              radius: 56,
+                            );
+                          } else {
+                            return XCircularImage(
+                              image: controller.user.value.profilePicture != ""
+                                  ? controller.user.value.profilePicture
+                                  : XImages.user,
+                              width: 80,
+                              height: 80,
+                              isNetworkImage:
+                                  controller.user.value.profilePicture != "",
+                            );
+                          }
+                        }),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.uploadProfilePicture();
+                            },
                             child: Text(
                               'Change Profile Picture',
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -110,7 +123,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   XProfileMenu(
                     title: 'Phone Number',
-                    value: controller.user.value.phoneNumber == ""? "Not available":controller.user.value.phoneNumber,
+                    value: controller.user.value.phoneNumber == ""
+                        ? "Not available"
+                        : controller.user.value.phoneNumber,
                     onPressed: () {},
                   ),
                   XProfileMenu(
