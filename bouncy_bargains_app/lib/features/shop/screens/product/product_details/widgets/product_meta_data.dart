@@ -95,7 +95,7 @@ class XProductMetaData extends StatelessWidget {
                 image: XImages.shoeIcon),
             const XBrandTitleWithVerifiedIcon(
               title: "Nike",
-              brandTextSize: TextSizes.medium,
+              brandTextSize: TexXSizes.medium,
             ),
           ],
         )
