@@ -13,14 +13,14 @@ class XBrandTitleWithVerifiedIcon extends StatelessWidget {
     this.textColor,
     this.iconColor = XColors.primary,
     this.textAlign = TextAlign.center,
-    this.brandTextSize = TextSizes.small,
+    this.brandTextSize = TexXSizes.small,
   });
 
   final String title;
   final int maxLines;
   final Color? textColor, iconColor;
   final TextAlign? textAlign;
-  final TextSizes brandTextSize;
+  final TexXSizes brandTextSize;
 
   @override
   Widget build(BuildContext context) {
