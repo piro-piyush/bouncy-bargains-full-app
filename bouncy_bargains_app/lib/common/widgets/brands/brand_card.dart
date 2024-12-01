@@ -49,7 +49,7 @@ class XBrandCard extends StatelessWidget {
                 children: [
                   const XBrandTitleWithVerifiedIcon(
                     title: "Nike",
-                    brandTextSize: TextSizes.large,
+                    brandTextSize: TexXSizes.large,
                   ),
                   Text(
                     '256 products',
