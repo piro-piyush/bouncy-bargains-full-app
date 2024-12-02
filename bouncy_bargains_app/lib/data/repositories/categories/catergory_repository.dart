@@ -17,7 +17,7 @@ class CategoryRepository extends GetxController {
   final _db = FirebaseFirestore.instance;
 
   // Get all categories
-  Future<List<CategoryModel>> getAllcategories()async {
+  Future<List<CategoryModel>> getAllCategories()async {
     try {
         final snapshot = await _db.collection("Categories").get();
         final list =snapshot.docs.map((docuement) => CategoryModel.fromSnapshot(docuement)).toList();
