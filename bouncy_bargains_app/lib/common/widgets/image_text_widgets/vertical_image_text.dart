@@ -11,12 +11,13 @@ class XVerticalImageText extends StatelessWidget {
     required this.title,
     this.textColor = XColors.white,
     this.backgroundColor,
-    this.onTapped,
+    this.onTapped, this.isNetworkImage = false,
   });
 
   final String image, title;
   final Color textColor;
   final Color? backgroundColor;
+  final bool isNetworkImage;
   final void Function()? onTapped;
 
   @override
@@ -28,6 +29,7 @@ class XVerticalImageText extends StatelessWidget {
         padding: const EdgeInsets.only(right: XSizes.spaceBtwItems),
         child: Column(
           children: [
+
             // Circular Icon
             Container(
               width: 56,
