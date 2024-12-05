@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "604269957403",
+    "firebase_url": "https://chit-chat-app-81a16-default-rtdb.firebaseio.com",
+    "project_id": "chit-chat-app-81a16",
+    "storage_bucket": "chit-chat-app-81a16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604269957403:android:beca6d6b2f290c7bbf03be",
+        "android_client_info": {
+          "package_name": "com.example.bouncy_bargains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604269957403-qaptlml2t40uqq9jsv9tfg55cag84kl7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bouncy_bargains",
+            "certificate_hash": "fa3f52f265d5f3e12cedd5fb13046e28b039d6cd"
+          }
+        },
+        {
+          "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXGkbushli6IIDUE3Ql6rXquCtDcvteo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604269957403-7up8obn484egs2rnfq5l6rgr9el1ppgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bouncyBargains"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604269957403:android:81c8c978c86bab68bf03be",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_admin_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXGkbushli6IIDUE3Ql6rXquCtDcvteo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604269957403-7up8obn484egs2rnfq5l6rgr9el1ppgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bouncyBargains"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
