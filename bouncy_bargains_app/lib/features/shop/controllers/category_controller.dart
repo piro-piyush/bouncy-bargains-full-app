@@ -1,7 +1,6 @@
-import 'package:bouncy_bargain/data/repositories/categories/catergory_repository.dart';
+import 'package:bouncy_bargain/data/repositories/categories/category_repository.dart';
 import 'package:bouncy_bargain/features/shop/models/category_model.dart';
 import 'package:bouncy_bargain/utils/popups/loaders.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
