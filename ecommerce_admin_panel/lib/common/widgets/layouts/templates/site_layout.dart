@@ -12,7 +12,7 @@ class TSiteTemplate extends StatelessWidget {
       this.desktop,
       this.tablet,
       this.mobile,
-      this.useLayout = false});
+      this.useLayout = true});
 
   // Widget for desktop layout
   final Widget? desktop;
@@ -29,23 +29,9 @@ class TSiteTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: THeader(),
         body: TResponsiveWidget(
-          desktop: useLayout
-              ? DesktopLayout(
-                  body: desktop,
-                )
-              : desktop ?? Container(),
-          tablet: useLayout
-              ? TabletLayout(
-                  body: tablet ?? desktop,
-                )
-              : tablet ?? desktop ?? Container(),
-          mobile: useLayout
-              ? MobileLayout(
-                  body: mobile ?? desktop,
-                )
-              : mobile ?? desktop ?? Container(),
-        ));
+          desktop: useLayout ? DesktopLayout(body: desktop,) : desktop ?? Container(),
+          tablet: useLayout ? TabletLayout(body: tablet ?? desktop,) : tablet ?? desktop ?? Container(),
+          mobile: useLayout ? MobileLayout(body: mobile ?? desktop,) : mobile ?? desktop ?? Container(),));
   }
 }
