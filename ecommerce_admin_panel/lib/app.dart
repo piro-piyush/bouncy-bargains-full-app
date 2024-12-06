@@ -20,7 +20,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: MyCustomScrollBehavior(),
         getPages: TAppRoute.pages,
-        initialRoute: TRoutes.firstScreen,
+        initialRoute: TRoutes.dashboard,
         unknownRoute: GetPage(
             name: '/page-not-found',
             page: () => const Scaffold(
@@ -28,41 +28,5 @@ class App extends StatelessWidget {
                     child: Text("Page not found"),
                   ),
                 )));
-  }
-}
-
-class ResponsiveDesign extends StatelessWidget {
-  const ResponsiveDesign({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const TSiteTemplate(desktop: Desktop(),tablet: Tablet(),mobile: Mobile(),);
-  }
-}
-
-class Desktop extends StatelessWidget {
-  const Desktop({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class Tablet extends StatelessWidget {
-  const Tablet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class Mobile extends StatelessWidget {
-  const Mobile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
