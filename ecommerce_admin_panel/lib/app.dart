@@ -1,4 +1,4 @@
-import 'package:ecommerce_admin_panel/common/widgets/layouts/templates/site_layout.dart';
+import 'package:ecommerce_admin_panel/bindings/general_bindings.dart';
 import 'package:ecommerce_admin_panel/routes/app_routes.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: MyCustomScrollBehavior(),
         getPages: TAppRoute.pages,
+        initialBinding: GeneralBindings(),
         initialRoute: TRoutes.dashboard,
         unknownRoute: GetPage(
             name: '/page-not-found',
