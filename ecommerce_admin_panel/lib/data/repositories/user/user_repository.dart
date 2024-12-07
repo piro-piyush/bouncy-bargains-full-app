@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/firebase_exceptions.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/format_exceptions.dart';
@@ -9,12 +10,12 @@ import 'package:get/get.dart';
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
 
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final _db = FirebaseFirestore.instance;
 
   // Function to save user data to Firestore
   Future<void> createUser(UserModel user) async {
     try {
-      await _db.collection("Users").doc(user.id).set(user.toJson());
+      await _db.collection('Users').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -26,28 +27,24 @@ class UserRepository extends GetxController {
     }
   }
 
-// Function to fetch user details based on User Id
-//   Future<UserModel> fetchUserDetails() async {
-//     try {
-//       final docuementSnapshot = await _db
-//           .collection("Users")
-//           .doc(AuthenticationRepository.instance.authUser?.uid)
-//           .get();
-//       if (docuementSnapshot.exists) {
-//         return UserModel.fromSnapshot(docuementSnapshot);
-//       } else {
-//         return UserModel.empty();
-//       }
-//     } on FirebaseException catch (e) {
-//       throw XFirebaseException(e.code).message;
-//     } on FormatException catch (_) {
-//       throw const XFormatException();
-//     } on PlatformException catch (e) {
-//       throw XPlatformException(e.code).message;
-//     } catch (e) {
-//       throw 'Something went wrong. Please try again';
-//     }
-//   }
+// Function to fetch admin details based on User Id
+  Future<UserModel> fetchAdminDetails() async {
+    try {
+      final docSnapshot = await _db
+          .collection("Users")
+          .doc(AuthenticationRepository.instance.authUser!.uid)
+          .get();
+      return UserModel.fromSnapshot(docSnapshot);
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
 // Function to update user data in Firestore
 //   Future<void> updateUserData(UserModel updatedUser) async {
