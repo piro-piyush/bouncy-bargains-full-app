@@ -2,7 +2,6 @@ import 'package:ecommerce_admin_panel/data/repositories/authentication/authentic
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:ecommerce_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
-import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
