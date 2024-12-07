@@ -25,13 +25,26 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     _auth.setPersistence(Persistence.LOCAL);
+    screenRedirect();
+  }
+
+
+  void screenRedirect() async {
+    final user = _auth.currentUser;
+
+    // If the user is logged in
+    if (user != null) {
+      // Navigate to the dashboard
+      Get.offAllNamed(TRoutes.dashboard);
+    } else {
+      Get.offAllNamed(TRoutes.login);
+    }
   }
 
 /*-------------------------------- Email & Password sign-in ------------------*/
 
   // [EmailAuthentication] - Login
-  Future<UserCredential> loginWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -160,23 +173,22 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Federated identity & social sign-in ------------------*/
 
   /// [LogoutUser] - Valid for any Authentication
-// Future<void> logout() async {
-//   try {
-//     await GoogleSignIn().signOut();
-//     await _auth.signOut();
-//     Get.offAll(() => const LoginScreen());
-//   } on FirebaseAuthException catch (e) {
-//     throw XFirebaseAuthException(e.code).message;
-//   } on FirebaseException catch (e) {
-//     throw XFirebaseException(e.code).message;
-//   } on FormatException catch (_) {
-//     throw const XFormatException();
-//   } on PlatformException catch (e) {
-//     throw XPlatformException(e.code).message;
-//   } catch (e) {
-//     throw 'Something went wrong. Please try again';
-//   }
-// }
+Future<void> logout() async {
+  try {
+    await _auth.signOut();
+    Get.offAllNamed(TRoutes.login);
+  } on FirebaseAuthException catch (e) {
+    throw TFirebaseAuthException(e.code).message;
+  } on FirebaseException catch (e) {
+    throw TFirebaseException(e.code).message;
+  } on FormatException catch (_) {
+    throw const TFormatException();
+  } on PlatformException catch (e) {
+    throw TPlatformException(e.code).message;
+  } catch (e) {
+    throw 'Something went wrong. Please try again';
+  }
+}
 
   /// [DeleteUser] - Remove User Auth and Firestore Account
 // Future<void> deleteAccount() async {
