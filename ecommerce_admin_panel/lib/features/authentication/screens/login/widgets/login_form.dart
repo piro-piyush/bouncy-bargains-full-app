@@ -30,6 +30,7 @@ class TLoginForm extends StatelessWidget {
                   labelText: TTexts.email,
                 ),
               ),
+
               SizedBox(
                 height: TSizes.spaceBtwInputFields,
               ),
@@ -66,7 +67,10 @@ class TLoginForm extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Obx(()=> Checkbox(value: controller.rememberMe.value, onChanged: (value) => controller.rememberMe.value = value!)),
+                      Obx(() => Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged: (value) =>
+                              controller.rememberMe.value = value!)),
                       Text(TTexts.rememberMe),
                     ],
                   ),
