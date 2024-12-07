@@ -14,6 +14,7 @@ class DesktopLayout extends StatelessWidget {
         children: [
           Expanded(child: TSidebar()),
           Expanded(
+            flex: 5,
               child: Column(
             children: [
               // Header
