@@ -1,4 +1,3 @@
-import 'package:ecommerce_admin_panel/common/widgets/layouts/headers/header.dart';
 import 'package:ecommerce_admin_panel/common/widgets/responsive/responsive_design.dart';
 import 'package:ecommerce_admin_panel/common/widgets/responsive/screens/desktop_layout.dart';
 import 'package:ecommerce_admin_panel/common/widgets/responsive/screens/mobile_layout.dart';
@@ -30,8 +29,21 @@ class TSiteTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: TResponsiveWidget(
-          desktop: useLayout ? DesktopLayout(body: desktop,) : desktop ?? Container(),
-          tablet: useLayout ? TabletLayout(body: tablet ?? desktop,) : tablet ?? desktop ?? Container(),
-          mobile: useLayout ? MobileLayout(body: mobile ?? desktop,) : mobile ?? desktop ?? Container(),));
+      desktop: useLayout
+          ? DesktopLayout(
+              body: desktop,
+            )
+          : desktop ?? Container(),
+      tablet: useLayout
+          ? TabletLayout(
+              body: tablet ?? desktop,
+            )
+          : tablet ?? desktop ?? Container(),
+      mobile: useLayout
+          ? MobileLayout(
+              body: mobile ?? desktop,
+            )
+          : mobile ?? desktop ?? Container(),
+    ));
   }
 }
