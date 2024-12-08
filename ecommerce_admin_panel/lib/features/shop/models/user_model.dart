@@ -4,22 +4,23 @@ import 'package:ecommerce_admin_panel/utils/formatters/formatter.dart';
 
 class UserModel {
   final String? id;
-  String username;
-  String email;
   String firstName;
   String lastName;
+  String username;
+  String email;
   String phoneNumber;
   String profilePicture;
   AppRole role;
   DateTime? createdAt;
   DateTime? updatedAt;
 
+  // Constructor for user model
   UserModel(
       {this.id,
-      this.username = '',
-      required this.email,
+        required this.email,
       this.firstName = '',
       this.lastName = '',
+        this.username = '',
       this.phoneNumber = '',
       this.profilePicture = '',
       this.role = AppRole.user,
@@ -54,9 +55,7 @@ class UserModel {
   }
 
   // Static function to create an empty user model.
-  static UserModel empty() => UserModel(
-        email: '',
-      );
+  static UserModel empty() => UserModel(email: '');
 
   // Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
@@ -74,32 +73,41 @@ class UserModel {
   }
 
   // Factory method to create a UserModel from a Firebase document snapshot.
-  factory UserModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
+  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
-      return UserModel(
+      final tempUser = UserModel(
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
         username: data.containsKey('Username') ? data['Username'] ?? '' : '',
         email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         phoneNumber:
-            data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
+        data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
         profilePicture: data.containsKey('ProfilePicture')
             ? data['ProfilePicture'] ?? ''
             : '',
-        role: data.containsKey('Role')
-            ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
-                ? AppRole.admin
-                : AppRole.user
-            : AppRole.user,
+        role: data.containsKey('Role') ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString() ? AppRole.admin : AppRole.user : AppRole.user,
         createdAt: data.containsKey('CreatedAt')
             ? data['CreatedAt'] ?? DateTime.now()
             : DateTime.now(),
         updatedAt: data.containsKey('UpdatedAt')
             ? data['UpdatedAt'] ?? DateTime.now()
             : DateTime.now(),
+      );
+      print(tempUser);
+
+      return UserModel(
+        id: document.id,
+        firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
+        lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
+        username: data.containsKey('Username') ? data['Username'] ?? '' : '',
+        email: data.containsKey('Email') ? data['Email'] ?? '' : '',
+        phoneNumber: data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
+        profilePicture: data.containsKey('ProfilePicture') ? data['ProfilePicture'] ?? '' : '',
+        role: data.containsKey('Role') ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString() ? AppRole.admin : AppRole.user : AppRole.user,
+        createdAt: data.containsKey('CreatedAt') ? data['CreatedAt'] ?? DateTime.now() : DateTime.now(),
+        updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt'] ?? DateTime.now() : DateTime.now(),
       );
     } else {
       return empty();
