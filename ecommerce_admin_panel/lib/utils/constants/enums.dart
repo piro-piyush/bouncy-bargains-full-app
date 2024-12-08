@@ -4,7 +4,7 @@
 -- */
 
 /// Switch of Custom Brand-Text-Size Widget
-enum AppRole { admin, user }
+enum AppRole {admin,user }
 
 enum TransactionType { buy, sell }
 
