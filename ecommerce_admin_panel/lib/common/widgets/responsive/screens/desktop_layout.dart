@@ -3,7 +3,7 @@ import 'package:ecommerce_admin_panel/common/widgets/layouts/sidebars/sidebar.da
 import 'package:flutter/material.dart';
 
 class DesktopLayout extends StatelessWidget {
-   const DesktopLayout({super.key, this.body});
+  const DesktopLayout({super.key, this.body});
 
   final Widget? body;
 
@@ -14,16 +14,16 @@ class DesktopLayout extends StatelessWidget {
         children: [
           Expanded(child: TSidebar()),
           Expanded(
-            flex: 5,
+              flex: 5,
               child: Column(
-            children: [
-              // Header
-              THeader(),
+                children: [
+                  // Header
+                  THeader(),
 
-              // Body
-              body ?? SizedBox(),
-            ],
-          ))
+                  // Body
+                  Expanded(child: body ?? SizedBox()),
+                ],
+              ))
         ],
       ),
     );
