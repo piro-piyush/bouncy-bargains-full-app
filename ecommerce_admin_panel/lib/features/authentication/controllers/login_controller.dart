@@ -66,11 +66,11 @@ class LoginController extends GetxController {
       }
 
       // Login user with Email & password Authentication
-      await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Create Admin record in the firestore
-      final user = await UserController.instance.fetchUserDetails();
+      final user = await UserController.instance.fetchAdminDetails();
+      print("User model: $user");
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
@@ -111,7 +111,7 @@ class LoginController extends GetxController {
       // Create Admin record in the firestore
       final userRepository = Get.put(UserRepository());
 
-      await userRepository.createUser(UserModel(
+      await userRepository.createAdmin(UserModel(
         id: AuthenticationRepository.instance.authUser!.uid,
         firstName: "Bouncy Bargains",
         lastName: "Admin",
