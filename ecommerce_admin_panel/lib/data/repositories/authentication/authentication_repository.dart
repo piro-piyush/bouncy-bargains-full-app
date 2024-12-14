@@ -28,7 +28,6 @@ class AuthenticationRepository extends GetxController {
     screenRedirect();
   }
 
-
   void screenRedirect() async {
     final user = _auth.currentUser;
 
@@ -44,7 +43,8 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Email & Password sign-in ------------------*/
 
   // [EmailAuthentication] - Login
-  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(
+      String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -173,22 +173,22 @@ class AuthenticationRepository extends GetxController {
 /*-------------------------------- Federated identity & social sign-in ------------------*/
 
   /// [LogoutUser] - Valid for any Authentication
-Future<void> logout() async {
-  try {
-    await _auth.signOut();
-    Get.offAllNamed(TRoutes.login);
-  } on FirebaseAuthException catch (e) {
-    throw TFirebaseAuthException(e.code).message;
-  } on FirebaseException catch (e) {
-    throw TFirebaseException(e.code).message;
-  } on FormatException catch (_) {
-    throw const TFormatException();
-  } on PlatformException catch (e) {
-    throw TPlatformException(e.code).message;
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      Get.offAllNamed(TRoutes.login);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
   }
-}
 
   /// [DeleteUser] - Remove User Auth and Firestore Account
 // Future<void> deleteAccount() async {
