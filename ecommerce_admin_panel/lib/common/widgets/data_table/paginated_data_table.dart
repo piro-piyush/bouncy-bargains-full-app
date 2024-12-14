@@ -60,17 +60,21 @@ class TPaginatedDataTable extends StatelessWidget {
             cardTheme: const CardTheme(color: Colors.white, elevation: 0)),
         child: PaginatedDataTable2(
           source: source,
+
+          // Columns & Rows
           columns: columns,
           columnSpacing: 12,
           minWidth: minWidth,
           dividerThickness: 0,
           horizontalMargin: 12,
           rowsPerPage: rowsPerPage,
+          dataRowHeight: dataRowHeight,
+
+          // Checkbox
           showFirstLastButtons: true,
           showCheckboxColumn: true,
           sortAscending: sortAscending,
           onPageChanged: onPageChanged,
-          dataRowHeight: dataRowHeight,
           renderEmptyRowsInTheEnd: false,
           onRowsPerPageChanged: (noOfRows) {},
           sortColumnIndex: sortColumnIndex,

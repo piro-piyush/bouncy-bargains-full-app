@@ -1,9 +1,10 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
-import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
-import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,86 +79,44 @@ class DashboardDesktopScreen extends StatelessWidget {
 
               // Graphs
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 2,
                     child: Column(
                       children: [
                         // Bar graph
+                        TWeeklySalesGraph(),
+                        SizedBox(
+                          height: TSizes.spaceBtwSections,
+                        ),
+
+                        // Orders
                         TRoundedContainer(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Weekly Sales",
+                                "Recent Orders",
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
                               const SizedBox(
                                 height: TSizes.spaceBtwSections,
                               ),
-
-                              // Graph
-                              SizedBox(
-                                  height: 400,
-                                  child: BarChart(BarChartData(
-                                      titlesData: buildFlTitlesData(),
-                                      borderData: FlBorderData(
-                                          show: true,
-                                          border: Border(
-                                            top: BorderSide.none,
-                                            right: BorderSide.none,
-                                          )),
-                                      gridData: FlGridData(
-                                        show: true,
-                                        drawHorizontalLine: true,
-                                        drawVerticalLine: true,
-                                        horizontalInterval: 200,
-                                      ),
-                                      barGroups: controller.weeklySales
-                                          .asMap()
-                                          .entries
-                                          .map((entry) => BarChartGroupData(
-                                                  x: entry.key,
-                                                  barRods: [
-                                                    BarChartRodData(
-                                                        width: 30,
-                                                        toY: entry.value,
-                                                        color: TColors.primary,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    TSizes.sm))
-                                                  ]))
-                                          .toList(),
-                                      groupsSpace: TSizes.spaceBtwItems,
-                                      barTouchData: BarTouchData(
-                                          touchTooltipData: BarTouchTooltipData(
-                                              getTooltipColor: (_) =>
-                                                  TColors.secondary),
-                                          touchCallback:
-                                              TDeviceUtils.isDesktopScreen(
-                                                      context)
-                                                  ? (barTouchEvent,
-                                                      barTouchResponse) {}
-                                                  : null))))
+                              const DashboardOrderTable()
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: TSizes.spaceBtwSections,
-                        ),
-
-                        // Orders
-                        TRoundedContainer()
+                        )
                       ],
                     ),
                   ),
                   SizedBox(
                     width: TSizes.spaceBtwSections,
                   ),
+
                   // Pie chart
-                  Expanded(child: TRoundedContainer())
+                  Expanded(child: OrderStatusPieChart())
                 ],
               )
             ],
