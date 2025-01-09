@@ -1,20 +1,16 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DashboardController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -125,35 +121,4 @@ class DashboardDesktopScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-FlTitlesData buildFlTitlesData() {
-  return FlTitlesData(
-      show: true,
-      bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-              showTitles: true,
-              getTitlesWidget: (value, meta) {
-                // Map index to the desired day of the week
-                final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-                // Calculate the index and ensure it wraps around for the correct day
-                final index = value.toInt() % days.length;
-
-                // Get the day corresponding to the calculated index
-                final day = days[index];
-                return SideTitleWidget(
-                  axisSide: AxisSide.bottom,
-                  space: 0,
-                  child: Text(day),
-                );
-              })),
-      leftTitles: AxisTitles(
-          sideTitles:
-              SideTitles(showTitles: true, interval: 200, reservedSize: 50)),
-      rightTitles: AxisTitles(
-          sideTitles: SideTitles(
-        showTitles: false,
-      )),
-      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)));
 }

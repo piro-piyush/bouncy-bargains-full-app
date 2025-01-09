@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
@@ -83,7 +84,22 @@ class DashboardTabletScreen extends StatelessWidget {
               ),
 
               // Orders
-              const TRoundedContainer(),
+              TRoundedContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Recent Orders",
+                      style:
+                      Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwSections,
+                    ),
+                    const DashboardOrderTable()
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: TSizes.spaceBtwSections,
               ),
