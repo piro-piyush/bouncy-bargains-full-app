@@ -57,62 +57,62 @@ class TSidebar extends StatelessWidget {
                       icon: Iconsax.image,
                       itemName: 'Media',
                     ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.picture_frame,
-                      itemName: 'Banners',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.shopping_bag,
-                      itemName: 'Products',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.category,
-                      itemName: 'Categories',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.status,
-                      itemName: 'Brands',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.people,
-                      itemName: 'Customers',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.box,
-                      itemName: 'Orders',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.status,
-                      itemName: 'Coupons',
-                    ),
-                    SizedBox(
-                      height: TSizes.spaceBtwItems,
-                    ),
-
-                    Text(
-                      "OTHER",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .apply(letterSpacingDelta: 1.2),
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.settings,
-                      itemName: 'Settings',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.dashboard,
-                      icon: Iconsax.logout,
-                      itemName: 'Logout',
-                    ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.picture_frame,
+                    //   itemName: 'Banners',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.shopping_bag,
+                    //   itemName: 'Products',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.category,
+                    //   itemName: 'Categories',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.status,
+                    //   itemName: 'Brands',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.people,
+                    //   itemName: 'Customers',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.box,
+                    //   itemName: 'Orders',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.status,
+                    //   itemName: 'Coupons',
+                    // ),
+                    // SizedBox(
+                    //   height: TSizes.spaceBtwItems,
+                    // ),
+                    //
+                    // Text(
+                    //   "OTHER",
+                    //   style: Theme.of(context)
+                    //       .textTheme
+                    //       .bodySmall!
+                    //       .apply(letterSpacingDelta: 1.2),
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.settings,
+                    //   itemName: 'Settings',
+                    // ),
+                    // TMenuItem(
+                    //   route: TRoutes.dashboard,
+                    //   icon: Iconsax.logout,
+                    //   itemName: 'Logout',
+                    // ),
                   ],
                 ),
               )
