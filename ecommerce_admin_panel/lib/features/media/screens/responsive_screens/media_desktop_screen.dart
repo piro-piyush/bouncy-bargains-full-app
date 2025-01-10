@@ -2,7 +2,6 @@ import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with
 import 'package:ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:ecommerce_admin_panel/features/media/screens/widgets/media_content.dart';
 import 'package:ecommerce_admin_panel/features/media/screens/widgets/media_uploader.dart';
-import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,14 +28,14 @@ class MediaDesktopScreen extends StatelessWidget {
                   // Breadcrumbs
                   TBreadcrumbWithHeading(
                     heading: "Media",
-                    breadcrumbItems: [TRoutes.dashboard, "Media Screen"],
-                    returnToPreviousScreen: true,
+                    breadcrumbItems: [ "Media"],
                   ),
 
                   SizedBox(
                     width: TSizes.buttonWidth * 1.5,
                     child: ElevatedButton.icon(
-                        onPressed: () =>controller.showImageUploaderSection.value = !controller.showImageUploaderSection.value,
+                        onPressed: () => controller.showImageUploaderSection
+                            .value = !controller.showImageUploaderSection.value,
                         icon: Icon(Iconsax.cloud_add),
                         label: Text("Upload Images")),
                   )
@@ -50,7 +49,10 @@ class MediaDesktopScreen extends StatelessWidget {
               MediaUploader(),
 
               /// Media
-              MediaContent(),
+              MediaContent(
+                allowSelection: false,
+                allowMultipleSelection: false,
+              ),
             ],
           ),
         ),

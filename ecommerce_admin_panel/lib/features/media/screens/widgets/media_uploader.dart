@@ -52,13 +52,13 @@ class MediaUploader extends StatelessWidget {
                               print("Zone drop multiple : $ev"),
                           onDropFile: (file) async {
                             if (file is html.File) {
-                              // final html.File htmlFile = html.File([file], file.name, {'type': file.type});
+                              final html.File htmlFile = html.File([file], file.name, {'type': file.type});
                               final bytes = await controller.dropzoneController
                                   .getFileData(file);
                               final image = ImageModel(
                                   url: '',
-                                  file: html.File(bytes, file.name),
-                                  folder: 'folder',
+                                  file: htmlFile,
+                                  folder: '',
                                   fileName: file.name,
                                   localImageToDisplay:
                                       Uint8List.fromList(bytes));
@@ -66,7 +66,7 @@ class MediaUploader extends StatelessWidget {
                             } else if (file is String) {
                               print("Zone drop  : $file");
                             } else {
-                              print("Zone drop  : $file");
+                              print("Zone drop  : ${file.runtimeType}");
                             }
                           },
                         ),
@@ -134,7 +134,8 @@ class MediaUploader extends StatelessWidget {
                           Row(
                             children: [
                               TextButton(
-                                onPressed: () =>controller.selectedImagesToUpload.clear(),
+                                onPressed: () =>
+                                    controller.selectedImagesToUpload.clear(),
                                 child: Text(
                                   "Remove All",
                                 ),
@@ -147,7 +148,8 @@ class MediaUploader extends StatelessWidget {
                                   : SizedBox(
                                       width: TSizes.buttonWidth,
                                       child: ElevatedButton(
-                                        onPressed: () => controller.uploadImagesConfirmation(),
+                                        onPressed: () => controller
+                                            .uploadImagesConfirmation(),
                                         child: Text(
                                           "Upload",
                                         ),
@@ -166,12 +168,11 @@ class MediaUploader extends StatelessWidget {
                         runSpacing: TSizes.spaceBtwItems / 2,
                         children: controller.selectedImagesToUpload
                             .where((image) => image.localImageToDisplay != null)
-                            .map((element) =>
-                                TRoundedImage(
+                            .map((element) => TRoundedImage(
                                   width: 90,
-                                    height: 90,
-                                    padding: TSizes.sm,
-                                    imageType: ImageType.memory,
+                                  height: 90,
+                                  padding: TSizes.sm,
+                                  imageType: ImageType.memory,
                                   memoryImage: element.localImageToDisplay,
                                   backgroundColor: TColors.primaryBackground,
                                 ))
@@ -184,7 +185,8 @@ class MediaUploader extends StatelessWidget {
                           ? SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => controller.uploadImagesConfirmation(),
+                                onPressed: () =>
+                                    controller.uploadImagesConfirmation(),
                                 child: Text(
                                   "Upload",
                                 ),
