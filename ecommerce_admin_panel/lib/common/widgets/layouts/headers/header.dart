@@ -37,7 +37,7 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
             : null,
 
         // Text Field
-        title: TDeviceUtils.isTabletScreen(context)
+        title: TDeviceUtils.isDesktopScreen(context)
             ? SizedBox(
                 width: 400,
                 child: TextFormField(
