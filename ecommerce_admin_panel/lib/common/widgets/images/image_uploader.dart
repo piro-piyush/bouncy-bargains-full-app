@@ -97,7 +97,7 @@ class TImageUploader extends StatelessWidget {
             size: TSizes.md,
             color: Colors.white,
             onPressed: onIconButtonPressed,
-            backgroundColor: TColors.primary.withOpacity(0.9),
+            backgroundColor: TColors.primary.withValues(alpha: 0.9),
           ),
         )
       ],
