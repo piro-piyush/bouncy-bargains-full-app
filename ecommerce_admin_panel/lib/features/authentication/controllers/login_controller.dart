@@ -23,7 +23,6 @@ class LoginController extends GetxController {
   final password = TextEditingController();
   final loginFormKey = GlobalKey<FormState>();
 
-  // final _auth = AuthenticationRepository.instance;
 
   @override
   void onInit() {
@@ -33,7 +32,7 @@ class LoginController extends GetxController {
   }
 
   // Handles email and password sign-in process
-  Future<void> emailAndPasswordSignIn () async {
+  Future<void> emailAndPasswordSignIn() async {
     try {
       // Start Loader
       TFullScreenLoader.openLoadingDialog(
@@ -66,11 +65,11 @@ class LoginController extends GetxController {
       }
 
       // Login user with Email & password Authentication
-      await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      await AuthenticationRepository.instance
+          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Create Admin record in the firestore
-      final user = await UserController.instance.fetchAdminDetails();
-      print("User model: $user");
+      final user = await UserController.instance.fetchUserDetails();
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
@@ -111,7 +110,7 @@ class LoginController extends GetxController {
       // Create Admin record in the firestore
       final userRepository = Get.put(UserRepository());
 
-      await userRepository.createAdmin(UserModel(
+      await userRepository.createUser(UserModel(
         id: AuthenticationRepository.instance.authUser!.uid,
         firstName: "Bouncy Bargains",
         lastName: "Admin",

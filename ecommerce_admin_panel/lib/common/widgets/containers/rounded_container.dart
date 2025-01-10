@@ -59,7 +59,7 @@ class TRoundedContainer extends StatelessWidget {
           boxShadow: [
             if (showShadow)
               BoxShadow(
-                color: TColors.grey.withOpacity(0.1),
+                color: TColors.grey.withValues(alpha: 0.1),
                 spreadRadius: 5,
                 blurRadius: 8,
                 offset: const Offset(0, 3),

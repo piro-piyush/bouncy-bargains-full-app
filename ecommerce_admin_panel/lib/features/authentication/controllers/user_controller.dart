@@ -12,24 +12,22 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    fetchAdminDetails();
+    fetchUserDetails();
     super.onInit();
   }
 
   // Fetches user details from the repository
-  Future<UserModel> fetchAdminDetails() async {
+  Future<UserModel> fetchUserDetails() async {
     try {
       loading.value = true;
-      print("Fetching admin details...");
-      final fetchedUser = await userRepository.fetchAdminDetails();
-      this.user.value = fetchedUser;
-      print("Admin details fetched successfully: $fetchedUser");
+      final user = await userRepository.fetchUserDetails();
+      this.user.value = user;
       loading.value = false;
-      return fetchedUser;
+      return user;
     } catch (e) {
       loading.value = false;
       // Log the error
-      print("Error in fetchAdminDetails: $e");
+      print("Error in fetching AdminDetails: $e");
       TLoaders.errorSnackBar(
           title: 'Something went wrong.', message: e.toString());
       return UserModel.empty();

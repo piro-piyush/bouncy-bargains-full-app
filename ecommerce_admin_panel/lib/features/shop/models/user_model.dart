@@ -76,27 +76,6 @@ class UserModel {
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
-      final tempUser = UserModel(
-        id: document.id,
-        firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
-        lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
-        username: data.containsKey('Username') ? data['Username'] ?? '' : '',
-        email: data.containsKey('Email') ? data['Email'] ?? '' : '',
-        phoneNumber:
-        data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
-        profilePicture: data.containsKey('ProfilePicture')
-            ? data['ProfilePicture'] ?? ''
-            : '',
-        role: data.containsKey('Role') ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString() ? AppRole.admin : AppRole.user : AppRole.user,
-        createdAt: data.containsKey('CreatedAt')
-            ? data['CreatedAt'] ?? DateTime.now()
-            : DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt')
-            ? data['UpdatedAt'] ?? DateTime.now()
-            : DateTime.now(),
-      );
-      print(tempUser);
-
       return UserModel(
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
@@ -106,8 +85,8 @@ class UserModel {
         phoneNumber: data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
         profilePicture: data.containsKey('ProfilePicture') ? data['ProfilePicture'] ?? '' : '',
         role: data.containsKey('Role') ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString() ? AppRole.admin : AppRole.user : AppRole.user,
-        createdAt: data.containsKey('CreatedAt') ? data['CreatedAt'] ?? DateTime.now() : DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt'] ?? DateTime.now() : DateTime.now(),
+        createdAt: data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() ?? DateTime.now() : DateTime.now(),
+        updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() ?? DateTime.now() : DateTime.now(),
       );
     } else {
       return empty();
