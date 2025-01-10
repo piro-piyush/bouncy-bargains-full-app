@@ -1,49 +1,43 @@
 class TRoutes {
-
   static const login = '/login';
   static const forgetPassword = '/forget-password/';
   static const resetPassword = '/reset-password';
   static const dashboard = '/dashboard';
   static const media = '/media';
 
+  // Category
+  static const categories = '/categories';
+  static const createCategory = '/createCategory';
+  static const editCategory = '/editCategory';
+
+  // Brands
+  static const brands = '/brands';
+  static const createBrand = '/createBrand';
+  static const editBrand = '/editBrand';
+
+  // Banners
+  static const banners = '/banners';
+  static const createBanner = '/createBanner';
+  static const editBanner = '/editBanner';
+
   static List sideMenuItems = [
     dashboard,
-    // media,
-    // banners,
+    media,
+    banners,
     // products,
-    // categories,
-    // brands,
+    categories,
+    brands,
     // customers,
     // orders,
     // coupons,
     // settings
   ];
-
-
-
-
 }
-
-
-// static const banners = '/banners';
-
-// static const createBanner = '/createBanner';
-// static const editBanner = '/editBanner';
 
 // static const products = '/products';
 
 // static const createProducts = '/createProducts';
 // static const editProducts = '/editProducts';
-
-// static const brands = '/brands';
-
-// static const createBrand = '/createBrand';
-// static const editBrand = '/editBrand';
-
-// static const categories = '/categories';
-
-// static const createCategory = '/createCategory';
-// static const editCategory = '/editCategory';
 
 // static const customers = '/customers';
 
