@@ -1,7 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/tables/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/all_products/widgets/data_table.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
