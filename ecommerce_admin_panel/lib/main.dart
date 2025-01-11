@@ -9,7 +9,7 @@ import 'app.dart';
 
 /// Entry point of Flutter App
 Future<void> main() async {
-  // Ensure that widgets are initialized
+  // Ensure that tables are initialized
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize GetX Local Storage

@@ -12,7 +12,7 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// - [showBackArrow] to toggle the visibility of the back arrow.
   /// - [leadingIcon] for a custom leading icon.
   /// - [leadingOnPressed] callback for the leading icon press event.
-  /// - [actions] for adding a list of action widgets.
+  /// - [actions] for adding a list of action tables.
   /// - Horizontal padding of the appbar can be customized inside this widget.
   const TAppBar({
     super.key,
