@@ -1,6 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:ecommerce_admin_panel/common/widgets/data_table/paginated_data_table.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/widgets/table_source.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/tables/table_source.dart';
 import 'package:flutter/material.dart';
 
 class BannerTable extends StatelessWidget {
