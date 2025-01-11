@@ -62,11 +62,11 @@ class TSidebar extends StatelessWidget {
                       icon: Iconsax.picture_frame,
                       itemName: 'Banners',
                     ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.shopping_bag,
-                    //   itemName: 'Products',
-                    // ),
+                    TMenuItem(
+                      route: TRoutes.products,
+                      icon: Iconsax.shopping_bag,
+                      itemName: 'Products',
+                    ),
                     TMenuItem(
                       route: TRoutes.categories,
                       icon: Iconsax.category_2,
@@ -77,42 +77,42 @@ class TSidebar extends StatelessWidget {
                       icon: Iconsax.status,
                       itemName: 'Brands',
                     ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.people,
-                    //   itemName: 'Customers',
-                    // ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.box,
-                    //   itemName: 'Orders',
-                    // ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.status,
-                    //   itemName: 'Coupons',
-                    // ),
-                    // SizedBox(
-                    //   height: TSizes.spaceBtwItems,
-                    // ),
-                    //
-                    // Text(
-                    //   "OTHER",
-                    //   style: Theme.of(context)
-                    //       .textTheme
-                    //       .bodySmall!
-                    //       .apply(letterSpacingDelta: 1.2),
-                    // ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.settings,
-                    //   itemName: 'Settings',
-                    // ),
-                    // TMenuItem(
-                    //   route: TRoutes.dashboard,
-                    //   icon: Iconsax.logout,
-                    //   itemName: 'Logout',
-                    // ),
+                    TMenuItem(
+                      route: TRoutes.customer,
+                      icon: Iconsax.people,
+                      itemName: 'Customers',
+                    ),
+                    TMenuItem(
+                      route: TRoutes.orders,
+                      icon: Iconsax.box,
+                      itemName: 'Orders',
+                    ),
+                    TMenuItem(
+                      route: TRoutes.coupons,
+                      icon: Iconsax.status,
+                      itemName: 'Coupons',
+                    ),
+                    SizedBox(
+                      height: TSizes.spaceBtwItems,
+                    ),
+
+                    Text(
+                      "OTHER",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(letterSpacingDelta: 1.2),
+                    ),
+                    TMenuItem(
+                      route: TRoutes.settings,
+                      icon: Iconsax.settings,
+                      itemName: 'Settings',
+                    ),
+                    TMenuItem(
+                      route: "logout",
+                      icon: Iconsax.logout,
+                      itemName: 'Logout',
+                    ),
                   ],
                 ),
               )

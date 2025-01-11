@@ -3,15 +3,20 @@ import 'package:ecommerce_admin_panel/features/authentication/screens/login/logi
 import 'package:ecommerce_admin_panel/features/authentication/screens/reset_password/reset_password_screen.dart';
 import 'package:ecommerce_admin_panel/features/media/screens/media_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/banners_screen.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/banners/create_brand/create_banner__screen.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/banners/edit_brand/edit_banner__screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/banners/create_banner/create_banner__screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/banners/edit_banner/edit_banner__screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/brands/all_brands/brands_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/brands/create_brand/create_brand__screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/brands/edit_brand/edit_brand__screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/categories/all_categories/categories_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/categories/create_category/create_category_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/categories/edit_category/edit_category_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/customer/all_customers/customers_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/customer/customer_details/cutomer_details_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/dashboard_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/products/all_products/products_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/create_product__screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/edit_product__screen.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/routes/routes_middleware.dart';
 import 'package:get/get.dart';
@@ -84,16 +89,37 @@ class TAppRoute {
       page: () => const EditBannerScreen(),
       middlewares: [TRoutesMiddleware()],
     ),
+
+    // Products
+    GetPage(
+      name: TRoutes.products,
+      page: () => const ProductsScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.createProduct,
+      page: () => const CreateProductScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.editProduct,
+      page: () => const EditProductScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+
+    // Customers
+    GetPage(
+      name: TRoutes.customer,
+      page: () => const CustomersScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.customers,
+      page: () => const CustomerDetailsScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
   ];
 }
-
-// Products
-// GetPage(name: TRoutes.products, page: () => const ProductsScreen(), middlewares: [TRoutesMiddleware()],),
-// GetPage(name: TRoutes.createProducts, page: () => const CreateProductScreen(), middlewares: [TRoutesMiddleware()],),
-// GetPage(name: TRoutes.editProducts, page: () => const EditProductScreen(), middlewares: [TRoutesMiddleware()],),
-
-// Customers
-// GetPage(name: TRoutes.customers, page: () => const CustomersScreen(), middlewares: [TRoutesMiddleware()],),
 
 // Orders
 // GetPage(name: TRoutes.orders, page: () => const OrdersScreen(), middlewares: [TRoutesMiddleware()],),

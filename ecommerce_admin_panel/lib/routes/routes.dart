@@ -20,34 +20,32 @@ class TRoutes {
   static const createBanner = '/createBanner';
   static const editBanner = '/editBanner';
 
+  // Products
+  static const products = '/products';
+  static const createProduct = '/createProduct';
+  static const editProduct = '/editProduct';
+
+  // Customer
+  static const customer = '/customer';
+  static const customers = '/customers';
+
+  static const orders = '/orders';
+  static const ordersDetails = '/ordersDetails';
+
+  static const coupons = '/coupons';
+  static const settings = '/settings';
+  static const logout = '/logout';
+
   static List sideMenuItems = [
     dashboard,
     media,
     banners,
-    // products,
+    products,
     categories,
     brands,
-    // customers,
-    // orders,
-    // coupons,
-    // settings
+    customers,
+    orders,
+    coupons,
+    settings
   ];
 }
-
-// static const products = '/products';
-
-// static const createProducts = '/createProducts';
-// static const editProducts = '/editProducts';
-
-// static const customers = '/customers';
-
-// static const createCustomer = '/createCustomer';
-// static const customerDetails = '/customerDetails';
-
-// static const orders = '/orders';
-
-// static const responsiveDesign = '/responsiveDesign';
-
-// static const coupons = '/coupons';
-// static const settings = '/settings';
-// static const logout = '/logout';
