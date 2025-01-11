@@ -10,7 +10,7 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final banner = Get.arguments;
+    // final banner = Get.arguments;
     return TSiteTemplate(
       desktop: EditProductDesktopScreen(),
       tablet: EditProductTabletScreen(),

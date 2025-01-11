@@ -18,9 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProductDesktopScreen extends StatelessWidget {
-  const EditProductDesktopScreen({super.key,  });
-
-
+  const EditProductDesktopScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                                 Text(
                                   "Stock & Pricing",
                                   style:
-                                  Theme.of(context).textTheme.headlineSmall,
+                                      Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 SizedBox(
                                   height: TSizes.spaceBtwItems,
@@ -106,58 +106,58 @@ class EditProductDesktopScreen extends StatelessWidget {
                   // SideBar
                   Expanded(
                       child: Column(
-                        children: [
-                          // Product Thumbnail
-                          ProductThumbnailImage(),
-                          SizedBox(
-                            height: TSizes.spaceBtwSections,
-                          ),
+                    children: [
+                      // Product Thumbnail
+                      ProductThumbnailImage(),
+                      SizedBox(
+                        height: TSizes.spaceBtwSections,
+                      ),
 
-                          // Product Images
-                          TRoundedContainer(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "All Product Images",
-                                  style: Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                SizedBox(
-                                  height: TSizes.spaceBtwItems,
-                                ),
-                                ProductAdditionalImages(
-                                    additionalProductImageURLs:
-                                    RxList<String>.empty(),
-                                    onTapToAddImages: () {},
-                                    onTapToRemoveImages: (index) {})
-                              ],
+                      // Product Images
+                      TRoundedContainer(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "All Product Images",
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                          ),
-                          SizedBox(
-                            height: TSizes.spaceBtwSections,
-                          ),
+                            SizedBox(
+                              height: TSizes.spaceBtwItems,
+                            ),
+                            ProductAdditionalImages(
+                                additionalProductImageURLs:
+                                    RxList<String>.empty(),
+                                onTapToAddImages: () {},
+                                onTapToRemoveImages: (index) {})
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: TSizes.spaceBtwSections,
+                      ),
 
-                          // Products Brand
-                          ProductsBrand(),
-                          SizedBox(
-                            height: TSizes.spaceBtwSections,
-                          ),
+                      // Products Brand
+                      ProductsBrand(),
+                      SizedBox(
+                        height: TSizes.spaceBtwSections,
+                      ),
 
-                          // Products Categories
-                          ProductsCategories(),
-                          SizedBox(
-                            height: TSizes.spaceBtwSections,
-                          ),
+                      // Products Categories
+                      ProductsCategories(),
+                      SizedBox(
+                        height: TSizes.spaceBtwSections,
+                      ),
 
-                          // Products Brand
-                          ProductsVisibilityWidget(),
-                          SizedBox(
-                            height: TSizes.spaceBtwSections,
-                          ),
+                      // Products Brand
+                      ProductsVisibilityWidget(),
+                      SizedBox(
+                        height: TSizes.spaceBtwSections,
+                      ),
 
-                          // Products Images
-                        ],
-                      ))
+                      // Products Images
+                    ],
+                  ))
                 ],
               ),
             ],

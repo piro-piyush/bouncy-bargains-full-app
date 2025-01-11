@@ -86,7 +86,7 @@ class MediaUploader extends StatelessWidget {
                               height: TSizes.spaceBtwItems,
                             ),
                             OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () =>controller.selectLocalImages(),
                               child: Text("Select Images"),
                             )
                           ],

@@ -2,6 +2,8 @@ import 'package:ecommerce_admin_panel/features/authentication/screens/forget_pas
 import 'package:ecommerce_admin_panel/features/authentication/screens/login/login_screen.dart';
 import 'package:ecommerce_admin_panel/features/authentication/screens/reset_password/reset_password_screen.dart';
 import 'package:ecommerce_admin_panel/features/media/screens/media_screen.dart';
+import 'package:ecommerce_admin_panel/features/personalization/screens/profile/profile_screen.dart';
+import 'package:ecommerce_admin_panel/features/personalization/screens/settings/settings_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/banners_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/create_banner/create_banner__screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/edit_banner/edit_banner__screen.dart';
@@ -14,6 +16,8 @@ import 'package:ecommerce_admin_panel/features/shop/screens/categories/edit_cate
 import 'package:ecommerce_admin_panel/features/shop/screens/customer/all_customers/customers_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/customer/customer_details/cutomer_details_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/dashboard_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/orders/all_orders/orders_screen.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/orders/order_details/order_details_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/all_products/products_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/create_product__screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/edit_product__screen.dart';
@@ -109,26 +113,40 @@ class TAppRoute {
 
     // Customers
     GetPage(
-      name: TRoutes.customer,
+      name: TRoutes.customers,
       page: () => const CustomersScreen(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
-      name: TRoutes.customers,
+      name: TRoutes.customerDetails,
       page: () => const CustomerDetailsScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+
+    // Orders
+    GetPage(
+      name: TRoutes.orders,
+      page: () => const OrdersScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.orderDetails,
+      page: () => const OrderDetailsScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+
+    GetPage(
+      name: TRoutes.settings,
+      page: () => const SettingsScreen(),
+      middlewares: [TRoutesMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.profile,
+      page: () => const ProfileScreen(),
       middlewares: [TRoutesMiddleware()],
     ),
   ];
 }
 
-// Orders
-// GetPage(name: TRoutes.orders, page: () => const OrdersScreen(), middlewares: [TRoutesMiddleware()],),
-
 // Coupons
 // GetPage(name: TRoutes.coupons, page: () => const CouponsScreen(), middlewares: [TRoutesMiddleware()],),
-
-// Settings
-// GetPage(name: TRoutes.settings, page: () => const SettingsScreen(), middlewares: [TRoutesMiddleware()],),
-
-// // Logout
-// GetPage(name: TRoutes.logout, page: () => const OrdersScreen(), middlewares: [TRoutesMiddleware()],),

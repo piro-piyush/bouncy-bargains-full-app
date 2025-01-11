@@ -49,7 +49,7 @@ class CustomerRows extends DataTableSource {
         view: true,
         edit: false,
         onViewPressed: () =>
-            Get.toNamed(TRoutes.customers, arguments: UserModel.empty()),
+            Get.toNamed(TRoutes.customerDetails, arguments: UserModel.empty()),
         onDeletePressed: () {},
       )),
     ]);

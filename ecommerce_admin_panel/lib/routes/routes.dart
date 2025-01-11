@@ -26,26 +26,27 @@ class TRoutes {
   static const editProduct = '/editProduct';
 
   // Customer
-  static const customer = '/customer';
   static const customers = '/customers';
+  static const createCustomer = '/createCustomer';
+  static const customerDetails = '/customerDetails';
 
   static const orders = '/orders';
-  static const ordersDetails = '/ordersDetails';
+  static const orderDetails = '/orderDetails';
 
   static const coupons = '/coupons';
   static const settings = '/settings';
-  static const logout = '/logout';
+  static const profile = '/profile';
 
   static List sideMenuItems = [
     dashboard,
     media,
-    banners,
-    products,
     categories,
     brands,
+    banners,
+    products,
     customers,
     orders,
-    coupons,
-    settings
+    settings,
+    profile
   ];
 }

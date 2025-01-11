@@ -58,6 +58,16 @@ class TSidebar extends StatelessWidget {
                       itemName: 'Media',
                     ),
                     TMenuItem(
+                      route: TRoutes.categories,
+                      icon: Iconsax.category_2,
+                      itemName: 'Categories',
+                    ),
+                    TMenuItem(
+                      route: TRoutes.brands,
+                      icon: Iconsax.dcube,
+                      itemName: 'Brands',
+                    ),
+                    TMenuItem(
                       route: TRoutes.banners,
                       icon: Iconsax.picture_frame,
                       itemName: 'Banners',
@@ -68,18 +78,8 @@ class TSidebar extends StatelessWidget {
                       itemName: 'Products',
                     ),
                     TMenuItem(
-                      route: TRoutes.categories,
-                      icon: Iconsax.category_2,
-                      itemName: 'Categories',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.brands,
-                      icon: Iconsax.status,
-                      itemName: 'Brands',
-                    ),
-                    TMenuItem(
-                      route: TRoutes.customer,
-                      icon: Iconsax.people,
+                      route: TRoutes.customers,
+                      icon: Iconsax.profile_2user,
                       itemName: 'Customers',
                     ),
                     TMenuItem(
@@ -92,10 +92,8 @@ class TSidebar extends StatelessWidget {
                       icon: Iconsax.status,
                       itemName: 'Coupons',
                     ),
-                    SizedBox(
-                      height: TSizes.spaceBtwItems,
-                    ),
 
+                    // Other Menu Items
                     Text(
                       "OTHER",
                       style: Theme.of(context)
@@ -104,8 +102,13 @@ class TSidebar extends StatelessWidget {
                           .apply(letterSpacingDelta: 1.2),
                     ),
                     TMenuItem(
+                      route: TRoutes.profile,
+                      icon: Iconsax.user,
+                      itemName: 'Profile',
+                    ),
+                    TMenuItem(
                       route: TRoutes.settings,
-                      icon: Iconsax.settings,
+                      icon: Iconsax.setting_2,
                       itemName: 'Settings',
                     ),
                     TMenuItem(

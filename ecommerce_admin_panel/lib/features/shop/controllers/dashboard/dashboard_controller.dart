@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/features/shop/models/order_model.dart';
+import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
@@ -6,113 +7,74 @@ import 'package:get/get.dart';
 class DashboardController extends GetxController {
   static DashboardController get instance => Get.find();
 
-  // order
+// List of sample orders
   static final List<OrderModel> orders = [
     OrderModel(
-      id: 'CWT0012',
+      id: 'order1',
+      userId: 'user1',
+      docId: 'doc1',
       status: OrderStatus.processing,
-      totalAmount: 265,
-      orderDate: DateTime(2024, 12, 9),
-      // Monday
-      deliveryDate: DateTime(2024, 12, 9),
+      totalAmount: 100.0,
+      orderDate: DateTime.now(),
+      paymentMethod: 'Credit Card',
+      items: [
+        ProductModel(
+          id: 'product1',
+          name: 'Product 1',
+          description: 'Description of Product 1',
+          category: 'Category 1',
+          price: 20.0,
+          quantity: 2,
+          imageUrl: 'http://example.com/product1.jpg',
+          selectedVariation: {'Size': 'M', 'Color': 'Red'},
+        ),
+        ProductModel(
+          id: 'product2',
+          name: 'Product 2',
+          description: 'Description of Product 2',
+          category: 'Category 2',
+          price: 60.0,
+          quantity: 1,
+          imageUrl: 'http://example.com/product2.jpg',
+          selectedVariation: {'Size': 'L', 'Color': 'Blue'},
+        ),
+      ],
+      deliveryDate: DateTime.now().add(Duration(days: 5)),
     ),
     OrderModel(
-      id: 'CWT0025',
+      id: 'order2',
+      userId: 'user2',
+      docId: 'doc2',
       status: OrderStatus.shipped,
-      totalAmount: 369,
-      orderDate: DateTime(2024, 12, 10),
-      // Tuesday
-      deliveryDate: DateTime(2024, 12, 10),
-    ),
-    OrderModel(
-      id: 'CWT0152',
-      status: OrderStatus.delivered,
-      totalAmount: 254,
-      orderDate: DateTime(2024, 12, 11),
-      // Wednesday
-      deliveryDate: DateTime(2024, 12, 11),
-    ),
-    OrderModel(
-      id: 'CWT0265',
-      status: OrderStatus.delivered,
-      totalAmount: 355,
-      orderDate: DateTime(2024, 12, 12),
-      // Thursday
-      deliveryDate: DateTime(2024, 12, 12),
-    ),
-    OrderModel(
-      id: 'CWT1536',
-      status: OrderStatus.delivered,
-      totalAmount: 115,
-      orderDate: DateTime(2024, 12, 13),
-      // Friday
-      deliveryDate: DateTime(2024, 12, 13),
-    ),
-    OrderModel(
-      id: 'CWT1537',
-      status: OrderStatus.delivered,
-      totalAmount: 490,
-      orderDate: DateTime(2024, 12, 9),
-      // Monday
-      deliveryDate: DateTime(2024, 12, 9),
-    ),
-    OrderModel(
-      id: 'CWT1538',
-      status: OrderStatus.processing,
-      totalAmount: 185,
-      orderDate: DateTime(2024, 12, 10),
-      // Tuesday
-      deliveryDate: DateTime(2024, 12, 10),
-    ),
-    OrderModel(
-      id: 'CWT1539',
-      status: OrderStatus.delivered,
-      totalAmount: 200,
-      orderDate: DateTime(2024, 12, 11),
-      // Wednesday
-      deliveryDate: DateTime(2024, 12, 11),
-    ),
-    OrderModel(
-      id: 'CWT1540',
-      status: OrderStatus.shipped,
-      totalAmount: 175,
-      orderDate: DateTime(2024, 12, 12),
-      // Thursday
-      deliveryDate: DateTime(2024, 12, 12),
-    ),
-    OrderModel(
-      id: 'CWT1541',
-      status: OrderStatus.processing,
-      totalAmount: 320,
-      orderDate: DateTime(2024, 12, 13),
-      // Friday
-      deliveryDate: DateTime(2024, 12, 13),
-    ),
-    OrderModel(
-      id: 'CWT1542',
-      status: OrderStatus.delivered,
-      totalAmount: 150,
-      orderDate: DateTime(2024, 12, 14),
-      // Saturday
-      deliveryDate: DateTime(2024, 12, 14),
-    ),
-    OrderModel(
-      id: 'CWT1543',
-      status: OrderStatus.delivered,
-      totalAmount: 230,
-      orderDate: DateTime(2024, 12, 15),
-      // Sunday
-      deliveryDate: DateTime(2024, 12, 15),
-    ),
-    OrderModel(
-      id: 'CWT1544',
-      status: OrderStatus.processing,
-      totalAmount: 125,
-      orderDate: DateTime(2024, 12, 11),
-      // Wednesday
-      deliveryDate: DateTime(2024, 12, 11),
+      totalAmount: 150.0,
+      orderDate: DateTime.now().subtract(Duration(days: 2)),
+      paymentMethod: 'Paypal',
+      items: [
+        ProductModel(
+          id: 'product3',
+          name: 'Product 3',
+          description: 'Description of Product 3',
+          category: 'Category 3',
+          price: 40.0,
+          quantity: 2,
+          imageUrl: 'http://example.com/product3.jpg',
+          selectedVariation: {'Size': 'XL', 'Color': 'Green'},
+        ),
+        ProductModel(
+          id: 'product4',
+          name: 'Product 4',
+          description: 'Description of Product 4',
+          category: 'Category 4',
+          price: 70.0,
+          quantity: 1,
+          imageUrl: 'http://example.com/product4.jpg',
+          selectedVariation: {'Size': 'S', 'Color': 'Black'},
+        ),
+      ],
+      deliveryDate: DateTime.now().add(Duration(days: 7)),
     ),
   ];
+
   final RxList<double> weeklySales = <double>[].obs;
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
   final RxMap<OrderStatus, double> totalAmounts = <OrderStatus, double>{}.obs;
