@@ -1,7 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:ecommerce_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
-import 'package:ecommerce_admin_panel/features/shop/models/banner_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
@@ -11,7 +10,6 @@ import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ProductsRows extends DataTableSource {
   late final CategoryModel category;
