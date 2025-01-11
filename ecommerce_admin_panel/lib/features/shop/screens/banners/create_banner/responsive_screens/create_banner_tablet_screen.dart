@@ -1,11 +1,11 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/banners/create_brand/widgets/create_banner_form.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/banners/create_banner/widgets/create_banner_form.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-class CreateBannerMobileScreen extends StatelessWidget {
-  const CreateBannerMobileScreen({super.key});
+class CreateBannerTabletScreen extends StatelessWidget {
+  const CreateBannerTabletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
