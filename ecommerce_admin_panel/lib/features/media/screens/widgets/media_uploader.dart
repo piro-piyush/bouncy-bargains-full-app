@@ -43,21 +43,20 @@ class MediaUploader extends StatelessWidget {
                           onLoaded: () => print("Zone Loaded"),
                           onError: (ev) => print("Zone error : $ev"),
                           onHover: () => print("Zone Hovered"),
-                          onLeave: () => print("Zone Hovered"),
+                          onLeave: () => print("Zone Left"),
                           onCreated: (ctrl) =>
                               controller.dropzoneController = ctrl,
                           onDropInvalid: (ev) =>
                               print("Zone invalid MIME : $ev"),
-                          onDropFiles: (ev) =>
+                          onDropMultiple: (ev) =>
                               print("Zone drop multiple : $ev"),
-                          onDropFile: (file) async {
+                          onDrop: (file) async {
                             if (file is html.File) {
-                              final html.File htmlFile = html.File([file], file.name, {'type': file.type});
-                              final bytes = await controller.dropzoneController
-                                  .getFileData(file);
+                              // final html.File htmlFile = html.File([file], file.name, {'type': file.type});
+                              final bytes = await controller.dropzoneController.getFileData(file);
                               final image = ImageModel(
                                   url: '',
-                                  file: htmlFile,
+                                  file:file,
                                   folder: '',
                                   fileName: file.name,
                                   localImageToDisplay:
@@ -70,6 +69,8 @@ class MediaUploader extends StatelessWidget {
                             }
                           },
                         ),
+
+                        // Drop Zone Content
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
