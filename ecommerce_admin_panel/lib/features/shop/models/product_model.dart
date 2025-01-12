@@ -23,7 +23,8 @@ class ProductModel {
     this.createdAt,
     this.updatedAt,
     Map<String, String>? selectedVariation, // Optional parameter
-  }) : selectedVariation = selectedVariation ?? {}; // Default to an empty map if null
+  }) : selectedVariation =
+            selectedVariation ?? {}; // Default to an empty map if null
 
   // Helper function to get formatted created date
   String get formattedDate => TFormatter.formatDate(createdAt);
@@ -48,7 +49,8 @@ class ProductModel {
       'Quantity': quantity,
       'ImageUrl': imageUrl,
       'CreatedAt': createdAt?.toIso8601String(),
-      'UpdatedAt': updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+      'UpdatedAt':
+          updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'SelectedVariation': selectedVariation, // Serialize variations
       'TotalAmount': totalAmount, // Add totalAmount to the JSON output
     };
@@ -64,12 +66,10 @@ class ProductModel {
       price: (json['Price'] ?? 0.0).toDouble(),
       quantity: json['Quantity'] ?? 0,
       imageUrl: json['ImageUrl'] ?? '',
-      createdAt: json['CreatedAt'] != null
-          ? DateTime.parse(json['CreatedAt'])
-          : null,
-      updatedAt: json['UpdatedAt'] != null
-          ? DateTime.parse(json['UpdatedAt'])
-          : null,
+      createdAt:
+          json['CreatedAt'] != null ? DateTime.parse(json['CreatedAt']) : null,
+      updatedAt:
+          json['UpdatedAt'] != null ? DateTime.parse(json['UpdatedAt']) : null,
       selectedVariation: json['SelectedVariation'] != null
           ? Map<String, String>.from(json['SelectedVariation'])
           : {}, // Default to an empty map if null
