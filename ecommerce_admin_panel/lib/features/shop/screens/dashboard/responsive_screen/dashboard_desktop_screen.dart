@@ -1,5 +1,3 @@
-import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_recent_orders.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
@@ -108,5 +106,3 @@ class DashboardDesktopScreen extends StatelessWidget {
     );
   }
 }
-
-

@@ -15,7 +15,7 @@ import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart' as html;
+// import 'package:universal_html/html.dart' as html;
 
 class MediaController extends GetxController {
   static MediaController get instance => Get.find();
@@ -60,8 +60,7 @@ class MediaController extends GetxController {
       }
 
       final images = await mediaRepository.fetchImagesFromDatabase(
-          selectedPath.value,
-          initialLoadCount);
+          selectedPath.value, initialLoadCount);
       targetList.assignAll(images);
 
       loading.value = false;
