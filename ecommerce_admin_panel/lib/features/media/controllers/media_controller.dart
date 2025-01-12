@@ -42,7 +42,6 @@ class MediaController extends GetxController {
     try {
       loading.value = true;
       RxList<ImageModel> targetList = <ImageModel>[].obs;
-
       if (selectedPath.value == MediaCategory.banners &&
           allBannerImages.isEmpty) {
         targetList = allBannerImages;
@@ -61,7 +60,8 @@ class MediaController extends GetxController {
       }
 
       final images = await mediaRepository.fetchImagesFromDatabase(
-          selectedPath.value, initialLoadCount);
+          selectedPath.value,
+          initialLoadCount);
       targetList.assignAll(images);
 
       loading.value = false;
@@ -113,18 +113,30 @@ class MediaController extends GetxController {
 
   Future<void> selectLocalImages() async {
     final files = await dropzoneController.pickFiles(
-        multiple: true, mime: ['images/jpeg', 'images/png']);
+      multiple: true,
+      mime: ['image/jpeg', 'image/png'],
+    ); // Use correct MIME types
+
     if (files.isNotEmpty) {
       for (var file in files) {
-        final html.File htmlFile = html.File(
-            [file], file.name, {'type': file.type});
+        // Get file data as bytes
         final bytes = await dropzoneController.getFileData(file);
+
+        // Create an ImageModel instance
         final image = ImageModel(
-            url: '',
-            file: htmlFile,
-            folder: '',
-            fileName: file.name,
-            localImageToDisplay: Uint8List.fromList(bytes));
+          url: '',
+          // URL is empty as it's a local image
+          file: file,
+          // Pass the DropzoneFileInterface instance
+          folder: '',
+          // Adjust folder path as needed
+          fileName: file.name,
+          // Use the name from DropzoneFileInterface
+          localImageToDisplay:
+              Uint8List.fromList(bytes), // Convert bytes for display
+        );
+
+        // Add the image to the list
         selectedImagesToUpload.add(image);
       }
     }
@@ -143,8 +155,7 @@ class MediaController extends GetxController {
         confirmText: 'Upload',
         onConfirm: () async => await uploadImages(),
         content:
-        "Are you sure you want to upload all the images in ${selectedPath.value
-            .name.toUpperCase()} folder?");
+            "Are you sure you want to upload all the images in ${selectedPath.value.name.toUpperCase()} folder?");
   }
 
   Future<void> uploadImages() async {
@@ -190,15 +201,15 @@ class MediaController extends GetxController {
 
         // Upload image to the firestore
         final ImageModel uploadedImage =
-        await mediaRepository.uploadImageFileInStorage(
-            file: image,
-            path: getSelectedPath(),
-            imageName: selectedImage.fileName);
+            await mediaRepository.uploadImageFileInStorage(
+                file: image,
+                path: getSelectedPath(),
+                imageName: selectedImage.fileName);
 
         // Upload Image to the Firestore
         uploadedImage.mediaCategory = selectedCategory.name;
         final id =
-        await mediaRepository.uploadImageFileInDatabase(uploadedImage);
+            await mediaRepository.uploadImageFileInDatabase(uploadedImage);
         uploadedImage.id = id;
         selectedImagesToUpload.removeAt(i);
         targetList.add(uploadedImage);
@@ -218,23 +229,22 @@ class MediaController extends GetxController {
     showDialog(
         context: Get.context!,
         barrierDismissible: false,
-        builder: (context) =>
-            PopScope(
-                canPop: false,
-                child: AlertDialog(
-                  title: Text("Uploading Images"),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(TImages.uploadingImageIllustration,
-                          height: 300, width: 300),
-                      SizedBox(
-                        height: TSizes.spaceBtwItems,
-                      ),
-                      Text('Sit Tight, Your images are uploading...')
-                    ],
+        builder: (context) => PopScope(
+            canPop: false,
+            child: AlertDialog(
+              title: Text("Uploading Images"),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(TImages.uploadingImageIllustration,
+                      height: 300, width: 300),
+                  SizedBox(
+                    height: TSizes.spaceBtwItems,
                   ),
-                )));
+                  Text('Sit Tight, Your images are uploading...')
+                ],
+              ),
+            )));
   }
 
   String getSelectedPath() {
@@ -332,9 +342,10 @@ class MediaController extends GetxController {
     }
   }
 
-  Future<List<ImageModel>?> selectImagesFromMedia({List<String>? selectedUrls,
-    bool allowSelection = true,
-    bool multipleSelection = false}) async {
+  Future<List<ImageModel>?> selectImagesFromMedia(
+      {List<String>? selectedUrls,
+      bool allowSelection = true,
+      bool multipleSelection = false}) async {
     showImageUploaderSection.value = true;
 
     List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
