@@ -66,7 +66,9 @@ class MediaRepository extends GetxController {
   Future<List<ImageModel>> fetchImagesFromDatabase(
       MediaCategory mediaCategory, int loadCount) async {
     try {
-      final querySnapshot = await FirebaseFirestore.instance.collection("Images").where('mediaCategory', isEqualTo: mediaCategory.name.toString())
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection("Images")
+          .where('mediaCategory', isEqualTo: mediaCategory)
           .orderBy('createdAt', descending: true)
           .limit(loadCount)
           .get();
@@ -78,6 +80,7 @@ class MediaRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
+      print("Unable to fetch images, from db");
       throw e.toString();
     }
   }
