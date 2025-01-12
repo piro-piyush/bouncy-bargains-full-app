@@ -10,7 +10,6 @@ import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
-import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -40,56 +39,23 @@ class MediaContent extends StatelessWidget {
           // Media Images Header
           Row(
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Select Folder",
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  SizedBox(
-                    width: TSizes.spaceBtwItems,
-                  ),
-                  MediaFolderDropdown(
-                    onChanged: (MediaCategory? newValue) {
-                      if (newValue != null) {
-                        controller.selectedPath.value = newValue;
-                        controller.getMediaImages();
-                      }
-                    },
-                  )
-                ],
-              ),
-              if (allowSelection) buildSelectedImagesButton()
-            ],
-          ),
-
-          // Upload & Remove Buttons
-          Row(
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Remove All",
-                ),
+              Text(
+                "Gallery Folders",
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(
                 width: TSizes.spaceBtwItems,
               ),
-              TDeviceUtils.isMobileScreen(context)
-                  ? SizedBox.shrink()
-                  : SizedBox(
-                      width: TSizes.buttonWidth,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Upload",
-                        ),
-                      ),
-                    ),
+              MediaFolderDropdown(
+                onChanged: (MediaCategory? newValue) {
+                  if (newValue != null) {
+                    controller.selectedPath.value = newValue;
+                    controller.getMediaImages();
+                  }
+                },
+              ),
+              if (allowSelection) buildSelectedImagesButton()
             ],
-          ),
-          SizedBox(
-            height: TSizes.spaceBtwSections,
           ),
 
           // Show Media
