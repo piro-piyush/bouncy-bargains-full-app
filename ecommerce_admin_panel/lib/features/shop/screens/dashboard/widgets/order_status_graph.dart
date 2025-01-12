@@ -64,21 +64,19 @@ class OrderStatusPieChart extends StatelessWidget {
                 final totalAmount = controller.totalAmounts[status] ?? 0;
                 return DataRow(cells: [
                   DataCell(
+                      Row(
+                    children: [
+                      TCircularContainer(
+                        width: 20,
+                        height: 20,
+                        backgroundColor:
+                            THelperFunctions.getOrderStatusColor(status),
+                      ),
                       Expanded(
-                    child: Row(
-                      children: [
-                        TCircularContainer(
-                          width: 20,
-                          height: 20,
-                          backgroundColor:
-                              THelperFunctions.getOrderStatusColor(status),
-                        ),
-                        Expanded(
-                          child:
-                              Text(' ${controller.getDisplayStatusName(status)}'),
-                        ),
-                      ],
-                    ),
+                        child:
+                            Text(' ${controller.getDisplayStatusName(status)}'),
+                      ),
+                    ],
                   )),
                   DataCell(Text(count.toString())),
                   DataCell(Text('\$${totalAmount.toStringAsFixed(2)}')),
