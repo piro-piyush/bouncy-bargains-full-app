@@ -11,19 +11,19 @@ dependencies:
     sdk: flutter
 
   # Utility Packages
-  intl: ^0.20.1
-  lottie: ^3.2.0
+  intl: ^0.19.0
+  lottie: ^3.1.0
   shimmer: ^3.0.0
   clipboard: ^0.1.3
-  image_picker: ^1.1.2
-  url_launcher: ^6.3.1
-  flutter_dropzone: ^4.2.1
+  image_picker: ^1.1.0
+  url_launcher: ^6.2.6
+  flutter_dropzone: ^3.0.7
   flutter_typeahead: ^5.2.0
-  connectivity_plus: ^6.1.0
+  connectivity_plus: ^6.0.3
   multi_select_flutter: ^4.1.3
-  cached_network_image: ^3.4.1
-  flutter_native_splash: ^2.4.3
-  smooth_page_indicator: ^1.2.0+3
+  cached_network_image: ^3.3.0
+  flutter_native_splash: ^2.4.0
+  smooth_page_indicator: ^1.1.0
 
   # Web Specific
   web: ^1.1.0
@@ -47,6 +47,7 @@ dependencies:
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.5.1
   firebase_storage: ^12.3.7
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -58,8 +59,12 @@ flutter:
   #--------------- LOCAL ASSETS ------------------#
   assets:
     - assets/logos/
-    - assets/images/content/
     - assets/images/animations/
+    - assets/images/banners/
+    - assets/images/content/
+    - assets/images/on_boarding_images/
+    - assets/images/products/
+    - assets/images/reviews/
     - assets/icons/payment_methods/
 
   #--------------- LOCAL FONTS ------------------#
