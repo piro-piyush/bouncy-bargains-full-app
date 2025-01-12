@@ -1,6 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
+import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_recent_orders.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -68,21 +69,7 @@ class DashboardMobileScreen extends StatelessWidget {
               ),
 
               // Orders
-              TRoundedContainer(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Recent Orders",
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(
-                      height: TSizes.spaceBtwSections,
-                    ),
-                    const DashboardOrderTable()
-                  ],
-                ),
-              ),
+              DashboardRecentOrders(),
               const SizedBox(
                 height: TSizes.spaceBtwSections,
               ),
