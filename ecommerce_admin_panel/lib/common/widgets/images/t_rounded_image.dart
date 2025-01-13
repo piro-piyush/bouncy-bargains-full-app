@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
+import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/enums.dart';
-import '../../../utils/constants/sizes.dart';
-import '../shimmers/shimmer.dart';
+import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 
 class TRoundedImage extends StatelessWidget {
   const TRoundedImage({
@@ -86,6 +86,7 @@ class TRoundedImage extends StatelessWidget {
     if (image != null) {
       // Use CachedNetworkImage for efficient loading and caching of network images // Not working in Web but just for loading
       return CachedNetworkImage(
+        imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
         fit: fit,
         color: overlayColor,
         imageUrl: image!,
