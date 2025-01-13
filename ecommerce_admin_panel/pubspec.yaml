@@ -65,7 +65,9 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/products/
     - assets/images/reviews/
+    - assets/icons/brands/
     - assets/icons/payment_methods/
+    - assets/icons/categories/
 
   #--------------- LOCAL FONTS ------------------#
   fonts:
