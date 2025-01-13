@@ -5,6 +5,7 @@ import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductThumbnailImage extends StatelessWidget {
   const ProductThumbnailImage({super.key});
@@ -50,7 +51,9 @@ class ProductThumbnailImage extends StatelessWidget {
                   SizedBox(
                     width: 200,
                     child: OutlinedButton(
-                        onPressed: () {}, child: Text("Add Thumbnail")),
+                        onPressed: () {
+                          // controller.selectedThumbnailImageUrl;
+                        }, child: Text("Add Thumbnail")),
                   )
                 ],
               ),
