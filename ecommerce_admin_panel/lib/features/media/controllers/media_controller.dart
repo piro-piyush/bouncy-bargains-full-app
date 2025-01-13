@@ -65,6 +65,7 @@ class MediaController extends GetxController {
 
       loading.value = false;
     } catch (e) {
+      print("Error in getMediaImages : ${e.toString()}");
       loading.value = false;
       TLoaders.errorSnackBar(
           title: "Oh snap",
@@ -361,7 +362,8 @@ class MediaController extends GetxController {
                   MediaContent(
                       allowSelection: allowSelection,
                       allowMultipleSelection: multipleSelection,
-                      alreadySelectedUrls: selectedUrls ?? [])
+                      alreadySelectedUrls: selectedUrls ?? []
+                  )
                 ],
               ),
             ),
