@@ -38,23 +38,26 @@ class MediaContent extends StatelessWidget {
         children: [
           // Media Images Header
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Gallery Folders",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              SizedBox(
-                width: TSizes.spaceBtwItems,
-              ),
-              MediaFolderDropdown(
-                onChanged: (MediaCategory? newValue) {
-                  if (newValue != null) {
-                    controller.selectedPath.value = newValue;
-                    controller.getMediaImages();
-                  }
-                },
-              ),
-              if (allowSelection) buildSelectedImagesButton()
+              Row(children: [
+                Text(
+                  "Gallery Folders",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                SizedBox(
+                  width: TSizes.spaceBtwItems,
+                ),
+                MediaFolderDropdown(
+                  onChanged: (MediaCategory? newValue) {
+                    if (newValue != null) {
+                      controller.selectedPath.value = newValue;
+                      controller.getMediaImages();
+                    }
+                  },
+                ),
+              ],),
+              if (allowSelection) buildAddSelectedImagesButton()
             ],
           ),
 
@@ -245,7 +248,7 @@ class MediaContent extends StatelessWidget {
     );
   }
 
-  Widget buildSelectedImagesButton() {
+  Widget buildAddSelectedImagesButton() {
     return Row(
       children: [
         // CLose button
