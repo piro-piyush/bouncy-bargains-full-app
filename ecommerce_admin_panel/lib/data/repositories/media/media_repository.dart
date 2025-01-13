@@ -66,12 +66,15 @@ class MediaRepository extends GetxController {
   Future<List<ImageModel>> fetchImagesFromDatabase(
       MediaCategory mediaCategory, int loadCount) async {
     try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection("Images")
-          .where('mediaCategory', isEqualTo: mediaCategory)
-          .orderBy('createdAt', descending: true)
-          .limit(loadCount)
-          .get();
+      final querySnapshot = await FirebaseFirestore.instance.collection("Images").where('mediaCategory', isEqualTo: mediaCategory.name.toString()).orderBy('createdAt', descending: true).limit(loadCount).get();
+
+      // Check if the snapshot has any documents
+      if (querySnapshot.docs.isEmpty) {
+        print(mediaCategory.toString());
+        print("No images found for this category.");
+        return [];  // Return an empty list if no documents are found
+      }
+
       return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
     } on FirebaseException catch (e) {
       throw e.message!;
