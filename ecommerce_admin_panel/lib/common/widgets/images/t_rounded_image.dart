@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -90,7 +91,10 @@ class TRoundedImage extends StatelessWidget {
         fit: fit,
         color: overlayColor,
         imageUrl: image!,
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+        errorWidget: (context, url, error) {
+          log(error.toString());
+          return Icon(Icons.error);
+        } ,
         progressIndicatorBuilder: (context, url, downloadProgress) =>
             TShimmerEffect(width: width, height: height),
       );
