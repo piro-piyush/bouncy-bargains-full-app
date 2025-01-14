@@ -1,6 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:ecommerce_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
@@ -11,10 +12,13 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CategoryRows extends DataTableSource {
-   // final CategoryModel category;
+  final controller = CategoryController.instance;
 
   @override
   DataRow? getRow(int index) {
+    final category = controller.filteredItems[index];
+    final parentCategory = controller.allItems
+        .firstWhereOrNull((item) => item.id == category.parentId);
     return DataRow2(cells: [
       DataCell(Row(
         children: [
@@ -22,8 +26,8 @@ class CategoryRows extends DataTableSource {
             width: 50,
             height: 50,
             padding: TSizes.sm,
-            image: TImages.facebook,
-            imageType: ImageType.asset,
+            image: category.image,
+            imageType: ImageType.network,
             borderRadius: TSizes.borderRadiusMd,
             backgroundColor: TColors.primaryBackground,
           ),
@@ -32,7 +36,7 @@ class CategoryRows extends DataTableSource {
           ),
           Expanded(
             child: Text(
-              "Name",
+              category.name,
               style: Theme.of(Get.context!)
                   .textTheme
                   .bodyLarge!
@@ -43,17 +47,20 @@ class CategoryRows extends DataTableSource {
           )
         ],
       )),
-      DataCell(Text("Parent")),
-      DataCell(Icon(
-        Iconsax.heart5,
-        color: TColors.primary,
-      )),
-      DataCell(Text(DateTime.now().toString())),
+      DataCell(Text(parentCategory != null ? parentCategory.name : "")),
+      DataCell(category.isFeatured
+          ? Icon(
+              Iconsax.heart5,
+              color: TColors.primary,
+            )
+          : Icon(
+              Iconsax.heart,
+              color: TColors.primary,
+            )),
+      DataCell(Text(category.createdAt == null ? "" : category.formattedDate)),
       DataCell(TTableActionButtons(
         onEditPressed: () =>
-            Get.toNamed(TRoutes.editCategory,
-                // arguments: 'category'
-            ),
+            Get.toNamed(TRoutes.editCategory, arguments: category),
         onDeletePressed: () {},
       )),
     ]);
@@ -63,8 +70,8 @@ class CategoryRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 5;
+  int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => 5;
+  int get selectedRowCount => 0;
 }
