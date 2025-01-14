@@ -40,23 +40,25 @@ class MediaContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(children: [
-                Text(
-                  "Gallery Folders",
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                SizedBox(
-                  width: TSizes.spaceBtwItems,
-                ),
-                MediaFolderDropdown(
-                  onChanged: (MediaCategory? newValue) {
-                    if (newValue != null) {
-                      controller.selectedPath.value = newValue;
-                      controller.getMediaImages();
-                    }
-                  },
-                ),
-              ],),
+              Row(
+                children: [
+                  Text(
+                    "Gallery Folders",
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  SizedBox(
+                    width: TSizes.spaceBtwItems,
+                  ),
+                  MediaFolderDropdown(
+                    onChanged: (MediaCategory? newValue) {
+                      if (newValue != null) {
+                        controller.selectedPath.value = newValue;
+                        controller.getMediaImages();
+                      }
+                    },
+                  ),
+                ],
+              ),
               if (allowSelection) buildAddSelectedImagesButton()
             ],
           ),
@@ -229,12 +231,10 @@ class MediaContent extends StatelessWidget {
                   if (selected != null) {
                     image.isSelected.value = selected;
                     if (selected) {
-                      if (allowMultipleSelection) {
-                        // If multiple section is not allowed, uncheck other checkboxes
+                      if (!allowMultipleSelection) {
+                        // Clear the current selected images list first
                         for (var otherImage in selectedImages) {
-                          if (otherImage != image) {
-                            otherImage.isSelected.value = false;
-                          }
+                          otherImage.isSelected.value = false;
                         }
                         selectedImages.clear();
                       }
