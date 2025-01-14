@@ -25,8 +25,6 @@ class DashboardDesktopScreen extends StatelessWidget {
                 'Dashboard',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              ElevatedButton(onPressed: ()=>controller.selectedThumbnailImage(), child: Text("Single Image")),
-              ElevatedButton(onPressed: ()=>controller.selectMultipleProductImages(), child: Text("Single Multiple Image")),
               SizedBox(
                 height: TSizes.spaceBtwSections,
               ),
