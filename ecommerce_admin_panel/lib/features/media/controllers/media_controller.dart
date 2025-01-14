@@ -15,7 +15,6 @@ import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
-// import 'package:universal_html/html.dart' as html;
 
 class MediaController extends GetxController {
   static MediaController get instance => Get.find();
@@ -79,20 +78,15 @@ class MediaController extends GetxController {
       loading.value = true;
       RxList<ImageModel> targetList = <ImageModel>[].obs;
 
-      if (selectedPath.value == MediaCategory.banners &&
-          allBannerImages.isEmpty) {
+      if (selectedPath.value == MediaCategory.banners) {
         targetList = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands &&
-          allBrandImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.brands) {
         targetList = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories &&
-          allCategoryImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.categories) {
         targetList = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products &&
-          allProductImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.products) {
         targetList = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users &&
-          allUserImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
       }
 
@@ -107,7 +101,8 @@ class MediaController extends GetxController {
       loading.value = false;
       TLoaders.errorSnackBar(
           title: "Oh snap",
-          message: "Unable to fetch images, Something went wrong. Try again");
+          message:
+              "Unable to load more images, Something went wrong. Try again");
     }
   }
 
@@ -362,8 +357,7 @@ class MediaController extends GetxController {
                   MediaContent(
                       allowSelection: allowSelection,
                       allowMultipleSelection: multipleSelection,
-                      alreadySelectedUrls: selectedUrls ?? []
-                  )
+                      alreadySelectedUrls: selectedUrls ?? [])
                 ],
               ),
             ),
