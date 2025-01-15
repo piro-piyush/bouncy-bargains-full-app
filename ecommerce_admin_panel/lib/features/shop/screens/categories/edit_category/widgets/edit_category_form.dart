@@ -1,11 +1,12 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
-import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EditCategoryForm extends StatelessWidget {
@@ -15,6 +16,8 @@ class EditCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryNameController = TextEditingController();
+    categoryNameController.text = category.name;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),
@@ -36,6 +39,7 @@ class EditCategoryForm extends StatelessWidget {
 
           // Name Text Field
           TextFormField(
+            controller: categoryNameController,
             validator: (value) => TValidator.validateEmptyText("Name", value),
             decoration: InputDecoration(
                 labelText: "Category Name", prefixIcon: Icon(Iconsax.category)),
@@ -63,8 +67,8 @@ class EditCategoryForm extends StatelessWidget {
           TImageUploader(
             width: 80,
             height: 80,
-            image: TImages.defaultImage,
-            imageType: ImageType.asset,
+            image: category.image,
+            imageType: ImageType.network,
             onIconButtonPressed: () {},
           ),
 
@@ -73,7 +77,13 @@ class EditCategoryForm extends StatelessWidget {
           ),
 
           CheckboxMenuButton(
-              value: true, onChanged: (value) {}, child: Text("Featured")),
+              value: category.isFeatured,
+              onChanged: (value) {
+                if (value != null) {
+                  category.isFeatured = value;
+                }
+              },
+              child: Text("Featured")),
 
           SizedBox(
             height: TSizes.spaceBtwInputFields * 2,
