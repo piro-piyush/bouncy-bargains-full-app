@@ -4,13 +4,14 @@ import 'package:ecommerce_admin_panel/features/shop/screens/categories/edit_cate
 import 'package:ecommerce_admin_panel/features/shop/screens/categories/edit_category/responsive_screens/edit_categories_mobile_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/categories/edit_category/responsive_screens/edit_categories_tablet_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditCategoryScreen extends StatelessWidget {
   const EditCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final category = CategoryModel(id: "", name: "", image: "");
+    final category = Get.arguments;
     return TSiteTemplate(
       desktop: EditCategoriesDesktopScreen(
         category: category,

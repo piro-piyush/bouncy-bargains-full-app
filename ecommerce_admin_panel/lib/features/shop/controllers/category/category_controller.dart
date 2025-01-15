@@ -1,6 +1,7 @@
 import 'package:ecommerce_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
+
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
@@ -9,6 +10,11 @@ class CategoryController extends GetxController {
   RxBool isLoading = false.obs;
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
+
+  // Sorting
+  RxInt sortColumnIndex = 1.obs;
+  RxBool sortAscending = true.obs;
+
   final _repo = Get.put(CategoryRepository());
 
   @override
@@ -31,5 +37,27 @@ class CategoryController extends GetxController {
       isLoading.value = false;
       TLoaders.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
+  }
+
+  void sortByName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      } else {}
+      return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+    });
+  }
+
+  void sortByParentName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      } else {}
+      return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+    });
   }
 }
