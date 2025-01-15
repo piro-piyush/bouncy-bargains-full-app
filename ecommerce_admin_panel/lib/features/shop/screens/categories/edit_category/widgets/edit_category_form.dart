@@ -1,12 +1,10 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EditCategoryForm extends StatelessWidget {
