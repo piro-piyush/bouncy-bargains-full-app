@@ -11,111 +11,113 @@ import 'package:get_storage/get_storage.dart';
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
-  // Variables
-  final rememberMe = false.obs;
-  final hidePassword = true.obs;
+  // Reactive variables
+  final rememberMe = false.obs; // To store "remember me" status
+  final hidePassword = true.obs; // To toggle password visibility
   final email = TextEditingController(); // Controller for email input
   final phoneNumber =
       TextEditingController(); // Controller for phone number input
   final password = TextEditingController(); // Controller for password input
-  final localStorage = GetStorage();
+  final localStorage = GetStorage(); // Instance for localStorage
 
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  final userController = Get.put(UserController());
+  GlobalKey<FormState> loginFormKey =
+      GlobalKey<FormState>(); // Form key for validation
+  final userController =
+      Get.put(UserController()); // Instance of UserController
 
   @override
   void onInit() {
     super.onInit();
-    // Check if "REMEMBER_ME" was previously saved in local storage
+    // Check if "REMEMBER_ME" is saved in local storage
     final storedRememberMe = localStorage.read("REMEMBER_ME") ?? false;
 
-    // If "REMEMBER_ME" was saved, set the rememberMe variable and populate email/password
+    // If "REMEMBER_ME" is true, load saved credentials
     if (storedRememberMe) {
       rememberMe.value = true;
       email.text = localStorage.read("REMEMBER_ME_EMAIL") ?? '';
       password.text = localStorage.read("REMEMBER_ME_PASSWORD") ?? '';
     }
-  } // Form key for form validation
+  }
 
-  // Email and password login
+  // Email and password login method
   Future<void> emailAndPasswordSignIn() async {
     try {
+      // Show loading dialog while processing login
       XFullScreenLoader.openLoadingDialog(
           "Logging you in", XImages.docerAnimation);
 
-      // Check Internet connectivity
+      // Check for internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if there's no internet connection
       }
 
-      // Form validation
+      // Validate the form before proceeding
       if (!loginFormKey.currentState!.validate()) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if form is not valid
       }
 
-      // Save Data if Remember me is selected
+      // Save credentials if "Remember me" is checked
       if (rememberMe.value) {
-        localStorage.write(
-            "REMEMBER_ME", true); // Save the "Remember me" status
+        localStorage.write("REMEMBER_ME", true); // Save "Remember me" status
         localStorage.write("REMEMBER_ME_EMAIL", email.text.trim());
         localStorage.write("REMEMBER_ME_PASSWORD", password.text.trim());
       } else {
-        localStorage
-            .remove("REMEMBER_ME"); // If not selected, remove the saved data
+        // Remove saved credentials if "Remember me" is unchecked
+        localStorage.remove("REMEMBER_ME");
         localStorage.remove("REMEMBER_ME_EMAIL");
         localStorage.remove("REMEMBER_ME_PASSWORD");
       }
 
-      // Login user with Email & password Authentication
+      // Attempt login with email and password
       final userCredentials = await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      // Remove Loader
+      // Stop loading indicator
       XFullScreenLoader.stopLoading();
 
-      // Redirect
+      // Redirect to appropriate screen after successful login
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      // Handle errors and stop loading indicator
       XFullScreenLoader.stopLoading();
       XLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
 
-  // Google SignIn authentication
+  // Google SignIn authentication method
   Future<void> googleSignIn() async {
     try {
-      // Start loading
+      // Show loading dialog during Google login
       XFullScreenLoader.openLoadingDialog(
         'Logging you in...',
         XImages.docerAnimation,
       );
 
-      // Check Internet Connectivity
+      // Check for internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if there's no internet connection
       }
 
-      //Google Authentication
+      // Attempt Google Sign-In
       final userCredentials =
           await AuthenticationRepository.instance.signInWithGoogle();
 
-      // Save user Record
+      // Save the user record in the database
       await userController.saveUserRecord(userCredentials);
 
-      // Remove Loader
+      // Stop loading indicator
       XFullScreenLoader.stopLoading();
 
-      // Redirect
+      // Redirect to the appropriate screen after successful login
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
-      // Remove Loader
+      // Handle errors and stop loading indicator
       XFullScreenLoader.stopLoading();
-
       XLoaders.errorSnackBar(title: "Oh Snap", message: e.toString());
     }
   }
