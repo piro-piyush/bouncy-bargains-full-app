@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 class BannersDesktopScreen extends StatelessWidget {
   const BannersDesktopScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,23 +26,22 @@ class BannersDesktopScreen extends StatelessWidget {
               ),
 
               // Table Body
-        TRoundedContainer(
-                  child: Column(
-                    children: [
-                      // Table Header
-                      TTableHeader(
-                        buttonText: "Create New Banner",
-                        onPressed: () => Get.toNamed(TRoutes.createBanner),
-                      ),
-                      SizedBox(
-                        height: TSizes.spaceBtwItems,
-                      ),
+              TRoundedContainer(
+                child: Column(
+                  children: [
+                    // Table Header
+                    TTableHeader(
+                      buttonText: "Create New Banner",
+                      onPressed: () => Get.toNamed(TRoutes.createBanner),
+                    ),
+                    SizedBox(
+                      height: TSizes.spaceBtwItems,
+                    ),
 
-                      // Table
-                      BannerTable(),
-                    ],
-                  ),
-
+                    // Table
+                    BannerTable(),
+                  ],
+                ),
               )
             ],
           ),

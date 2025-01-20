@@ -1,9 +1,9 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/banner_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
-import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,7 @@ class EditBannerForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final banner = Get.arguments;
+    final BannerModel banner = Get.arguments;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),
@@ -39,17 +39,22 @@ class EditBannerForm extends StatelessWidget {
             children: [
               GestureDetector(
                 child: TRoundedImage(
-                  imageType: ImageType.asset,
+                  imageType: ImageType.network,
                   width: 400,
                   height: 200,
                   backgroundColor: TColors.primaryBackground,
-                  image: TImages.defaultImage,
+                  image: banner.imageUrl,
                 ),
               ),
               SizedBox(
                 height: TSizes.spaceBtwItems,
               ),
-              TextButton(onPressed: () {}, child: Text('Select Image'))
+              TextButton(
+                  onPressed: () {
+                    // final controller = Get.put(MediaController());
+                    // controller.selectLocalImages();
+                  },
+                  child: Text('Select Image'))
             ],
           ),
           SizedBox(
@@ -62,7 +67,7 @@ class EditBannerForm extends StatelessWidget {
           ),
 
           CheckboxMenuButton(
-            value: true,
+            value: banner.active,
             onChanged: (value) {},
             child: Text("Active"),
           ),

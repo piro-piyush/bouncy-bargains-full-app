@@ -21,6 +21,20 @@ class BannerModel {
     );
   }
 
+  static String screenName(String targetScreen) {
+    // Remove any leading slash
+    targetScreen = targetScreen.replaceAll('/', '');
+
+    final regExp =
+        RegExp('([a-z])([A-Z])'); // Regex to detect camelCase transitions
+
+    // Add spaces between camelCase words and capitalize the first letter
+    return targetScreen.replaceAllMapped(regExp, (match) {
+      return '${match.group(1)} ${match.group(2)}';
+    }).replaceFirst(targetScreen[0],
+        targetScreen[0].toUpperCase()); // Capitalize the first letter
+  }
+
   // Factory constructor to create a BannerModel from a Firestore snapshot
   factory BannerModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;

@@ -5,8 +5,7 @@ import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class CreateBannerDesktopScreen extends StatelessWidget {
-  const CreateBannerDesktopScreen({super.key});
-
+  const CreateBannerDesktopScreen({super.key,});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

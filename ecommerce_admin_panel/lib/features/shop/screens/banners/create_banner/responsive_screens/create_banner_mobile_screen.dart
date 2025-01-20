@@ -5,7 +5,8 @@ import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class CreateBannerMobileScreen extends StatelessWidget {
-  const CreateBannerMobileScreen({super.key});
+  const CreateBannerMobileScreen({super.key, });
+
 
   @override
   Widget build(BuildContext context) {
