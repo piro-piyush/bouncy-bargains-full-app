@@ -10,78 +10,80 @@ import 'package:get/get.dart';
 class ForgetPasswordController extends GetxController {
   static ForgetPasswordController get instance => Get.find();
 
-  // Variables
+  // Controllers and Form keys
   final email = TextEditingController();
   GlobalKey<FormState> forgetPasswordFormKey = GlobalKey<FormState>();
 
-  // Send Reset password email
+  // Send password reset email
   sendPasswordResetEmail() async {
     try {
-      // Start Loading
+      // Show loading indicator while processing the request
       XFullScreenLoader.openLoadingDialog(
           "Processing your request", XImages.docerAnimation);
 
-      // Check internet connectivity
+      // Check for internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if there's no internet connection
       }
 
-      // Form validation
+      // Validate the form
       if (!forgetPasswordFormKey.currentState!.validate()) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if form is not valid
       }
 
-      // Send Email to reset password
+      // Send password reset email
       await AuthenticationRepository.instance
           .sendPasswordResetEmail(email.text.trim());
 
-      // Remove loader
+      // Hide loading indicator
       XFullScreenLoader.stopLoading();
 
-      // Show success screen
+      // Show success message
       XLoaders.successSnackBar(
           title: "Email Sent",
           message: "Email Link Sent to Reset your password".tr);
 
-      // Redirect
+      // Redirect to the reset password screen
       Get.to(() => ResetPasswordScreen(email: email.text.trim()));
     } catch (e) {
-      // Remove loader
+      // Hide loading indicator in case of error
       XFullScreenLoader.stopLoading();
+      // Show error message
       XLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
 
-  // Resend Reset password email
+  // Resend password reset email
   resendPasswordResetEmail(String email) async {
     try {
-      // Start Loading
+      // Show loading indicator while processing the request
       XFullScreenLoader.openLoadingDialog(
           "Processing your request", XImages.docerAnimation);
 
-      // Check internet connectivity
+      // Check for internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         XFullScreenLoader.stopLoading();
-        return;
+        return; // Stop if there's no internet connection
       }
 
-      // Send Email to reset password
+      // Send password reset email
       await AuthenticationRepository.instance.sendPasswordResetEmail(email);
 
-      // Remove loader
+      // Hide loading indicator
       XFullScreenLoader.stopLoading();
 
-      // Show success screen
+      // Show success message
       XLoaders.successSnackBar(
           title: "Email Sent",
           message: "Email Link Sent to Reset your password".tr);
     } catch (e) {
-      // Remove loader
+      // Hide loading indicator in case of error
       XFullScreenLoader.stopLoading();
+      // Show error message
       XLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
