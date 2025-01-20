@@ -1,3 +1,4 @@
+import 'package:bouncy_bargain/routes/app_routes.dart';
 import 'package:bouncy_bargain/utils/constants/colors.dart';
 import 'package:bouncy_bargain/utils/constants/text_strings.dart';
 import 'package:bouncy_bargain/utils/theme/theme.dart';
@@ -16,8 +17,8 @@ class App extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: XAppTheme.lightTheme,
         darkTheme: XAppTheme.darkTheme,
-        // debugShowCheckedModeBanner: false,
-        // Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
+        getPages: AppRoutes.pages,
+        debugShowCheckedModeBanner: false,
         initialBinding: GeneralBindings(),
         home: const Scaffold(
           backgroundColor: XColors.primary,
