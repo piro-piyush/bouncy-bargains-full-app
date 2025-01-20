@@ -24,7 +24,9 @@ class CategoriesDesktopScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               TBreadcrumbWithHeading(
-                  heading: "Categories", breadcrumbItems: ["Categories"]),
+                heading: "Categories",
+                breadcrumbItems: ["Categories"],
+              ),
               SizedBox(
                 height: TSizes.spaceBtwSections,
               ),
@@ -38,6 +40,9 @@ class CategoriesDesktopScreen extends StatelessWidget {
                     TTableHeader(
                       buttonText: "Create New Category",
                       onPressed: () => Get.toNamed(TRoutes.createCategory),
+                      hintText: "Search Categories",
+                      searchController: controller.searchController,
+                      onSearchChange: (query) => controller.searchQuery(query),
                     ),
                     SizedBox(
                       height: TSizes.spaceBtwItems,
