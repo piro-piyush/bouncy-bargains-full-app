@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key, required this.email});
+  const ResetPasswordScreen({super.key, this.email = "dummy@gmail.com"});
 
   final String email;
 
