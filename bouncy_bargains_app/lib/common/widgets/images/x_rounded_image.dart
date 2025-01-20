@@ -1,4 +1,6 @@
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
+import 'package:bouncy_bargain/utils/shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class XRoundedImage extends StatelessWidget {
@@ -41,15 +43,28 @@ class XRoundedImage extends StatelessWidget {
               border: border,
               borderRadius: BorderRadius.circular(borderRadius)),
           child: ClipRRect(
-              borderRadius: applyImageRadius
-                  ? BorderRadius.circular(XSizes.md)
-                  : BorderRadius.zero,
-              child: Image(
-                image: isNetworkImage
-                    ? NetworkImage(imageUrl)
-                    : AssetImage(imageUrl) as ImageProvider,
-                fit: fit,
-              ))),
+            borderRadius: applyImageRadius
+                ? BorderRadius.circular(XSizes.md)
+                : BorderRadius.zero,
+            child: isNetworkImage
+                ? CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: fit,
+                    width: width,
+                    height: height,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            const XShimmerEffect(
+                              height: 190,
+                              width: double.infinity,
+                            ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error))
+                : Image(
+                    fit: fit,
+                    image: AssetImage(imageUrl),
+                  ),
+          )),
     );
   }
 }

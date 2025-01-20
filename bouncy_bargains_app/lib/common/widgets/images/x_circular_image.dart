@@ -57,6 +57,7 @@ class XCircularImage extends StatelessWidget {
                   image: AssetImage(image),
                   color: overlayColor,
                 ),
-        ));
+        )
+    );
   }
 }

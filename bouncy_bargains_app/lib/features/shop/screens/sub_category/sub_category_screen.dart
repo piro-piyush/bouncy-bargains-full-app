@@ -23,7 +23,7 @@ class SubCategoryScreen extends StatelessWidget {
             children: [
               // Banner
               const XRoundedImage(
-                imageUrl: XImages.promoBanner4,
+                imageUrl: XImages.promoBanner3,
                 applyImageRadius: true,
                 width: double.infinity,
               ),
@@ -35,17 +35,26 @@ class SubCategoryScreen extends StatelessWidget {
               Column(
                 children: [
                   // Heading
-                  XSectionHeading(title: "Sports Shirts",onPressed: (){},),
-                  const SizedBox(height: XSizes.spaceBtwItems/2,),
+                  XSectionHeading(
+                    title: "Sports Shirts",
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
+                    height: XSizes.spaceBtwItems / 2,
+                  ),
 
-                    SizedBox(
-                      height: 120,
-                      child: ListView.separated(
-                        separatorBuilder: (context,index) =>const SizedBox(width: XSizes.spaceBtwItems,),
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context,index) => const XProductCardHorizontal(),),
-                    )
+                  SizedBox(
+                    height: 120,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: XSizes.spaceBtwItems,
+                      ),
+                      itemCount: 4,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          const XProductCardHorizontal(),
+                    ),
+                  )
                 ],
               )
             ],

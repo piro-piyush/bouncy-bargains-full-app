@@ -9,11 +9,12 @@ class TTableHeader extends StatelessWidget {
       this.buttonText = "Add",
       this.searchController,
       this.onSearchChange,
-      this.showLeftWidget = true});
+      this.showLeftWidget = true,
+      this.hintText = "Search Here ..."});
 
   final Function()? onPressed;
   final String buttonText;
-
+  final String hintText;
   final bool showLeftWidget;
   final TextEditingController? searchController;
   final Function(String)? onSearchChange;
@@ -42,8 +43,7 @@ class TTableHeader extends StatelessWidget {
               controller: searchController,
               onChanged: onSearchChange,
               decoration: InputDecoration(
-                  hintText: "Search Here ...",
-                  prefixIcon: Icon(Iconsax.search_normal)),
+                  hintText: hintText, prefixIcon: Icon(Iconsax.search_normal)),
             ))
       ],
     );

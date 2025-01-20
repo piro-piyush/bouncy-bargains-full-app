@@ -1,5 +1,5 @@
+import 'package:bouncy_bargain/common/widgets/images/x_circular_image.dart';
 import 'package:bouncy_bargain/utils/constants/colors.dart';
-import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:bouncy_bargain/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,8 @@ class XVerticalImageText extends StatelessWidget {
     required this.title,
     this.textColor = XColors.white,
     this.backgroundColor,
-    this.onTapped, this.isNetworkImage = false,
+    this.onTapped,
+    this.isNetworkImage = true,
   });
 
   final String image, title;
@@ -29,23 +30,14 @@ class XVerticalImageText extends StatelessWidget {
         padding: const EdgeInsets.only(right: XSizes.spaceBtwItems),
         child: Column(
           children: [
-
             // Circular Icon
-            Container(
-              width: 56,
-              height: 56,
-              padding: const EdgeInsets.all(XSizes.sm),
-              decoration: BoxDecoration(
-                  color:
-                      backgroundColor ?? (dark ? XColors.black : XColors.white),
-                  borderRadius: BorderRadius.circular(100)),
-              child: Center(
-                child: Image(
-                  image: const AssetImage(XImages.shoeIcon),
-                  fit: BoxFit.cover,
-                  color: dark ? XColors.light : XColors.dark,
-                ),
-              ),
+            XCircularImage(
+              image: image,
+              fit: BoxFit.fitWidth,
+              padding: XSizes.sm * 1.4,
+              isNetworkImage: isNetworkImage,
+              backgroundColor: backgroundColor,
+              overlayColor: dark ? XColors.light : XColors.dark,
             ),
 
             // Text

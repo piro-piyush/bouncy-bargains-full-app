@@ -12,59 +12,55 @@ import 'package:get/get.dart';
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
 
-  // Variables
+  // Variables for user input
   final hidePassword = true.obs;
   final privacyPolicy = false.obs;
-  final firstName = TextEditingController(); // Controller for first name input
-  final lastName = TextEditingController(); // Controller for last name input
-  final username = TextEditingController(); // Controller for user name input
-  final email = TextEditingController(); // Controller for email input
-  final phoneNumber =
-      TextEditingController(); // Controller for phone number input
-  final password = TextEditingController(); // Controller for password input
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final username = TextEditingController();
+  final email = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final password = TextEditingController();
 
-  GlobalKey<FormState> signupFormKey =
-      GlobalKey<FormState>(); // Form key for form validation
+  // Form key for validation
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
-  // Signup
+  // Signup method
   Future<void> signup() async {
     try {
-      // Start Loading
+      // Show loading indicator
       XFullScreenLoader.openLoadingDialog(
           "We are processing your information...", XImages.docerAnimation);
 
-      // Check Internet Connectivity
+      // Check if the device is connected to the internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        // Remove Loader
         XFullScreenLoader.stopLoading();
         return;
       }
 
-      // Form Validation
+      // Form validation
       if (!signupFormKey.currentState!.validate()) {
-        // Remove Loader
         XFullScreenLoader.stopLoading();
         return;
       }
 
-      // Privacy Policy Check
+      // Ensure the user accepts the privacy policy
       if (!privacyPolicy.value) {
-        // Remove Loader
         XFullScreenLoader.stopLoading();
         XLoaders.warningSnackBar(
             title: 'Accept Privacy Policy',
             message:
-                "In order to create account, you must have to read and accept the Privacy Policy & Terms of use.");
+                "You must accept the Privacy Policy & Terms of use to continue.");
         return;
       }
 
-      // Register user in firebase authentication & save user data in firebase
+      // Register user using email and password authentication
       final userCredential = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
               email.text.trim(), password.text.trim());
 
-      // Save authenticated user data in the firebase firestore
+      // Create a new user object with the provided details
       final newUser = UserModel(
         id: userCredential.user!.uid,
         username: username.text.trim(),
@@ -72,13 +68,15 @@ class SignupController extends GetxController {
         firstName: firstName.text.trim(),
         lastName: lastName.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
-        profilePicture: "",
+        profilePicture:
+            "", // Placeholder for profile picture (can be updated later)
       );
 
+      // Save the user data in Firestore
       final userRepository = Get.put(UserRepository());
       await userRepository.saveUserRecord(newUser);
 
-      // Remove Loader
+      // Hide loading indicator
       XFullScreenLoader.stopLoading();
 
       // Show success message
@@ -86,14 +84,13 @@ class SignupController extends GetxController {
           title: 'Congratulations',
           message: 'Your account has been created! Verify email to continue.');
 
-      // Move to verify email screen
-      Get.to(() => VerifyEmailScreen(
-            email: email.text.trim(),
-          ));
+      // Navigate to the email verification screen
+      Get.to(() => VerifyEmailScreen(email: email.text.trim()));
     } catch (e) {
-      // Remove Loader
+      // Hide loading indicator in case of error
       XFullScreenLoader.stopLoading();
-      // Show some Generic error to the user
+
+      // Show error message to the user
       XLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
