@@ -31,8 +31,9 @@ class XHomeCategories extends StatelessWidget {
             itemCount: controller.featuredCategories.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (_, index) {
-              final category  = controller.featuredCategories[index];
+              final category = controller.featuredCategories[index];
               return XVerticalImageText(
+                isNetworkImage: true,
                 image: category.image,
                 title: category.name,
                 onTapped: () {

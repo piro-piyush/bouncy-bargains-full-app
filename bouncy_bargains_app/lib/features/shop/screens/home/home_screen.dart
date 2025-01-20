@@ -8,7 +8,6 @@ import 'package:bouncy_bargain/features/shop/screens/home/widgets/home_app_bar.d
 import 'package:bouncy_bargain/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:bouncy_bargain/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:bouncy_bargain/utils/constants/colors.dart';
-import 'package:bouncy_bargain/utils/constants/image_strings.dart';
 import 'package:bouncy_bargain/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,12 +74,6 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     // Promo slider
                     const XPromoSlider(
-                      banners: [
-                        XImages.promoBanner1,
-                        XImages.promoBanner2,
-                        XImages.promoBanner3,
-                        XImages.promoBanner3
-                      ],
                     ),
                     const SizedBox(
                       height: XSizes.spaceBtwSections,
