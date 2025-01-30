@@ -7,7 +7,6 @@ import 'package:ecommerce_admin_panel/utils/helpers/network_manager.dart';
 import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class CreateCategoryController extends GetxController {

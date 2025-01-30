@@ -13,16 +13,7 @@ class EditCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CategoryModel category = Get.arguments;
-
-    if (category == null) {
-      log("Error: No category data received in EditCategoryScreen!");
-      return Scaffold(
-        body: Center(child: Text("Error: No category data found")),
-      );
-    }
-
     log("Category received: ${category.toString()}");
-
     return TSiteTemplate(
       desktop: EditCategoriesDesktopScreen(category: category),
       tablet: EditCategoriesTabletScreen(category: category),
