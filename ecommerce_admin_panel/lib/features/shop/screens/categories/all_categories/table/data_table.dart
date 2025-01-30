@@ -13,6 +13,7 @@ class CategoryTable extends StatelessWidget {
     final controller = Get.put(CategoryController());
     return Obx(() {
       Text(controller.filteredItems.length.toString());
+      Text(controller.selectedRows.length.toString());
       return TPaginatedDataTable(
           sortAscending: controller.sortAscending.value,
           sortColumnIndex: controller.sortColumnIndex.value,
