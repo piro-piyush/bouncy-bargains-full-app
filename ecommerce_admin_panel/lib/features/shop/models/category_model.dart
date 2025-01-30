@@ -62,4 +62,19 @@ class CategoryModel {
       // Assigning DateTime.now() only if updatedAt is null
     };
   }
+
+  // toString method to print all data
+  @override
+  String toString() {
+    return '''
+    CategoryModel(
+      id: $id,
+      name: $name,
+      image: $image,
+      parentId: $parentId,
+      isFeatured: $isFeatured,
+      createdAt: ${createdAt?.toIso8601String()},
+      updatedAt: ${updatedAt?.toIso8601String()}
+    )''';
+  }
 }
