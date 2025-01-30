@@ -52,4 +52,15 @@ class BrandModel {
       productsCount: 0,
     );
   }
+
+  // Method to convert BrandModel from JSON (if needed in future for other scenarios)
+  factory BrandModel.fromJson(Map<String, dynamic> json) {
+    return BrandModel(
+      id: json['id'] ?? '',
+      name: json['Name'] ?? '',
+      image: json['Image'] ?? '',
+      isFeatured: json['IsFeatured'] ?? false,
+      productsCount: json['ProductsCount'] ?? 0,
+    );
+  }
 }

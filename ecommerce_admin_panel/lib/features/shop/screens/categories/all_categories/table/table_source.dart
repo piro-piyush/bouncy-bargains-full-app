@@ -18,51 +18,56 @@ class CategoryRows extends DataTableSource {
     final category = controller.filteredItems[index];
     final parentCategory = controller.allItems
         .firstWhereOrNull((item) => item.id == category.parentId);
-    return DataRow2(cells: [
-      DataCell(Row(
-        children: [
-          TRoundedImage(
-            width: 50,
-            height: 50,
-            padding: TSizes.sm,
-            image: category.image,
-            imageType: ImageType.network,
-            borderRadius: TSizes.borderRadiusMd,
-            backgroundColor: TColors.primaryBackground,
-          ),
-          SizedBox(
-            width: TSizes.spaceBtwItems,
-          ),
-          Expanded(
-            child: Text(
-              category.name,
-              style: Theme.of(Get.context!)
-                  .textTheme
-                  .bodyLarge!
-                  .apply(color: TColors.primary),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
-        ],
-      )),
-      DataCell(Text(parentCategory != null ? parentCategory.name : "")),
-      DataCell(category.isFeatured
-          ? Icon(
-              Iconsax.heart5,
-              color: TColors.primary,
-            )
-          : Icon(
-              Iconsax.heart,
-              color: TColors.primary,
-            )),
-      DataCell(Text(category.createdAt == null ? "" : category.formattedDate)),
-      DataCell(TTableActionButtons(
-        onEditPressed: () =>
-            Get.toNamed(TRoutes.editCategory, arguments: category),
-        onDeletePressed: () {},
-      )),
-    ]);
+    return DataRow2(
+        selected: controller.selectedRows[index],
+        onSelectChanged: (value) =>
+            controller.selectedRows[index] = value ?? false,
+        cells: [
+          DataCell(Row(
+            children: [
+              TRoundedImage(
+                width: 50,
+                height: 50,
+                padding: TSizes.sm,
+                image: category.image,
+                imageType: ImageType.network,
+                borderRadius: TSizes.borderRadiusMd,
+                backgroundColor: TColors.primaryBackground,
+              ),
+              SizedBox(
+                width: TSizes.spaceBtwItems,
+              ),
+              Expanded(
+                child: Text(
+                  category.name,
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .bodyLarge!
+                      .apply(color: TColors.primary),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
+            ],
+          )),
+          DataCell(Text(parentCategory != null ? parentCategory.name : "")),
+          DataCell(category.isFeatured
+              ? Icon(
+                  Iconsax.heart5,
+                  color: TColors.primary,
+                )
+              : Icon(
+                  Iconsax.heart,
+                  color: TColors.primary,
+                )),
+          DataCell(
+              Text(category.createdAt == null ? "" : category.formattedDate)),
+          DataCell(TTableActionButtons(
+            onEditPressed: () =>
+                Get.toNamed(TRoutes.editCategory, arguments: category),
+            onDeletePressed: () => controller.confirmAndDeleteItem(category),
+          )),
+        ]);
   }
 
   @override
