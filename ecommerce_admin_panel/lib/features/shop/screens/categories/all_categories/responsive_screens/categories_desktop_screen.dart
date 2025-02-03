@@ -41,7 +41,7 @@ class CategoriesDesktopScreen extends StatelessWidget {
                       buttonText: "Create New Category",
                       onPressed: () => Get.toNamed(TRoutes.createCategory),
                       hintText: "Search Categories",
-                      searchController: controller.searchController,
+                      searchController: controller.searchTextController,
                       onSearchChange: (query) => controller.searchQuery(query),
                     ),
                     SizedBox(
