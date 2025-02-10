@@ -1,6 +1,8 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/brands/all_brands/widgets/data_table.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +14,7 @@ class BrandsDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BrandController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -26,7 +29,6 @@ class BrandsDesktopScreen extends StatelessWidget {
               ),
 
               // Table Body
-              // Should be in obx
               TRoundedContainer(
                 child: Column(
                   children: [
@@ -40,7 +42,9 @@ class BrandsDesktopScreen extends StatelessWidget {
                     ),
 
                     // Table
-                    BrandTable(),
+                    Obx(() => controller.isLoading.value
+                        ? TLoaderAnimation()
+                        : BrandTable()),
                   ],
                 ),
               )
