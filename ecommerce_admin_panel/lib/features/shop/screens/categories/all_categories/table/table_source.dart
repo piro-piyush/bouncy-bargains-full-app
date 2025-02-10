@@ -5,6 +5,7 @@ import 'package:ecommerce_admin_panel/features/shop/controllers/category/categor
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
+import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,14 +24,15 @@ class CategoryRows extends DataTableSource {
         onSelectChanged: (value) =>
             controller.selectedRows[index] = value ?? false,
         cells: [
-          DataCell(Row(
+          DataCell(
+              Row(
             children: [
               TRoundedImage(
                 width: 50,
                 height: 50,
                 padding: TSizes.sm,
-                image: category.image,
-                imageType: ImageType.network,
+                image: category.image != ""? category.image : TImages.defaultImage,
+                imageType: category.image.isNotEmpty? ImageType.network:ImageType.asset,
                 borderRadius: TSizes.borderRadiusMd,
                 backgroundColor: TColors.primaryBackground,
               ),
