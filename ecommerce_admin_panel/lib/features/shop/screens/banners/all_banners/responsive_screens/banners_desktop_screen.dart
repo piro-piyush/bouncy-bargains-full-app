@@ -1,6 +1,8 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/banner/banner_controllers.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/all_banners/tables/data_table.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +14,7 @@ class BannersDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BannerController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -26,23 +29,28 @@ class BannersDesktopScreen extends StatelessWidget {
               ),
 
               // Table Body
-              TRoundedContainer(
-                child: Column(
-                  children: [
-                    // Table Header
-                    TTableHeader(
-                      buttonText: "Create New Banner",
-                      onPressed: () => Get.toNamed(TRoutes.createBanner),
-                    ),
-                    SizedBox(
-                      height: TSizes.spaceBtwItems,
-                    ),
+              Obx(() {
+                // Show loader
+                if (controller.isLoading.value) return const TLoaderAnimation();
 
-                    // Table
-                    BannerTable(),
-                  ],
-                ),
-              )
+                return TRoundedContainer(
+                  child: Column(
+                    children: [
+                      // Table Header
+                      TTableHeader(
+                        buttonText: "Create New Banner",
+                        onPressed: () => Get.toNamed(TRoutes.createBanner),
+                        showRightWidget: false,
+                      ),
+                      SizedBox(
+                        height: TSizes.spaceBtwItems,
+                      ),
+                      // Table
+                      BannerTable(),
+                    ],
+                  ),
+                );
+              })
             ],
           ),
         ),
