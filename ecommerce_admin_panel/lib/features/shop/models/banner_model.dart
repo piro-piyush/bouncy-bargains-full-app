@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BannerModel {
-  final String imageUrl;
-  final String targetScreen; // Renamed to targetScreen
-  final bool active;
+  String? id;
+   String imageUrl;
+   String targetScreen;
+   bool active;
 
   // Constructor
   BannerModel({
+    this.id,
     required this.imageUrl,
     required this.targetScreen,
     required this.active,
@@ -21,26 +23,23 @@ class BannerModel {
     );
   }
 
-  static String screenName(String targetScreen) {
-    // Remove any leading slash
-    targetScreen = targetScreen.replaceAll('/', '');
-
-    final regExp =
-        RegExp('([a-z])([A-Z])'); // Regex to detect camelCase transitions
-
-    // Add spaces between camelCase words and capitalize the first letter
-    return targetScreen.replaceAllMapped(regExp, (match) {
-      return '${match.group(1)} ${match.group(2)}';
-    }).replaceFirst(targetScreen[0],
-        targetScreen[0].toUpperCase()); // Capitalize the first letter
+  /// Method for formatting a route string.
+  String formatRoute() {
+    if (targetScreen.isEmpty) return "";
+    // Remove the leading "/"
+    String formatted = targetScreen.substring(1);
+    // Capitalize the first character
+    formatted = formatted[0].toUpperCase() + formatted.substring(1);
+    return formatted;
   }
 
   // Factory constructor to create a BannerModel from a Firestore snapshot
   factory BannerModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
     return BannerModel(
+      id:snapshot.id,
       imageUrl: data['imageUrl'] ?? '',
-      targetScreen: data['targetScreen'] ?? '', // Updated key
+      targetScreen: data['targetScreen'] ?? '',
       active: data['active'] ?? false,
     );
   }
