@@ -10,9 +10,10 @@ class BannerTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BannerController());
+    final controller = BannerController.instance;
     return Obx(() {
       Text(controller.filteredItems.length.toString());
+      Text(controller.selectedRows.length.toString());
       return TPaginatedDataTable(
           minWidth: 700,
           tableHeight: 900,
