@@ -9,7 +9,6 @@ import 'app.dart';
 
 /// Entry point of Flutter App
 Future<void> main() async {
-
   // Ensure that tables are initialized
   WidgetsFlutterBinding.ensureInitialized();
 
