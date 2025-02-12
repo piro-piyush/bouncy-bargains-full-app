@@ -71,8 +71,6 @@ abstract class TBaseController<T> extends GetxController {
     allItems.add(item);
     filteredItems.add(item);
     selectedRows.assignAll(List.generate(allItems.length, (_) => false));
-
-    // filteredItems.refresh();
   }
 
   ///  Method for removing an item to the lists.
@@ -80,18 +78,15 @@ abstract class TBaseController<T> extends GetxController {
     allItems.remove(item);
     filteredItems.remove(item);
     selectedRows.assignAll(List.generate(allItems.length, (_) => false));
-    update();
   }
 
   ///  Method for updating an item to the lists.
-  void updateItemInList(T item) {
+  void updateItemFromList(T item) {
     final itemIndex = allItems.indexWhere((i) => i == item);
     final filteredItemIndex = filteredItems.indexWhere((i) => i == item);
 
     if (itemIndex != -1) allItems[itemIndex] = item;
     if (filteredItemIndex != -1) filteredItems[filteredItemIndex] = item;
-
-    // filteredItems.refresh();
   }
 
   ///  Method to be implemented by subclass for

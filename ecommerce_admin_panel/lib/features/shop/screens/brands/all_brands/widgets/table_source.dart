@@ -20,8 +20,7 @@ class BrandRows extends DataTableSource {
     final brand = controller.filteredItems[index];
     return DataRow2(
         selected: controller.selectedRows[index],
-        onSelectChanged: (value) =>
-            controller.selectedRows[index] = value ?? false,
+        onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
         cells: [
           DataCell(Row(
             children: [

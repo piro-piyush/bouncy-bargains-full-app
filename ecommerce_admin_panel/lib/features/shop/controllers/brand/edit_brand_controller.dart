@@ -104,11 +104,10 @@ class EditBrandController extends GetxController {
       if (isBrandUpdated) await updateBrandInProducts(brand);
 
       // Update all the list
-      BrandController.instance.updateItemInList(brand);
+      BrandController.instance.updateItemFromList(brand);
 
       // Reset Form
       resetFields();
-      ();
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
@@ -159,7 +158,7 @@ class EditBrandController extends GetxController {
     }
 
     brand.brandCategories!.assignAll(selectedCategories);
-    BrandController.instance.updateItemInList(brand);
+    BrandController.instance.updateItemFromList(brand);
   }
 
   // Update Products of this brand

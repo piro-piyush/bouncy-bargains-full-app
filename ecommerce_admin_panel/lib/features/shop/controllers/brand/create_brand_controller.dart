@@ -53,6 +53,7 @@ class CreateBrandController extends GetxController {
     }
   }
 
+
   // Register new Brand
   Future<void> createBrand() async {
     try {
