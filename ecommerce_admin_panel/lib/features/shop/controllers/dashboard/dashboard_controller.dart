@@ -7,7 +7,8 @@ class DashboardController extends GetxController {
   static DashboardController get instance => Get.find();
 
 // List of sample orders
-  static final List<OrderModel> orders = OrderModel.sampleOrders.obs;
+//   static final List<OrderModel> orders = OrderModel.sampleOrders.obs;
+  static final List<OrderModel> orders = [];
 
   final RxList<double> weeklySales = <double>[].obs;
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;

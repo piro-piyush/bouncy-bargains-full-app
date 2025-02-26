@@ -37,36 +37,41 @@ class MediaUploader extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         DropzoneView(
-                          mime: const ["image/jpeg", "image/png"],
+                          mime: const ['image/jpeg', 'image/png'],
                           cursor: CursorType.Default,
                           operation: DragOperation.copy,
-                          onLoaded: () => print("Zone Loaded"),
-                          onError: (ev) => print("Zone error : $ev"),
-                          onHover: () => print("Zone Hovered"),
-                          onLeave: () => print("Zone Left"),
                           onCreated: (ctrl) =>
                               controller.dropzoneController = ctrl,
+                          onLoaded: () => print('Zone loaded'),
+                          onError: (ev) => print('Zone error: $ev'),
+                          onHover: () {
+                            print('Zone hovered');
+                          },
+                          onLeave: () {
+                            print('Zone left');
+                          },
+                          onDropFile: (DropzoneFileInterface ev) async {
+                            // Retrieve file data as Uint8List
+                            final bytes = await controller.dropzoneController
+                                .getFileData(ev);
+                            // Extract file metadata
+                            final filename = await controller.dropzoneController
+                                .getFilename(ev);
+                            final mimeType = await controller.dropzoneController
+                                .getFileMIME(ev);
+                            final image = ImageModel(
+                              url: '',
+                              folder: '',
+                              fileName: filename,
+                              contentType: mimeType,
+                              localImageToDisplay: Uint8List.fromList(bytes),
+                            );
+                            controller.selectedImagesToUpload.add(image);
+                          },
                           onDropInvalid: (ev) =>
-                              print("Zone invalid MIME : $ev"),
-                          onDropMultiple: (ev) =>
-                              print("Zone drop multiple : $ev"),
-                          onDrop: (file) async {
-                            if (file is html.File) {
-                              // final html.File htmlFile = html.File([file], file.name, {'type': file.type});
-                              final bytes = await controller.dropzoneController.getFileData(file);
-                              final image = ImageModel(
-                                  url: '',
-                                  file:file,
-                                  folder: '',
-                                  fileName: file.name,
-                                  localImageToDisplay:
-                                      Uint8List.fromList(bytes));
-                              controller.selectedImagesToUpload.add(image);
-                            } else if (file is String) {
-                              print("Zone drop  : $file");
-                            } else {
-                              print("Zone drop  : ${file.runtimeType}");
-                            }
+                              print('Zone invalid MIME: $ev'),
+                          onDropFiles: (ev) async {
+                            print('Zone drop multiple: $ev');
                           },
                         ),
 
@@ -87,7 +92,7 @@ class MediaUploader extends StatelessWidget {
                               height: TSizes.spaceBtwItems,
                             ),
                             OutlinedButton(
-                              onPressed: () =>controller.selectLocalImages(),
+                              onPressed: () => controller.selectLocalImages(),
                               child: Text("Select Images"),
                             )
                           ],

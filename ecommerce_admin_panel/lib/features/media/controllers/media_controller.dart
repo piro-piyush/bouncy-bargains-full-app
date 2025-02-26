@@ -106,32 +106,24 @@ class MediaController extends GetxController {
     }
   }
 
+  /// Select Local Images on Button Press
   Future<void> selectLocalImages() async {
-    final files = await dropzoneController.pickFiles(
-      multiple: true,
-      mime: ['image/jpeg', 'image/png'],
-    ); // Use correct MIME types
-
+    final files = await dropzoneController
+        .pickFiles(multiple: true, mime: ['image/jpeg', 'image/png']);
     if (files.isNotEmpty) {
       for (var file in files) {
-        // Get file data as bytes
+        // Retrieve file data as Uint8List
         final bytes = await dropzoneController.getFileData(file);
-
-        // Create an ImageModel instance
+        // Extract file metadata
+        final filename = await dropzoneController.getFilename(file);
+        final mimeType = await dropzoneController.getFileMIME(file);
         final image = ImageModel(
           url: '',
-          // URL is empty as it's a local image
-          file: file,
-          // Pass the DropzoneFileInterface instance
           folder: '',
-          // Adjust folder path as needed
-          fileName: file.name,
-          // Use the name from DropzoneFileInterface
-          localImageToDisplay:
-              Uint8List.fromList(bytes), // Convert bytes for display
+          fileName: filename,
+          contentType: mimeType,
+          localImageToDisplay: Uint8List.fromList(bytes),
         );
-
-        // Add the image to the list
         selectedImagesToUpload.add(image);
       }
     }
@@ -153,19 +145,17 @@ class MediaController extends GetxController {
             "Are you sure you want to upload all the images in ${selectedPath.value.name.toUpperCase()} folder?");
   }
 
+  /// Upload Images
   Future<void> uploadImages() async {
     try {
       // Remove confirmation box
       Get.back();
-      // Loader
+      // Start Loader
       uploadImagesLoader();
-
       // Get the selected category
       MediaCategory selectedCategory = selectedPath.value;
-
       // Get the corresponding list to update
       RxList<ImageModel> targetList;
-
       // Check the selected category and update the corresponding list
       switch (selectedCategory) {
         case MediaCategory.banners:
@@ -186,21 +176,18 @@ class MediaController extends GetxController {
         default:
           return;
       }
-
-      // Upload and add Images to the target list
-
-      // Using a reverse loop to avoid 'Concurrent Modification during Iteration' error
+      // Upload and add images to the target list
+      // Using a reverse loop to avoid 'Concurrent modification during iteration' error
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
-        final image = selectedImage.file!;
-
-        // Upload image to the firestore
+        // Upload Image to the Storage
         final ImageModel uploadedImage =
             await mediaRepository.uploadImageFileInStorage(
-                file: image,
-                path: getSelectedPath(),
-                imageName: selectedImage.fileName);
-
+          fileData: selectedImage.localImageToDisplay!,
+          mimeType: selectedImage.contentType!,
+          path: getSelectedPath(),
+          imageName: selectedImage.fileName,
+        );
         // Upload Image to the Firestore
         uploadedImage.mediaCategory = selectedCategory.name;
         final id =
@@ -209,14 +196,15 @@ class MediaController extends GetxController {
         selectedImagesToUpload.removeAt(i);
         targetList.add(uploadedImage);
       }
-
-      // Stop load after successful upload
+      // Stop Loader after successful upload
       TFullScreenLoader.stopLoading();
     } catch (e) {
+      // Stop Loader in case of an error
       TFullScreenLoader.stopLoading();
+      // Show a warning snack-bar for the error
       TLoaders.warningSnackBar(
-          title: "Error uploading Images",
-          message: "Something went wrong while uploading your images.");
+          title: 'Error Uploading Images',
+          message: 'Something went wrong while uploading your images.');
     }
   }
 

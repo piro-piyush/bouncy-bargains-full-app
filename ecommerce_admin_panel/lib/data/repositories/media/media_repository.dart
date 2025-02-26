@@ -13,25 +13,26 @@ class MediaRepository extends GetxController {
   // Firebase Storage instance
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  // Upload any Image using File
+  /// Upload any Image using Uint8List (compatible with DropzoneFileInterface)
   Future<ImageModel> uploadImageFileInStorage(
-      {required html.File file,
+      {required Uint8List fileData,
+      required String mimeType,
       required String path,
       required String imageName}) async {
     try {
       // Reference to the storage location
       final Reference ref = _storage.ref('$path/$imageName');
-
-      // Uploaded File
-      await ref.putBlob(file);
-
-      // Get download Url
-      final String downloadUrl = await ref.getDownloadURL();
-
-      // Fetch MetaData
+      // Upload file using Uint8List
+      final UploadTask uploadTask =
+          ref.putData(fileData, SettableMetadata(contentType: mimeType));
+      // Wait for the upload to complete
+      final TaskSnapshot snapshot = await uploadTask.whenComplete(() => {});
+      // Get download URL
+      final String downloadURL = await snapshot.ref.getDownloadURL();
+      // Fetch metadata
       final FullMetadata metadata = await ref.getMetadata();
       return ImageModel.fromFirebaseMetaData(
-          metadata, path, imageName, downloadUrl);
+          metadata, path, imageName, downloadURL);
     } on FirebaseException catch (e) {
       throw e.message!;
     } on SocketException catch (e) {
