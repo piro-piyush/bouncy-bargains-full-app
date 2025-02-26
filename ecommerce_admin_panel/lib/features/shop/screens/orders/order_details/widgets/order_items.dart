@@ -19,7 +19,7 @@ class OrderItems extends StatelessWidget {
     final subTotal = order.items!.fold(
         0.0,
         (previousValue, element) =>
-            previousValue + (element.price * element.quantity));
+            previousValue + (element.price * element.soldQuantity));
     return TRoundedContainer(
       padding: EdgeInsets.all(TSizes.defaultSpace),
       child: Column(
@@ -50,8 +50,8 @@ class OrderItems extends StatelessWidget {
                     children: [
                       TRoundedImage(
                           backgroundColor: TColors.primaryBackground,
-                          image: item.imageUrl ?? TImages.defaultImage,
-                          imageType: item.imageUrl != null
+                          image: item.thumbnail ?? TImages.defaultImage,
+                          imageType: item.thumbnail != ""
                               ? ImageType.network
                               : ImageType.asset),
                       SizedBox(
@@ -62,15 +62,15 @@ class OrderItems extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            item.name,
+                            item.title,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          if (item.selectedVariation != null)
-                            Text(item.selectedVariation.entries
-                                .map((e) => ('${e.key} : ${e.value} '))
-                                .toString())
+                          // if (item.selectedVariation != null)
+                          //   Text(item.selectedVariation.entries
+                          //       .map((e) => ('${e.key} : ${e.value} '))
+                          //       .toString())
                         ],
                       )),
                     ],
@@ -87,7 +87,7 @@ class OrderItems extends StatelessWidget {
                         ? TSizes.xl * 1.4
                         : TSizes.xl * 2,
                     child: Text(
-                      item.quantity.toString(),
+                      item.soldQuantity.toString(),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
