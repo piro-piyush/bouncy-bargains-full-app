@@ -1,7 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/customer/customer_details_controller.dart';
-import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';

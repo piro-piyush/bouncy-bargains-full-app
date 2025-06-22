@@ -1,6 +1,6 @@
 import 'package:ecommerce_admin_panel/data/abstract/base_data_table_controller.dart';
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
 import 'package:get/get.dart';
 
 class CustomerController extends TBaseController<UserModel> {
