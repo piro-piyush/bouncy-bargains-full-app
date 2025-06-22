@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/customer/customer_details_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_address.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_info.dart';
@@ -8,10 +9,10 @@ import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class CustomerDetailsMobileScreen extends StatelessWidget {
-  const CustomerDetailsMobileScreen({super.key, required this.customer});
+   CustomerDetailsMobileScreen({super.key, required this.customer});
 
   final UserModel customer;
-
+  final controller = CustomerDetailsController.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

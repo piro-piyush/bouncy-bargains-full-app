@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/customer/customer_details_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
@@ -14,6 +15,23 @@ class CustomerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = CustomerDetailsController.instance;
+
+    // Get the most recent order based on orderDate
+    final lastOrder = controller.allOrders.isNotEmpty
+        ? controller.allOrders
+            .reduce((a, b) => a.orderDate.isAfter(b.orderDate) ? a : b)
+        : null;
+
+    // Calculate total amount
+    final total =
+        controller.allOrders.fold(0.0, (sum, order) => sum + order.totalAmount);
+
+    // Calculate average
+    final avg = controller.allOrders.isNotEmpty
+        ? total / controller.allOrders.length
+        : 0.0;
+
     return TRoundedContainer(
       padding: EdgeInsets.all(TSizes.defaultSpace),
       child: Column(
@@ -31,8 +49,12 @@ class CustomerInfo extends StatelessWidget {
           Row(
             children: [
               TRoundedImage(
-                imageType: ImageType.asset,
-                image: TImages.user,
+                imageType: customer.profilePicture.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
+                image: customer.profilePicture.isNotEmpty
+                    ? customer.profilePicture
+                    : TImages.user,
                 padding: 0,
                 backgroundColor: TColors.primaryBackground,
               ),
@@ -45,13 +67,13 @@ class CustomerInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Piyush",
+                    customer.fullName,
                     style: Theme.of(context).textTheme.titleLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
-                  const Text(
-                    "piyush72717272@gmail.com",
+                  Text(
+                    customer.email.isNotEmpty ? customer.email : "N/A",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   )
@@ -76,7 +98,7 @@ class CustomerInfo extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                "admin@bouncybargains",
+                customer.username.isNotEmpty ? customer.username : "N/A",
                 style: Theme.of(context).textTheme.titleMedium,
               ))
             ],
@@ -112,7 +134,7 @@ class CustomerInfo extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                "+91 798-545-746",
+                customer.phoneNumber.isNotEmpty ? customer.phoneNumber : "N/A",
                 style: Theme.of(context).textTheme.titleMedium,
               ))
             ],
@@ -135,7 +157,9 @@ class CustomerInfo extends StatelessWidget {
                     "Last Order",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Text("7 Days Ago, #[34d54]"),
+                  Text(lastOrder != null
+                      ? lastOrder.formatOrderDateText
+                      : "N/A"),
                 ],
               )),
               Expanded(
@@ -147,7 +171,7 @@ class CustomerInfo extends StatelessWidget {
                     "Average Order Value",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Text("\$342.2"),
+                  Text("\$${avg.toString()}"),
                 ],
               )),
             ],
