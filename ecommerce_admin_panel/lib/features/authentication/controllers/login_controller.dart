@@ -110,7 +110,7 @@ class LoginController extends GetxController {
       // Create Admin record in the firestore
       final userRepository = Get.put(UserRepository());
 
-      await userRepository.createUser(UserModel(
+      await userRepository.createAdmin(UserModel(
         id: AuthenticationRepository.instance.authUser!.uid,
         firstName: "Bouncy Bargains",
         lastName: "Admin",

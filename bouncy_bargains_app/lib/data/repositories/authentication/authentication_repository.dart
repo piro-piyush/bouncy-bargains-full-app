@@ -81,7 +81,7 @@ class AuthenticationRepository extends GetxController {
       throw XFirebaseException(e.code).message;
     } on FormatException catch (_) {
       throw const XFormatException();
-    } on PlatformException catch (e) {
+    } on PlatformException catch (e) {  
       throw XPlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. Please try again';

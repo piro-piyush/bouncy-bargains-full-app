@@ -15,15 +15,12 @@ class LoginController extends GetxController {
   final rememberMe = false.obs; // To store "remember me" status
   final hidePassword = true.obs; // To toggle password visibility
   final email = TextEditingController(); // Controller for email input
-  final phoneNumber =
-      TextEditingController(); // Controller for phone number input
+  final phoneNumber = TextEditingController(); // Controller for phone number input
   final password = TextEditingController(); // Controller for password input
   final localStorage = GetStorage(); // Instance for localStorage
 
-  GlobalKey<FormState> loginFormKey =
-      GlobalKey<FormState>(); // Form key for validation
-  final userController =
-      Get.put(UserController()); // Instance of UserController
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>(); // Form key for validation
+  final userController = Get.put(UserController()); // Instance of UserController
 
   @override
   void onInit() {
@@ -71,8 +68,7 @@ class LoginController extends GetxController {
         localStorage.remove("REMEMBER_ME_PASSWORD");
       }
 
-      // Attempt login with email and password
-      final userCredentials = await AuthenticationRepository.instance
+     await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Stop loading indicator
