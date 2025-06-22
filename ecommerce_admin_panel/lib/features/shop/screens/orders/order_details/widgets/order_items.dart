@@ -16,7 +16,7 @@ class OrderItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subTotal = order.items!.fold(
+    final subTotal = order.items.fold(
         0.0,
         (previousValue, element) =>
             previousValue + (element.price * element.soldQuantity));
@@ -38,11 +38,11 @@ class OrderItems extends StatelessWidget {
             separatorBuilder: (_, __) => SizedBox(
               height: TSizes.spaceBtwItems,
             ),
-            itemCount: order.items!.length,
+            itemCount: order.items.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
-              final item = order.items![index];
+              final item = order.items[index];
               return Row(
                 children: [
                   Expanded(
@@ -50,9 +50,9 @@ class OrderItems extends StatelessWidget {
                     children: [
                       TRoundedImage(
                           backgroundColor: TColors.primaryBackground,
-                          image: item.thumbnail ?? TImages.defaultImage,
-                          imageType: item.thumbnail != ""
-                              ? ImageType.network
+                          image: item.thumbnail.isNotEmpty?item.thumbnail: TImages.defaultImage,
+                          imageType: item.thumbnail.isNotEmpty?
+                               ImageType.network
                               : ImageType.asset),
                       SizedBox(
                         width: TSizes.spaceBtwItems,

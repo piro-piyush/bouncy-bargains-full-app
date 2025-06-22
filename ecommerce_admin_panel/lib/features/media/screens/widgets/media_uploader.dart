@@ -12,7 +12,6 @@ import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart' as html;
 
 class MediaUploader extends StatelessWidget {
   const MediaUploader({super.key});

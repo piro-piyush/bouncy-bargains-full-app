@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/helper_functions.dart';
@@ -10,7 +11,7 @@ class OrderModel {
   final double totalAmount;
   final DateTime orderDate;
   final String paymentMethod;
-  final List<ProductModel>? items; // List of ordered products
+  final List<ProductModel> items; // List of ordered products
   final DateTime? deliveryDate;
 
   OrderModel({
@@ -21,7 +22,7 @@ class OrderModel {
     required this.status,
     required this.totalAmount,
     required this.orderDate,
-    this.items,
+    this.items = const [],
     this.deliveryDate,
   });
 
@@ -32,6 +33,30 @@ class OrderModel {
   String get formattedDeliveryDate => deliveryDate != null
       ? THelperFunctions.getFormattedDate(deliveryDate!)
       : 'N/A';
+
+  String get formatOrderDateText {
+    final now = DateTime.now();
+    final difference = now.difference(orderDate);
+
+    String timeAgo;
+    if (difference.inDays >= 30) {
+      final months = (difference.inDays / 30).floor();
+      timeAgo = "$months Month${months > 1 ? 's' : ''} Ago";
+    } else if (difference.inDays >= 7) {
+      final weeks = (difference.inDays / 7).floor();
+      timeAgo = "$weeks Week${weeks > 1 ? 's' : ''} Ago";
+    } else if (difference.inDays >= 1) {
+      timeAgo =
+          "${difference.inDays} Day${difference.inDays > 1 ? 's' : ''} Ago";
+    } else if (difference.inHours >= 1) {
+      timeAgo =
+          "${difference.inHours} Hour${difference.inHours > 1 ? 's' : ''} Ago";
+    } else {
+      timeAgo = "Just now";
+    }
+
+    return "$timeAgo, #[$id]";
+  }
 
   // Get a human-readable status text
   String get orderStatusText {
@@ -57,263 +82,33 @@ class OrderModel {
       'totalAmount': totalAmount,
       'orderDate': orderDate.toIso8601String(),
       'paymentMethod': paymentMethod,
-      'items': items?.map((item) => item.toJson()).toList(),
+      'items': items.map((item) => item.toJson()).toList(),
       'deliveryDate': deliveryDate?.toIso8601String(),
     };
   }
 
-  // static List<OrderModel> sampleOrders = [
-  //   OrderModel(
-  //     id: 'order1',
-  //     userId: 'user3',
-  //     docId: 'doc45',
-  //     status: OrderStatus.processing,
-  //     totalAmount: 79.99,
-  //     orderDate: DateTime(2025, 1, 12),
-  //     paymentMethod: 'Credit Card',
-  //     items: [
-  //       ProductModel(
-  //         id: '1',
-  //         name: 'Product 35',
-  //         description: 'A great product with features 23',
-  //         category: 'Electronics',
-  //         price: 39.99,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/nike.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 3)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 2)),
-  //         selectedVariation: {'Color': 'Red', 'Size': 'Medium'},
-  //       ),
-  //       ProductModel(
-  //         id: '2',
-  //         name: 'Product 82',
-  //         description: 'A great product with features 56',
-  //         category: 'Home',
-  //         price: 29.99,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/adidas-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 10)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 5)),
-  //         selectedVariation: {'Color': 'Blue', 'Size': 'Large'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 15),
-  //   ),
-  //   OrderModel(
-  //     id: 'order2',
-  //     userId: 'user1',
-  //     docId: 'doc38',
-  //     status: OrderStatus.shipped,
-  //     totalAmount: 45.50,
-  //     orderDate: DateTime(2025, 1, 10),
-  //     paymentMethod: 'Paypal',
-  //     items: [
-  //       ProductModel(
-  //         id: '3',
-  //         name: 'Product 12',
-  //         description: 'A great product with features 11',
-  //         category: 'Fashion',
-  //         price: 22.75,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/apple-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 5)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 3)),
-  //         selectedVariation: {'Color': 'Green', 'Size': 'Small'},
-  //       ),
-  //       ProductModel(
-  //         id: '4',
-  //         name: 'Product 65',
-  //         description: 'A great product with features 48',
-  //         category: 'Fashion',
-  //         price: 22.75,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/jordan-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 8)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 2)),
-  //         selectedVariation: {'Color': 'Black', 'Size': 'Medium'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 14),
-  //   ),
-  //   OrderModel(
-  //     id: 'order3',
-  //     userId: 'user8',
-  //     docId: 'doc99',
-  //     status: OrderStatus.delivered,
-  //     totalAmount: 120.40,
-  //     orderDate: DateTime(2025, 1, 5),
-  //     paymentMethod: 'Debit Card',
-  //     items: [
-  //       ProductModel(
-  //         id: '5',
-  //         name: 'Product 87',
-  //         description: 'A great product with features 77',
-  //         category: 'Electronics',
-  //         price: 60.20,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/puma-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 7)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 3)),
-  //         selectedVariation: {'Color': 'Black', 'Size': 'Medium'},
-  //       ),
-  //       ProductModel(
-  //         id: '6',
-  //         name: 'Product 29',
-  //         description: 'A great product with features 55',
-  //         category: 'Home',
-  //         price: 60.20,
-  //         quantity: 1,
-  //         imageUrl: 'assets/icons/brands/zara-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 10)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 4)),
-  //         selectedVariation: {'Color': 'White', 'Size': 'Large'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 7),
-  //   ),
-  //   OrderModel(
-  //     id: 'order4',
-  //     userId: 'user2',
-  //     docId: 'doc72',
-  //     status: OrderStatus.processing,
-  //     totalAmount: 66.60,
-  //     orderDate: DateTime(2025, 1, 2),
-  //     paymentMethod: 'Paypal',
-  //     items: [
-  //       ProductModel(
-  //         id: '7',
-  //         name: 'Product 48',
-  //         description: 'A great product with features 38',
-  //         category: 'Toys',
-  //         price: 33.30,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/kenwood-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 2)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 1)),
-  //         selectedVariation: {'Color': 'Yellow', 'Size': 'Small'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 10),
-  //   ),
-  //   OrderModel(
-  //     id: 'order5',
-  //     userId: 'user6',
-  //     docId: 'doc31',
-  //     status: OrderStatus.shipped,
-  //     totalAmount: 158.70,
-  //     orderDate: DateTime(2025, 1, 3),
-  //     paymentMethod: 'Credit Card',
-  //     items: [
-  //       ProductModel(
-  //         id: '8',
-  //         name: 'Product 64',
-  //         description: 'A great product with features 15',
-  //         category: 'Home',
-  //         price: 79.35,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/herman-miller-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 10)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 3)),
-  //         selectedVariation: {'Color': 'Blue', 'Size': 'Medium'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 12),
-  //   ),
-  //   OrderModel(
-  //     id: 'order6',
-  //     userId: 'user5',
-  //     docId: 'doc21',
-  //     status: OrderStatus.delivered,
-  //     totalAmount: 190.85,
-  //     orderDate: DateTime(2025, 1, 7),
-  //     paymentMethod: 'Debit Card',
-  //     items: [
-  //       ProductModel(
-  //         id: '9',
-  //         name: 'Product 56',
-  //         description: 'A great product with features 99',
-  //         category: 'Books',
-  //         price: 95.43,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/ikea_logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 5)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 1)),
-  //         selectedVariation: {'Color': 'Red', 'Size': 'Small'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 10),
-  //   ),
-  //   OrderModel(
-  //     id: 'order7',
-  //     userId: 'user4',
-  //     docId: 'doc10',
-  //     status: OrderStatus.processing,
-  //     totalAmount: 135.60,
-  //     orderDate: DateTime(2025, 1, 4),
-  //     paymentMethod: 'Paypal',
-  //     items: [
-  //       ProductModel(
-  //         id: '10',
-  //         name: 'Product 72',
-  //         description: 'A great product with features 24',
-  //         category: 'Electronics',
-  //         price: 67.80,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/acer_logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 8)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 4)),
-  //         selectedVariation: {'Color': 'Green', 'Size': 'Large'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 9),
-  //   ),
-  //   OrderModel(
-  //     id: 'order8',
-  //     userId: 'user7',
-  //     docId: 'doc13',
-  //     status: OrderStatus.shipped,
-  //     totalAmount: 83.90,
-  //     orderDate: DateTime(2025, 1, 6),
-  //     paymentMethod: 'Cash on Delivery',
-  //     items: [
-  //       ProductModel(
-  //         id: '11',
-  //         name: 'Product 33',
-  //         description: 'A great product with features 12',
-  //         category: 'Books',
-  //         price: 41.95,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/nike.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 3)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 1)),
-  //         selectedVariation: {'Color': 'Yellow', 'Size': 'Medium'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 13),
-  //   ),
-  //   OrderModel(
-  //     id: 'order9',
-  //     userId: 'user3',
-  //     docId: 'doc77',
-  //     status: OrderStatus.processing,
-  //     totalAmount: 99.50,
-  //     orderDate: DateTime(2025, 1, 8),
-  //     paymentMethod: 'Credit Card',
-  //     items: [
-  //       ProductModel(
-  //         id: '12',
-  //         name: 'Product 79',
-  //         description: 'A great product with features 56',
-  //         category: 'Sports',
-  //         price: 49.75,
-  //         quantity: 2,
-  //         imageUrl: 'assets/icons/brands/adidas-logo.png',
-  //         createdAt: DateTime.now().subtract(Duration(days: 5)),
-  //         updatedAt: DateTime.now().subtract(Duration(days: 2)),
-  //         selectedVariation: {'Color': 'Red', 'Size': 'Large'},
-  //       ),
-  //     ],
-  //     deliveryDate: DateTime(2025, 1, 17),
-  //   ),
-  // ];
+  // static OrderModel empty() => OrderModel(id: "", status: OrderStatus.processing, totalAmount: 0, orderDate: DateTime.now());
+
+  factory OrderModel.fromSnapshot(DocumentSnapshot document) {
+    // final id = document.id;
+    final data = document.data() as Map<String, dynamic>;
+    return OrderModel(
+      id: document.id,
+      userId: data['userId'] ?? '',
+      docId: data['docId'] ?? '',
+      status: OrderStatus.values.firstWhere(
+        (status) => status.name == data['status'],
+        orElse: () => OrderStatus.processing,
+      ),
+      totalAmount: double.parse((data['totalAmount'] ?? 0.0).toString()),
+      orderDate: DateTime.parse(data['orderDate']),
+      paymentMethod: data['paymentMethod'] ?? 'Paypal',
+      deliveryDate: data['deliveryDate'] != null
+          ? DateTime.parse(data['deliveryDate'])
+          : null,
+      items: (data['items'] as List<dynamic>? ?? [])
+          .map((e) => ProductModel.fromSnapshot(e))
+          .toList(),
+    );
+  }
 }
