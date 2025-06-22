@@ -1,12 +1,17 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class ProductBottomNavigationBar extends StatelessWidget {
-  const ProductBottomNavigationBar({super.key});
+  final ProductModel productModel;
+
+  const ProductBottomNavigationBar({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
+    final controller = EditProductController.instance;
     return TRoundedContainer(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -20,8 +25,9 @@ class ProductBottomNavigationBar extends StatelessWidget {
           // Save changes Button
           SizedBox(
             width: 160,
-            child:
-                ElevatedButton(onPressed: () {}, child: Text("Update Changes")),
+            child: ElevatedButton(
+                onPressed: () => controller.updateProduct(productModel),
+                child: Text("Update Changes")),
           )
         ],
       ),
