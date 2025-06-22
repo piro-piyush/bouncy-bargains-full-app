@@ -21,10 +21,12 @@ class TMenuItem extends StatelessWidget {
     final menuController = Get.put(SidebarController());
     return InkWell(
       onTap: () => menuController.menuOnTap(route),
-      onHover: (hovering) => hovering
-          ? menuController.changeHoverItem(route)
-          : menuController.changeHoverItem(""),
-      child: Obx(
+        onHover: (hovering) {
+          Future.delayed(Duration(milliseconds: 1), () {
+            menuController.changeHoverItem(hovering ? route : "");
+          });
+        },
+        child: Obx(
         () => Padding(
           padding: const EdgeInsets.symmetric(vertical: TSizes.xs),
           child: Container(

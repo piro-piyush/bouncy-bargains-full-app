@@ -15,7 +15,8 @@ class XElevatedButtonTheme {
           textStyle: const TextStyle(
               fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))));
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)))
+              );
 
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

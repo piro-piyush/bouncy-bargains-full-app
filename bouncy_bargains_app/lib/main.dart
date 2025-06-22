@@ -9,8 +9,7 @@ import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
   // Widgets Binding
-  final WidgetsBinding widgetsBinding =
-      WidgetsFlutterBinding.ensureInitialized();
+  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   // GetX Local Storage
   await GetStorage.init();

@@ -9,12 +9,14 @@ class ProductAttributeModel {
     this.values,
   });
 
-  factory ProductAttributeModel.fromJson(Map<String, dynamic> document) {
-    final data = document;
-    if (data.isEmpty) return ProductAttributeModel();
+  factory ProductAttributeModel.fromJson(Map<String, dynamic>? data) {
+    if (data == null || data.isEmpty) return ProductAttributeModel();
+
     return ProductAttributeModel(
-      name: data.containsKey('Name') ? data['Name'] : '',
-      values: List<String>.from(data['Values'] ?? []),
+      name: data.containsKey('Name') ? data['Name'] ?? '' : '',
+      values: data.containsKey('Values') && data['Values'] != null
+          ? List<String>.from(data['Values'])
+          : [],
     );
   }
 

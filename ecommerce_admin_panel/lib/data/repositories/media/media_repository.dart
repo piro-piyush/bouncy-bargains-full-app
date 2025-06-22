@@ -5,7 +5,6 @@ import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart' as html;
 
 class MediaRepository extends GetxController {
   static MediaRepository get instance => Get.find();

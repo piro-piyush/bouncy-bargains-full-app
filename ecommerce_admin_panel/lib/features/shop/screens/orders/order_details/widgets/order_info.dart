@@ -45,7 +45,7 @@ class OrderInfo extends StatelessWidget {
                 children: [
                   Text("Items"),
                   Text(
-                    '${order.items!.length} Items',
+                    '${order.items.length} Items',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
