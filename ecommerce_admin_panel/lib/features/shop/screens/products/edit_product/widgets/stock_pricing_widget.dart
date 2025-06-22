@@ -1,14 +1,20 @@
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
+import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class ProductStockAndPricing extends StatelessWidget {
-  const ProductStockAndPricing({super.key});
-
+   ProductStockAndPricing({super.key});
+  final controller = EditProductController.instance;
   @override
   Widget build(BuildContext context) {
-    return Form(
+
+    return Obx(() => controller.productType.value == ProductType.single
+        ? Form(
+      key: controller.stockFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -16,6 +22,7 @@ class ProductStockAndPricing extends StatelessWidget {
           FractionallySizedBox(
             widthFactor: 0.45,
             child: TextFormField(
+              controller: controller.stock,
               decoration: InputDecoration(
                   labelText: "Stock",
                   hintText: "Add Stock only number allowed"),
@@ -37,17 +44,20 @@ class ProductStockAndPricing extends StatelessWidget {
               // Price
               Expanded(
                   child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Price",
-                  hintText: "Price with up-to 2 decimals",
-                ),
-                validator: (value) =>
-                    TValidator.validateEmptyText("Price", value),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?d{0,2}$'))
-                ],
-              )),
+                    controller: controller.price,
+                    decoration: InputDecoration(
+                      labelText: "Price",
+                      hintText: "Price with up-to 2 decimals",
+                    ),
+                    validator: (value) =>
+                        TValidator.validateEmptyText("Price", value),
+                    keyboardType:
+                    TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+\.?d{0,2}$'))
+                    ],
+                  )),
               SizedBox(
                 width: TSizes.spaceBtwItems,
               ),
@@ -55,19 +65,23 @@ class ProductStockAndPricing extends StatelessWidget {
               // Sale Price
               Expanded(
                   child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Discounted Price",
-                  hintText: "Price with up-to 2 decimals",
-                ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?d{0,2}$'))
-                ],
-              )),
+                    controller: controller.salePrice,
+                    decoration: InputDecoration(
+                      labelText: "Discounted Price",
+                      hintText: "Price with up-to 2 decimals",
+                    ),
+                    keyboardType:
+                    TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+\.?d{0,2}$'))
+                    ],
+                  )),
             ],
           )
         ],
       ),
-    );
+    )
+        : SizedBox());
   }
 }

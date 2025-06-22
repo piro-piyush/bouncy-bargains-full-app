@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -12,6 +13,7 @@ class ProductThumbnailImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImagesController());
     return TRoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,13 +39,18 @@ class ProductThumbnailImage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                          child: TRoundedImage(
-                        imageType: ImageType.asset,
-                        height: 220,
-                        width: 220,
-                        image: TImages.defaultSingleImageIcon,
-                      ))
+                      Expanded(child: Obx(() {
+                        return TRoundedImage(
+                          imageType:
+                              controller.selectedThumbnailImageUrl.value == null
+                                  ? ImageType.asset
+                                  : ImageType.network,
+                          height: 220,
+                          width: 220,
+                          image: controller.selectedThumbnailImageUrl.value ??
+                              TImages.defaultSingleImageIcon,
+                        );
+                      }))
                     ],
                   ),
 
@@ -51,9 +58,8 @@ class ProductThumbnailImage extends StatelessWidget {
                   SizedBox(
                     width: 200,
                     child: OutlinedButton(
-                        onPressed: () {
-                          // controller.selectedThumbnailImageUrl;
-                        }, child: Text("Add Thumbnail")),
+                        onPressed: () =>controller.selectedThumbnailImage(),
+                        child: Text("Add Thumbnail")),
                   )
                 ],
               ),

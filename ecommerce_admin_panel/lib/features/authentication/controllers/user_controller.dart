@@ -20,7 +20,7 @@ class UserController extends GetxController {
   Future<UserModel> fetchUserDetails() async {
     try {
       loading.value = true;
-      final user = await userRepository.fetchUserDetails();
+      final user = await userRepository.fetchAdminDetails();
       this.user.value = user;
       loading.value = false;
       return user;

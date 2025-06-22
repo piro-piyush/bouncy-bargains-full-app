@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/address_model.dart';
+import 'package:ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/formatters/formatter.dart';
 
@@ -13,6 +15,8 @@ class UserModel {
   AppRole role;
   DateTime? createdAt;
   DateTime? updatedAt;
+  List<OrderModel>? orders;
+  List<AddressModel>? addresses;
 
   // Constructor for user model
   UserModel(
@@ -25,7 +29,10 @@ class UserModel {
       this.profilePicture = '',
       this.role = AppRole.user,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.orders,
+      this.addresses,
+      });
 
   // Helper function to get full name
   String get fullName => '$firstName $lastName';
@@ -60,6 +67,7 @@ class UserModel {
   // Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
+      'Id':id,
       'FirstName': firstName,
       'LastName': lastName,
       'Username': username,
@@ -69,6 +77,8 @@ class UserModel {
       'Role': role.name.toString(),
       'CreatedAt': createdAt,
       'UpdatedAt': updatedAt = DateTime.now(),
+      // 'Orders': orders,
+      // 'Addresses': addresses,
     };
   }
 

@@ -26,7 +26,7 @@ class OrderRows extends DataTableSource {
                 .apply(color: TColors.primary),
           )),
           DataCell(Text(order.formattedOrderDate)),
-          DataCell(Text('${order.items?.length} Items')),
+          DataCell(Text('${order.items.length} Items')),
           DataCell(TRoundedContainer(
             radius: TSizes.cardRadiusSm,
             padding: EdgeInsets.symmetric(
