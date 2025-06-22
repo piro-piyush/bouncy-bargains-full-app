@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/additional_images.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/attributes_widget.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/bottom_navigation_widget.dart';
@@ -22,6 +23,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageController = Get.put(ProductImagesController());
     return Scaffold(
       bottomNavigationBar: ProductBottomNavigationBar(),
       body: SingleChildScrollView(
@@ -125,9 +127,11 @@ class CreateProductDesktopScreen extends StatelessWidget {
                             ),
                             ProductAdditionalImages(
                                 additionalProductImageURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImages: (index) {})
+                                    imageController.additionalProductImageUrls,
+                                onTapToAddImages: () => imageController
+                                    .selectMultipleProductImages(),
+                                onTapToRemoveImages: (index) =>
+                                    imageController.removeImage(index))
                           ],
                         ),
                       ),

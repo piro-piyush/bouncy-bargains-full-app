@@ -27,8 +27,7 @@ class EditCategoryController extends GetxController {
     imageUrl.value = category.image;
     if (category.parentId.isNotEmpty) {
       selectedParent.value = _controller.allItems
-              .firstWhereOrNull((e) => e.id == category.parentId) ??
-          CategoryModel.empty();
+              .firstWhereOrNull((e) => e.id == category.parentId) ??CategoryModel.empty();
     }
   }
 

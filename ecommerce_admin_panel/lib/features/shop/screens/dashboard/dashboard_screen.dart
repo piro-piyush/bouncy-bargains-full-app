@@ -10,6 +10,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final controller = Get.put(ProductImagesController());
     return TSiteTemplate(
       desktop: DashboardDesktopScreen(),
       tablet: DashboardTabletScreen(),

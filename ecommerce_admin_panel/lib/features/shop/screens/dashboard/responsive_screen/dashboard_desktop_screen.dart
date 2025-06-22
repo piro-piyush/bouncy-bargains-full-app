@@ -1,18 +1,15 @@
-import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_recent_orders.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductImagesController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
