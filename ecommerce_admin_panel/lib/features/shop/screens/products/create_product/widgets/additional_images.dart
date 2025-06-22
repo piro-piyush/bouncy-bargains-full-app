@@ -9,11 +9,10 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProductAdditionalImages extends StatelessWidget {
-  const ProductAdditionalImages(
-      {super.key,
-      required this.additionalProductImageURLs,
-      this.onTapToAddImages,
-      this.onTapToRemoveImages});
+  const ProductAdditionalImages({super.key,
+    required this.additionalProductImageURLs,
+    this.onTapToAddImages,
+    this.onTapToRemoveImages});
 
   final RxList<String> additionalProductImageURLs;
   final Function()? onTapToAddImages;
@@ -49,28 +48,30 @@ class ProductAdditionalImages extends StatelessWidget {
 
             Expanded(
                 child: Row(
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      height: 80,
-                      child: _uploadedImagesOrEmptyList(),
-                    )),
+                  children: [
+                    Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          height: 80,
+                          child: Obx(() {
+                            return _uploadedImagesOrEmptyList();
+                          }),
+                        )),
 
-                // Add More Images Button
-                TRoundedContainer(
-                  width: 80,
-                  height: 80,
-                  showBorder: true,
-                  borderColor: TColors.grey,
-                  backgroundColor: TColors.white,
-                  onTap: onTapToAddImages,
-                  child: Center(
-                    child: Icon(Iconsax.add),
-                  ),
-                )
-              ],
-            ))
+                    // Add More Images Button
+                    TRoundedContainer(
+                      width: 80,
+                      height: 80,
+                      showBorder: true,
+                      borderColor: TColors.grey,
+                      backgroundColor: TColors.white,
+                      onTap: onTapToAddImages,
+                      child: Center(
+                        child: Icon(Iconsax.add),
+                      ),
+                    )
+                  ],
+                ))
           ],
         ));
   }
@@ -85,9 +86,13 @@ class ProductAdditionalImages extends StatelessWidget {
   // Widget to Display empty List placeholder
   Widget emptyList() {
     return ListView.separated(
-        itemBuilder: (context, index) => TRoundedContainer(
-            backgroundColor: TColors.primaryBackground, width: 80, height: 80),
-        separatorBuilder: (context, index) => SizedBox(
+        itemBuilder: (context, index) =>
+            TRoundedContainer(
+                backgroundColor: TColors.primaryBackground,
+                width: 80,
+                height: 80),
+        separatorBuilder: (context, index) =>
+            SizedBox(
               width: TSizes.spaceBtwItems / 2,
             ),
         itemCount: 6,
@@ -97,7 +102,8 @@ class ProductAdditionalImages extends StatelessWidget {
   // Widget to Display uploaded images
   ListView _uploadedImages() {
     return ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(
+        separatorBuilder: (context, index) =>
+            SizedBox(
               width: TSizes.spaceBtwItems / 2,
             ),
         itemCount: additionalProductImageURLs.length,

@@ -37,6 +37,9 @@ class CategoriesTabletScreen extends StatelessWidget {
                       TTableHeader(
                         buttonText: "Create New Category",
                         onPressed: () => Get.toNamed(TRoutes.createCategory),
+                        searchController: controller.searchTextController,
+                        onSearchChange: (query) =>
+                            controller.searchQuery(query),
                       ),
                       SizedBox(
                         height: TSizes.spaceBtwItems,

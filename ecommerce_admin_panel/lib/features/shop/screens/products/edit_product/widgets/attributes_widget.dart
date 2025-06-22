@@ -1,5 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -7,22 +9,35 @@ import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProductAttributes extends StatelessWidget {
-  const ProductAttributes({super.key});
+  ProductAttributes({super.key});
+
+  final controller = EditProductController.instance;
 
   @override
   Widget build(BuildContext context) {
+    final attributeController = controller.productAttributesController;
+    final variationController = controller.productVariationsController;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(
-          color: TColors.primaryBackground,
-        ),
-        SizedBox(
-          height: TSizes.spaceBtwSections,
-        ),
+        Obx(() {
+          return controller.productType.value == ProductType.single
+              ? Column(
+                  children: [
+                    Divider(
+                      color: TColors.primaryBackground,
+                    ),
+                    SizedBox(
+                      height: TSizes.spaceBtwSections,
+                    ),
+                  ],
+                )
+              : SizedBox.shrink();
+        }),
 
         Text(
           'Add Product Attributes',
@@ -34,34 +49,37 @@ class ProductAttributes extends StatelessWidget {
 
         // Form to add new attributes
         Form(
+            key: attributeController.attributeFormKey,
             child: TDeviceUtils.isDesktopScreen(context)
                 ? Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: _buildAttributeNames(),
+                        child: _buildAttributeName(attributeController),
                       ),
                       SizedBox(
                         width: TSizes.spaceBtwItems,
                       ),
-                      Expanded(flex: 2, child: _buildAttributeTextField()),
+                      Expanded(
+                          flex: 2,
+                          child: _buildAttributeTextField(attributeController)),
                       SizedBox(
                         width: TSizes.spaceBtwItems,
                       ),
-                      _buildAttributeButton()
+                      _buildAttributeButton(attributeController)
                     ],
                   )
                 : Column(
                     children: [
-                      _buildAttributeNames(),
+                      _buildAttributeName(attributeController),
                       const SizedBox(
                         height: TSizes.spaceBtwItems,
                       ),
-                      _buildAttributeTextField(),
+                      _buildAttributeTextField(attributeController),
                       SizedBox(
                         height: TSizes.spaceBtwItems,
                       ),
-                      _buildAttributeButton()
+                      _buildAttributeButton(attributeController)
                     ],
                   )),
         SizedBox(
@@ -78,36 +96,40 @@ class ProductAttributes extends StatelessWidget {
         ),
 
         // Display added attributes in a rounded container
-        TRoundedContainer(
-          backgroundColor: TColors.primaryBackground,
-          child: Column(
-            children: [
-              buildAttributesList(context),
-              buildEmptyAttributes(),
-            ],
-          ),
-        ),
+        Obx(() {
+          return TRoundedContainer(
+            backgroundColor: TColors.primaryBackground,
+            child: attributeController.productAttributes.isNotEmpty
+                ? buildAttributesList(context, attributeController)
+                : buildEmptyAttributes(),
+          );
+        }),
         SizedBox(
           height: TSizes.spaceBtwSections,
         ),
 
         // Generate Variations Button
-        Center(
-          child: SizedBox(
-            width: 200,
-            child: ElevatedButton.icon(
-              onPressed: () {},
-              label: Text("Generate Variations"),
-              icon: Icon(Iconsax.activity),
-            ),
-          ),
-        )
+        Obx(() => controller.productType.value == ProductType.variable &&
+                variationController.productVariations.isEmpty
+            ? Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton.icon(
+                    onPressed: () => variationController
+                        .generateVariationsConfirmation(context),
+                    label: Text("Generate Variations"),
+                    icon: Icon(Iconsax.activity),
+                  ),
+                ),
+              )
+            : SizedBox.shrink())
       ],
     );
   }
 
-  TextFormField _buildAttributeNames() {
+  TextFormField _buildAttributeName(ProductAttributesController controller) {
     return TextFormField(
+      controller: controller.attributeNameController,
       validator: (value) =>
           TValidator.validateEmptyText("Attributes Name", value),
       decoration: InputDecoration(
@@ -115,10 +137,11 @@ class ProductAttributes extends StatelessWidget {
     );
   }
 
-  SizedBox _buildAttributeTextField() {
+  SizedBox _buildAttributeTextField(ProductAttributesController controller) {
     return SizedBox(
       height: 80,
       child: TextFormField(
+        controller: controller.attributeValueController,
         expands: true,
         maxLines: null,
         textAlign: TextAlign.start,
@@ -135,11 +158,11 @@ class ProductAttributes extends StatelessWidget {
     );
   }
 
-  SizedBox _buildAttributeButton() {
+  SizedBox _buildAttributeButton(ProductAttributesController controller) {
     return SizedBox(
       width: 100,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () => controller.addNewAttribute(),
         label: Text(
           "Add",
         ),
@@ -174,7 +197,8 @@ class ProductAttributes extends StatelessWidget {
     );
   }
 
-  ListView buildAttributesList(BuildContext context) {
+  ListView buildAttributesList(
+      BuildContext context, ProductAttributesController controller) {
     return ListView.separated(
       itemBuilder: (_, index) {
         return Container(
@@ -182,10 +206,12 @@ class ProductAttributes extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(TSizes.borderRadiusLg)),
           child: ListTile(
-            title: Text("Color"),
-            subtitle: Text("Green, Orange, Pink"),
+            title: Text(controller.productAttributes[index].name ?? ""),
+            subtitle: Text(controller.productAttributes[index].values!
+                .map((e) => e.trim())
+                .toString()),
             trailing: IconButton(
-                onPressed: () {},
+                onPressed: () => controller.removeAttribute(index, context),
                 icon: Icon(
                   Iconsax.trash,
                   color: TColors.error,
@@ -196,7 +222,7 @@ class ProductAttributes extends StatelessWidget {
       separatorBuilder: (_, __) => SizedBox(
         height: TSizes.spaceBtwItems,
       ),
-      itemCount: 3,
+      itemCount: controller.productAttributes.length,
       shrinkWrap: true,
     );
   }
