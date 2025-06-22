@@ -6,7 +6,6 @@ import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class EditProductForm extends StatelessWidget {
   const EditProductForm({super.key, required this.banner});
@@ -15,7 +14,7 @@ class EditProductForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final banner = Get.arguments;
+    // final product = Get.arguments;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),

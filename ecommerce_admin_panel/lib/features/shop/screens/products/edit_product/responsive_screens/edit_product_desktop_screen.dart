@@ -1,5 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/widgets/additional_images.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/widgets/attributes_widget.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/widgets/bottom_navigation_widget.dart';
@@ -15,17 +17,22 @@ import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class EditProductDesktopScreen extends StatelessWidget {
+  final ProductModel product;
+
   const EditProductDesktopScreen({
     super.key,
+    required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
+    final controller = EditProductController.instance;
     return Scaffold(
-      bottomNavigationBar: ProductBottomNavigationBar(),
+      bottomNavigationBar: ProductBottomNavigationBar(
+        productModel: product,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -126,10 +133,17 @@ class EditProductDesktopScreen extends StatelessWidget {
                               height: TSizes.spaceBtwItems,
                             ),
                             ProductAdditionalImages(
-                                additionalProductImageURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImages: (index) {})
+                                additionalProductImageURLs: controller
+                                    .productImagesController
+                                    .additionalProductImageUrls,
+                                onTapToAddImages: () {
+                                  controller.productImagesController
+                                      .selectMultipleProductImages();
+                                },
+                                onTapToRemoveImages: (index) {
+                                  controller.productImagesController
+                                      .removeImage(index);
+                                })
                           ],
                         ),
                       ),
@@ -144,7 +158,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                       ),
 
                       // Products Categories
-                      ProductsCategories(),
+                      ProductsCategories(productModel: product),
                       SizedBox(
                         height: TSizes.spaceBtwSections,
                       ),
