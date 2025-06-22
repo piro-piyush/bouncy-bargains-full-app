@@ -1,10 +1,13 @@
 import 'package:ecommerce_admin_panel/common/widgets/images/t_circular_image.dart';
 import 'package:ecommerce_admin_panel/common/widgets/layouts/sidebars/menu/menu_item.dart';
+import 'package:ecommerce_admin_panel/features/personalization/controllers/settings_controller.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
+import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TSidebar extends StatelessWidget {
@@ -22,11 +25,30 @@ class TSidebar extends StatelessWidget {
           child: Column(
             children: [
               // Image
-              TCircularImage(
-                width: 100,
-                height: 100,
-                image: TImages.darkAppLogo,
-                backgroundColor: Colors.transparent,
+              Row(
+                children: [
+                  Obx(() {
+                    return TCircularImage(
+                      width: 100,
+                      height: 100,
+                      image: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? SettingsController.instance.settings.value.appLogo
+                          : TImages.darkAppLogo,
+                      backgroundColor: Colors.transparent,
+                      imageType: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? ImageType.network
+                          : ImageType.asset,
+                    );
+                  }),
+                  Expanded(
+                      child: Obx(() => Text(
+                            SettingsController.instance.settings.value.appName,
+                            style: context.textTheme.headlineLarge,
+                            overflow: TextOverflow.ellipsis,
+                          )))
+                ],
               ),
               SizedBox(
                 height: TSizes.spaceBtwSections,

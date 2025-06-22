@@ -1,5 +1,7 @@
+import 'package:ecommerce_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
+import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class SidebarController extends GetxController {
@@ -19,9 +21,25 @@ class SidebarController extends GetxController {
   void menuOnTap(String route) {
     if (!isActive(route)) {
       changeActiveItem(route);
+
+      // Close drawer if on mobile
       if (TDeviceUtils.isMobileScreen(Get.context!)) Get.back();
 
-      Get.toNamed(route);
+      // Check for logout
+      if (route.toLowerCase() == 'logout') {
+        logout(); // 👈 Your logout logic here
+      } else {
+        Get.toNamed(route); // 👈 Normal navigation
+      }
+    }
+  }
+
+  void logout() {
+    try {
+      AuthenticationRepository.instance.logout();
+      TLoaders.successSnackBar(title: "Success", message: "Log out Success !");
+    } catch (e) {
+      TLoaders.errorSnackBar(title: "Error", message: e.toString());
     }
   }
 }

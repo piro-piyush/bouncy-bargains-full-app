@@ -1,7 +1,9 @@
 import 'package:ecommerce_admin_panel/data/repositories/authentication/authentication_repository.dart';
+import 'package:ecommerce_admin_panel/data/repositories/settings/settings_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:ecommerce_admin_panel/features/authentication/controllers/user_controller.dart';
-import 'package:ecommerce_admin_panel/features/shop/models/user_model.dart';
+import 'package:ecommerce_admin_panel/features/personalization/controllers/user_controller.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/settings_model.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
@@ -119,6 +121,13 @@ class LoginController extends GetxController {
         createdAt: DateTime.now(),
       ));
 
+      final settingsRepo = Get.put(SettingsRepository());
+      await settingsRepo.registerSettings(SettingsModel(
+        appName: "Bouncy Bargains",
+        appLogo: "",
+        taxRate: 0,
+        shippingCost: 0
+      ));
       // Remove Loader
       TFullScreenLoader.stopLoading();
 
