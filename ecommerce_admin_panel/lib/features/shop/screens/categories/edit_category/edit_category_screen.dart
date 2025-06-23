@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/edit_category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_admin_panel/common/widgets/layouts/templates/site_layout.dart';
@@ -13,7 +13,8 @@ class EditCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CategoryModel category = Get.arguments;
-    log("Category received: ${category.toString()}");
+    final editCategoryController = EditCategoryController.instance;
+    editCategoryController.init(category);
     return TSiteTemplate(
       desktop: EditCategoriesDesktopScreen(category: category),
       tablet: EditCategoriesTabletScreen(category: category),

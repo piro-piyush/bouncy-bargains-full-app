@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:ecommerce_admin_panel/features/shop/bindings/category/category_bindings.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +13,7 @@ class ProductsCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CategoryBindings().dependencies();
     final categoryController = Get.put(CategoryController());
 
     // Fetch categories if the list is empty

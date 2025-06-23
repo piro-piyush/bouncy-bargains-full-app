@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 class CreateCategoryController extends GetxController {
   static CreateCategoryController get instance => Get.find();
-
+  final categoryController = CategoryController.instance;
+  final _repo = CategoryRepository.instance;
   final selectedParent = CategoryModel.empty().obs;
   final isLoading = false.obs;
   RxString imageUrl = "".obs;
@@ -69,11 +70,11 @@ class CreateCategoryController extends GetxController {
         parentId: selectedParent.value.id,
       );
 
-      newRecord.id = await CategoryRepository.instance
+      newRecord.id = await _repo
           .createCategory(categoryModel: newRecord);
 
       // Update All Data List
-      CategoryController.instance.addItemToList(newRecord);
+      categoryController.addItemToList(newRecord);
 
       // Reset Form
       resetFields();

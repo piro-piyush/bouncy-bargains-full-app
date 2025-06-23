@@ -10,7 +10,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class EditCategoryController extends GetxController {
+
   static EditCategoryController get instance => Get.find();
+
+
+  final categoryController = CategoryController.instance;
+  final _repo = CategoryRepository.instance;
+
 
   final selectedParent = CategoryModel.empty().obs;
   final isLoading = false.obs;
@@ -18,7 +24,6 @@ class EditCategoryController extends GetxController {
   final isFeatured = false.obs;
   final name = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final _controller = CategoryController.instance;
 
   /// Init Data
   void init(CategoryModel category) {
@@ -26,8 +31,9 @@ class EditCategoryController extends GetxController {
     isFeatured.value = category.isFeatured;
     imageUrl.value = category.image;
     if (category.parentId.isNotEmpty) {
-      selectedParent.value = _controller.allItems
-              .firstWhereOrNull((e) => e.id == category.parentId) ??CategoryModel.empty();
+      selectedParent.value = categoryController.allItems
+              .firstWhereOrNull((e) => e.id == category.parentId) ??
+          CategoryModel.empty();
     }
   }
 
@@ -79,10 +85,10 @@ class EditCategoryController extends GetxController {
       category.updatedAt = DateTime.now();
 
       // Call the repo to update category
-      await CategoryRepository.instance.updateCategory(categoryModel: category);
+      await _repo.updateCategory(categoryModel: category);
 
       // Update All Data List
-      _controller.updateItemFromList(category);
+      categoryController.updateItemFromList(category);
 
       // Reset Form
       resetFields();

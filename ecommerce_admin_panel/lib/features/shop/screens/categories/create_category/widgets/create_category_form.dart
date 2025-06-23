@@ -1,7 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/category/create_category_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -16,8 +15,8 @@ class CreateCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createCategoryController = Get.put(CreateCategoryController());
-    final categoryController = Get.put(CategoryController());
+    final createCategoryController = CreateCategoryController.instance;
+    final categoryController = createCategoryController.categoryController;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),
@@ -63,7 +62,7 @@ class CreateCategoryForm extends StatelessWidget {
                           .selectedParent.value = newValue!,
                       items: categoryController.allItems
                           .map((item) => DropdownMenuItem(
-                        value: item,
+                                value: item,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [Text(item.name)],

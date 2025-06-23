@@ -14,7 +14,7 @@ class CategoriesDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CategoryController());
+    final controller = CategoryController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -34,28 +34,30 @@ class CategoriesDesktopScreen extends StatelessWidget {
               // Table Body
               // Should be in Obx
               TRoundedContainer(
-                child: Column(
-                  children: [
-                    // Table Header
-                    TTableHeader(
-                      buttonText: "Create New Category",
-                      onPressed: () => Get.toNamed(TRoutes.createCategory),
-                      hintText: "Search Categories",
-                      searchController: controller.searchTextController,
-                      onSearchChange: (query) => controller.searchQuery(query),
-                    ),
-                    SizedBox(
-                      height: TSizes.spaceBtwItems,
-                    ),
+                  child: Column(
+                    children: [
+                      // Table Header
+                      TTableHeader(
+                        buttonText: "Create New Category",
+                        onPressed: () => Get.toNamed(TRoutes.createCategory),
+                        hintText: "Search Categories",
+                        searchController: controller.searchTextController,
+                        onSearchChange: (query) => controller.searchQuery(query),
+                      ),
+                      SizedBox(
+                        height: TSizes.spaceBtwItems,
+                      ),
 
-                    // Table
-                    Obx(() {
-                      if (controller.isLoading.value) return TLoaderAnimation();
-                      return CategoryTable();
-                    })
-                  ],
+                      // Table
+                      Obx(() {
+                        if (controller.isLoading.value) {
+                          return TLoaderAnimation();
+                        }
+                        return CategoryTable();
+                      })
+                    ],
+                  ),
                 ),
-              )
             ],
           ),
         ),

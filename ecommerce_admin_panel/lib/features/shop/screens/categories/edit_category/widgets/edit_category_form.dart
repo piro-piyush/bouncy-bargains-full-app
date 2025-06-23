@@ -1,7 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/category/edit_category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
@@ -19,14 +18,13 @@ class EditCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final editController = Get.put(EditCategoryController());
-    final categoryController = Get.put(CategoryController());
-    editController.init(category);
+    final editCategoryController = EditCategoryController.instance;
+    final categoryController = editCategoryController.categoryController;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),
       child: Form(
-          key: editController.formKey,
+          key: editCategoryController.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,7 +42,7 @@ class EditCategoryForm extends StatelessWidget {
 
               // Name Text Field
               TextFormField(
-                controller: editController.name,
+                controller: editCategoryController.name,
                 validator: (value) =>
                     TValidator.validateEmptyText("Name", value),
                 decoration: InputDecoration(
@@ -63,11 +61,12 @@ class EditCategoryForm extends StatelessWidget {
                           hintText: "Parent Category",
                           labelText: "Parent Category",
                           prefixIcon: Icon(Iconsax.bezier)),
-                      value: editController.selectedParent.value.id.isNotEmpty
-                          ? editController.selectedParent.value
+                      value: editCategoryController
+                              .selectedParent.value.id.isNotEmpty
+                          ? editCategoryController.selectedParent.value
                           : null,
-                      onChanged: (newValue) =>
-                          editController.selectedParent.value = newValue!,
+                      onChanged: (newValue) => editCategoryController
+                          .selectedParent.value = newValue!,
                       items: categoryController.allItems
                           .map((item) => DropdownMenuItem(
                                 value: item,
@@ -84,13 +83,13 @@ class EditCategoryForm extends StatelessWidget {
                 () => TImageUploader(
                   width: 80,
                   height: 80,
-                  image: editController.imageUrl.value.isNotEmpty
-                      ? editController.imageUrl.value
+                  image: editCategoryController.imageUrl.value.isNotEmpty
+                      ? editCategoryController.imageUrl.value
                       : TImages.defaultImage,
-                  imageType: editController.imageUrl.value.isNotEmpty
+                  imageType: editCategoryController.imageUrl.value.isNotEmpty
                       ? ImageType.network
                       : ImageType.asset,
-                  onIconButtonPressed: () => editController.pickImage(),
+                  onIconButtonPressed: () => editCategoryController.pickImage(),
                 ),
               ),
 
@@ -100,9 +99,9 @@ class EditCategoryForm extends StatelessWidget {
 
               Obx(
                 () => CheckboxMenuButton(
-                    value: editController.isFeatured.value,
-                    onChanged: (value) =>
-                        editController.isFeatured.value = value ?? false,
+                    value: editCategoryController.isFeatured.value,
+                    onChanged: (value) => editCategoryController
+                        .isFeatured.value = value ?? false,
                     child: Text("Featured")),
               ),
 
@@ -113,7 +112,8 @@ class EditCategoryForm extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => editController.updateCategory(category),
+                    onPressed: () =>
+                        editCategoryController.updateCategory(category),
                     child: Text("Update")),
               ),
               SizedBox(
