@@ -1,7 +1,9 @@
-import 'package:ecommerce_admin_panel/features/authentication/bindings/login_bindings.dart';
+import 'package:ecommerce_admin_panel/features/authentication/bindings/auth_bindings.dart';
+import 'package:ecommerce_admin_panel/features/authentication/screens/account_approval/account_approval_screen.dart';
 import 'package:ecommerce_admin_panel/features/authentication/screens/forget_password/forget_password_screen.dart';
 import 'package:ecommerce_admin_panel/features/authentication/screens/login/login_screen.dart';
 import 'package:ecommerce_admin_panel/features/authentication/screens/reset_password/reset_password_screen.dart';
+import 'package:ecommerce_admin_panel/features/authentication/screens/sign_up/signup_screen.dart';
 import 'package:ecommerce_admin_panel/features/media/screens/media_screen.dart';
 import 'package:ecommerce_admin_panel/features/personalization/screens/profile/profile_screen.dart';
 import 'package:ecommerce_admin_panel/features/personalization/screens/settings/settings_screen.dart';
@@ -42,14 +44,22 @@ class TAppRoute {
     GetPage(
         name: TRoutes.login,
         page: () => const LoginScreen(),
-        binding: LoginBindings()),
+        binding: AuthBindings()),
+    GetPage(
+        name: TRoutes.signUp,
+        page: () => const SignupScreen(),
+        binding: AuthBindings()),
+    GetPage(
+        name: TRoutes.accountApproval,
+        page: () => const AccountApprovalScreen(),
+        binding: AuthBindings()),
     GetPage(
         name: TRoutes.forgetPassword,
-        binding: LoginBindings(),
+        binding: AuthBindings(),
         page: () => const ForgetPasswordScreen()),
     GetPage(
         name: TRoutes.resetPassword,
-        binding: LoginBindings(),
+        binding: AuthBindings(),
         page: () => const ResetPasswordScreen()),
     GetPage(
       name: TRoutes.dashboard,

@@ -31,7 +31,7 @@ class CustomerController extends TBaseController<UserModel> {
   /// ❌ Deletes a user from Firestore using their ID
   @override
   Future<void> deleteItem(UserModel item) async {
-    return await _repo.delete(item.id ?? "");
+    return await _repo.deleteUser(item.id);
   }
 
   /// 📥 Fetches all users from Firestore

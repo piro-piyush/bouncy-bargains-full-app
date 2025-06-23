@@ -139,12 +139,14 @@ class DashboardController extends TBaseController<OrderModel> {
 
 
   /// 📈 Returns a widget showing percentage change with colored arrow
-  Widget getPercentageIndicator(double current, double last, BuildContext context) {
+  Widget getPercentageIndicator(double current, double last, BuildContext context,
+      {bool showIcon = true}) {
     final percent = last == 0 ? (current > 0 ? 100.0 : 0.0) : ((current - last) / last) * 100;
     final isPositive = percent >= 0;
 
     return Row(
       children: [
+        if(showIcon)
         Icon(
           isPositive ? Icons.arrow_upward : Icons.arrow_downward,
           color: isPositive ? TColors.success : TColors.error,
@@ -179,7 +181,7 @@ class DashboardController extends TBaseController<OrderModel> {
         .length
         .toDouble();
 
-    return getPercentageIndicator(currentMonth, lastMonth,context,);
+    return getPercentageIndicator(currentMonth, lastMonth,context,showIcon: false);
   }
 
   /// 📦 % increase in number of orders this month vs last month

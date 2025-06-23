@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/data/repositories/address/address_repository.dart';
+import 'package:ecommerce_admin_panel/data/repositories/order/order_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
@@ -17,6 +18,7 @@ class CustomerDetailsController extends GetxController {
   final Rx<UserModel> customer = UserModel.empty().obs;
   final addressRepo = AddressRepository.instance;
   final userRepo =UserRepository.instance;
+  final orderRepo =OrderRepository.instance;
   final searchTextController = TextEditingController();
   RxList<OrderModel> allOrders = <OrderModel>[].obs;
   RxList<OrderModel> filteredOrders = <OrderModel>[].obs;
@@ -39,9 +41,11 @@ class CustomerDetailsController extends GetxController {
       ordersLoading.value = true;
 
       // Fetch categories orders && addresses
-      if (customer.value.id != null && customer.value.id!.isNotEmpty) {
-        customer.value.orders =
-            await userRepo.fetchUserOrders(customer.value.id!);
+      if (customer.value.id.isNotEmpty) {
+        final orders = await orderRepo.fetchOrder(customer.value.id);
+        customer.value = customer.value.copyWith(
+          orders: orders
+        );
       }
 
       // Update the categories list
@@ -62,8 +66,11 @@ class CustomerDetailsController extends GetxController {
   Future<void> getCustomerAddresses()async{
     try{
       addressLoading.value = true;
-      if(customer.value.id != null && customer.value.id!.isNotEmpty){
-        customer.value.addresses = await addressRepo.fetchUserAddresses(customer.value.id!);
+      if(customer.value.id.isNotEmpty){
+        final addresses = await addressRepo.fetchUserAddresses(customer.value.id);
+        customer.value = customer.value.copyWith(
+            addresses: addresses
+        );
       }
     }catch(e){
       TLoaders.errorSnackBar(title: "Oh Snap!", message: e.toString());

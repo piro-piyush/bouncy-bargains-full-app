@@ -49,10 +49,10 @@ class CustomerInfo extends StatelessWidget {
           Row(
             children: [
               TRoundedImage(
-                imageType: customer.profilePicture.isNotEmpty
+                imageType: customer.profilePicture!=null
                     ? ImageType.network
                     : ImageType.asset,
-                image: customer.profilePicture.isNotEmpty
+                image: customer.profilePicture!=null
                     ? customer.profilePicture
                     : TImages.user,
                 padding: 0,
