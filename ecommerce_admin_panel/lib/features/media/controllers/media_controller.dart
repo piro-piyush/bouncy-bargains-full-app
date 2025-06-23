@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:ecommerce_admin_panel/common/widgets/loaders/circular_loader.dart';
 import 'package:ecommerce_admin_panel/data/repositories/media/media_repository.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
@@ -12,6 +11,7 @@ import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
 import 'package:ecommerce_admin_panel/utils/popups/dialogs.dart';
 import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
@@ -64,7 +64,7 @@ class MediaController extends GetxController {
 
       loading.value = false;
     } catch (e) {
-      print("Error in getMediaImages : ${e.toString()}");
+      if(kDebugMode )print("Error in getMediaImages : ${e.toString()}");
       loading.value = false;
       TLoaders.errorSnackBar(
           title: "Oh snap",

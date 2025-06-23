@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -74,8 +75,6 @@ class MediaRepository extends GetxController {
 
       // Check if the snapshot has any documents
       if (querySnapshot.docs.isEmpty) {
-        print(mediaCategory.toString());
-        print("No images found for this category.");
         return []; // Return an empty list if no documents are found
       }
 
@@ -87,7 +86,7 @@ class MediaRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      print("Unable to fetch images, from db");
+      if(kDebugMode )print("Unable to fetch images, from db");
       throw e.toString();
     }
   }

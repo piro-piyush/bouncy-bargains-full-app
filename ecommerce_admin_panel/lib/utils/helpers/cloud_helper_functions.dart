@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:io' as html;
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -117,10 +118,10 @@ class TCloudHelperFunctions {
       Reference ref = FirebaseStorage.instance.refFromURL(downloadUrl);
       await ref.delete();
 
-      print('File deleted successfully.');
+      if(kDebugMode ) print('File deleted successfully.');
     } on FirebaseException catch (e) {
       if (e.code == 'object-not-found') {
-        print('The file does not exist in Firebase Storage.');
+        if(kDebugMode )  print('The file does not exist in Firebase Storage.');
       } else {
         throw e.message!;
       }

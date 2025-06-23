@@ -41,14 +41,10 @@ class MediaUploader extends StatelessWidget {
                           operation: DragOperation.copy,
                           onCreated: (ctrl) =>
                               controller.dropzoneController = ctrl,
-                          onLoaded: () => print('Zone loaded'),
-                          onError: (ev) => print('Zone error: $ev'),
-                          onHover: () {
-                            print('Zone hovered');
-                          },
-                          onLeave: () {
-                            print('Zone left');
-                          },
+                          onLoaded: () {},
+                          onError: (ev) {},
+                          onHover: () {},
+                          onLeave: () {},
                           onDropFile: (DropzoneFileInterface ev) async {
                             // Retrieve file data as Uint8List
                             final bytes = await controller.dropzoneController
@@ -67,10 +63,9 @@ class MediaUploader extends StatelessWidget {
                             );
                             controller.selectedImagesToUpload.add(image);
                           },
-                          onDropInvalid: (ev) =>
-                              print('Zone invalid MIME: $ev'),
+                          onDropInvalid: (ev) {},
                           onDropFiles: (ev) async {
-                            print('Zone drop multiple: $ev');
+                            // print('Zone drop multiple: $ev');
                           },
                         ),
 
