@@ -54,7 +54,7 @@ class CustomerRows extends DataTableSource {
           DataCell(Text(
               customer.phoneNumber.isNotEmpty ? customer.phoneNumber : "N/A")),
           DataCell(Text(
-              customer.createdAt != null ? customer.formattedDate : "N/A")),
+               customer.formattedDate )),
           DataCell(TTableActionButtons(
             view: true,
             edit: false,
