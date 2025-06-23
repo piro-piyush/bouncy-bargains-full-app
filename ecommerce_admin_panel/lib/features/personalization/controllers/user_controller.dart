@@ -1,7 +1,7 @@
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
-import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
+import 'package:ecommerce_admin_panel/features/personalization/models/admin_model.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/network_manager.dart';
 import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
@@ -22,7 +22,7 @@ class UserController extends GetxController {
   RxBool loading = false.obs;
 
   /// Observable user model
-  Rx<UserModel> user = UserModel.empty().obs;
+  Rx<AdminModel> admin = AdminModel.empty().obs;
 
   /// Form key for validation
   final formKey = GlobalKey<FormState>();
@@ -46,12 +46,12 @@ class UserController extends GetxController {
   }
 
   /// 📥 Fetch logged-in user's details and populate form fields
-  Future<UserModel> fetchUserDetails() async {
+  Future<AdminModel> fetchUserDetails() async {
     try {
       loading.value = true;
 
-      final admin = await _repo.fetchAdminDetails();
-      user.value = admin;
+      final admin = await _repo.fetchAdmin();
+      this.admin.value = admin;
 
       // Populate form fields
       firstNameController.text = admin.firstName;
@@ -63,7 +63,7 @@ class UserController extends GetxController {
     } catch (e) {
       TLoaders.errorSnackBar(
           title: "Something went wrong", message: e.toString());
-      return UserModel.empty();
+      return AdminModel.empty();
     } finally {
       loading.value = false;
     }
@@ -82,11 +82,11 @@ class UserController extends GetxController {
         final ImageModel selectedImage = selectedImages.first;
 
         // Update Firestore
-        await _repo.updateSingleField({"ProfilePicture": selectedImage.url});
+        await _repo.updateAdminField({"ProfilePicture": selectedImage.url});
 
         // Update UI
-        user.value.profilePicture = selectedImage.url;
-        user.refresh();
+        admin.value.profilePicture = selectedImage.url;
+        admin.refresh();
 
         TLoaders.successSnackBar(
             title: "Success", message: "Profile picture updated successfully.");
@@ -117,13 +117,13 @@ class UserController extends GetxController {
       }
 
       // Assign updated values
-      user.value.firstName = firstNameController.text.trim();
-      user.value.lastName = lastNameController.text.trim();
-      user.value.phoneNumber = phoneController.text.trim();
+      admin.value.firstName = firstNameController.text.trim();
+      admin.value.lastName = lastNameController.text.trim();
+      admin.value.phoneNumber = phoneController.text.trim();
 
       // Update in Firestore
-      await _repo.updateUserDetails(user.value);
-      user.refresh();
+      await _repo.updateAdminDetails(admin.value);
+      admin.refresh();
 
       TLoaders.successSnackBar(
           title: "Success", message: "User details updated successfully.");

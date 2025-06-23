@@ -52,6 +52,7 @@ class TTexts {
   static const String verificationCode = "verificationCode";
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
+  static const String optional = "(Optional)";
 
 
   // -- Authentication Headings

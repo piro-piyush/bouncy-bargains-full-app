@@ -2,70 +2,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/address_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
-import 'package:ecommerce_admin_panel/utils/formatters/formatter.dart';
+import 'package:ecommerce_admin_panel/utils/constants/extenstions.dart';
+import 'base_user_model.dart';
 
-class UserModel {
-  final String? id;
-  String firstName;
-  String lastName;
-  String username;
-  String email;
-  String phoneNumber;
-  String profilePicture;
-  AppRole role;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<OrderModel>? orders;
-  List<AddressModel>? addresses;
+class UserModel extends BaseUserModel {
+  final List<OrderModel>? orders;
+  final List<AddressModel>? addresses;
 
-  // Constructor for user model
+  /// 🏗️ User model constructor
   UserModel({
-    this.id,
-    required this.email,
-    this.firstName = '',
-    this.lastName = '',
-    this.username = '',
-    this.phoneNumber = '',
-    this.profilePicture = '',
-    this.role = AppRole.user,
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.username,
+    required super.email,
+    required super.phoneNumber,
+    super.profilePicture,
+    super.createdAt,
+    super.updatedAt,
+    super.role = AppRole.user,
     this.orders,
     this.addresses,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  })  : createdAt = createdAt ?? DateTime.now(),
-        updatedAt = updatedAt ?? DateTime.now();
+  });
 
-  // Helper function to get full name
-  String get fullName => '$firstName $lastName';
-
-  // Helper functions to get formated created date;
-  String get formattedDate => TFormatter.formatDate(createdAt);
-
-  // Helper functions to get formated updated date;
-  String get formattedUpdatedDate => TFormatter.formatDate(updatedAt);
-
-  // Helper function to format phone number
-  String get formattedPhoneNumber => TFormatter.formatPhoneNumber(phoneNumber);
-
-  // Static function to split full name into first and last name
-  static List<String> nameParts(fullName) => fullName.split(" ");
-
-  // Static function to generate a username from the full name
-  static String generateUsername(fullName) {
-    List<String> nameParts = fullName.split(" ");
-    String firstName = nameParts[0].toLowerCase();
-    String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
-
-    String camelCaseUsername =
-        "$firstName$lastName"; // Combine first and last name
-    String usernameWithPrefix = "cwt_$camelCaseUsername"; // Add "cwt_" prefix
-    return usernameWithPrefix;
-  }
-
-  // Static function to create an empty user model.
-  static UserModel empty() => UserModel(email: '');
-
-  // Convert model to JSON structure for storing data in Firebase.
+  /// 🔄 Convert object to JSON
+  @override
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
@@ -75,44 +36,90 @@ class UserModel {
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
-      'Role': role.name.toString(),
+      'Role': role.toJson(),
       'CreatedAt': createdAt,
-      'UpdatedAt': updatedAt = DateTime.now(),
-      // 'Orders': orders,
-      // 'Addresses': addresses,
+      'UpdatedAt': DateTime.now(),
     };
   }
 
-  // Factory method to create a UserModel from a Firebase document snapshot.
+  /// 🧱 Empty user factory
+  factory UserModel.empty() => UserModel(
+    id: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+  );
+
+  /// 🔄 Create from Firebase snapshot
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
-      return UserModel(
-        id: document.id,
-        firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
-        lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
-        username: data.containsKey('Username') ? data['Username'] ?? '' : '',
-        email: data.containsKey('Email') ? data['Email'] ?? '' : '',
-        phoneNumber:
-            data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
-        profilePicture: data.containsKey('ProfilePicture')
-            ? data['ProfilePicture'] ?? ''
-            : '',
-        role: data.containsKey('Role')
-            ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
-                ? AppRole.admin
-                : AppRole.user
-            : AppRole.user,
-        createdAt: data.containsKey('CreatedAt')
-            ? data['CreatedAt']?.toDate() ?? DateTime.now()
-            : DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt')
-            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
-            : DateTime.now(),
-      );
-    } else {
-      return empty();
-    }
+    final data = document.data();
+    if (data == null) return UserModel.empty();
+
+    return UserModel(
+      id: document.id,
+      firstName: data['FirstName'] ?? '',
+      lastName: data['LastName'] ?? '',
+      username: data['Username'] ?? '',
+      email: data['Email'] ?? '',
+      phoneNumber: data['PhoneNumber'] ?? '',
+      profilePicture: data['ProfilePicture'],
+      role: AppRoleExtension.fromJson(data['Role'] ?? ''),
+      createdAt:
+      data['CreatedAt']?.toDate(),
+      updatedAt:
+      data['UpdatedAt']?.toDate(),
+    );
+  }
+
+  /// 🧩 Create from plain JSON
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['Id'] ?? '',
+      firstName: json['FirstName'] ?? '',
+      lastName: json['LastName'] ?? '',
+      username: json['Username'] ?? '',
+      email: json['Email'] ?? '',
+      phoneNumber: json['PhoneNumber'] ?? '',
+      profilePicture: json['ProfilePicture'] ?? '',
+      role: AppRoleExtension.fromJson(json['Role'] ?? ''),
+      createdAt:
+      json['CreatedAt'] != null ? (json['CreatedAt'] as Timestamp).toDate() : null,
+      updatedAt:
+      json['UpdatedAt'] != null ? (json['UpdatedAt'] as Timestamp).toDate() : null,
+    );
+  }
+
+  /// ✏️ Copy with utility
+  UserModel copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? username,
+    String? email,
+    String? phoneNumber,
+    String? profilePicture,
+    AppRole? role,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    List<OrderModel>? orders,
+    List<AddressModel>? addresses,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      profilePicture: profilePicture ?? this.profilePicture,
+      role: role ?? this.role,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      orders: orders ?? this.orders,
+      addresses: addresses ?? this.addresses,
+    );
   }
 }
