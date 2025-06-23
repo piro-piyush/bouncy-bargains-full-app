@@ -43,14 +43,18 @@ class ImageAndMeta extends StatelessWidget {
               SizedBox(
                 height: TSizes.spaceBtwItems,
               ),
-              Text(
-                controller.user.value.fullName,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineLarge,
-              ),
-              Text(controller.user.value.email),
+              Obx(() {
+                return Text(
+                  controller.user.value.fullName,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineLarge,
+                );
+              }),
+              Obx(() {
+                return Text(controller.user.value.email);
+              }),
               SizedBox(
                 height: TSizes.spaceBtwItems,
               ),

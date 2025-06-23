@@ -1,6 +1,7 @@
-import 'package:ecommerce_admin_panel/routes/routes.dart';
+import 'package:ecommerce_admin_panel/features/authentication/controllers/forget_password_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
+import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -12,6 +13,7 @@ class HeaderAndForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ForgetPasswordController.instance;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,11 +37,14 @@ class HeaderAndForm extends StatelessWidget {
 
         // Form
         Form(
+          key: controller.resetKey,
           child: TextFormField(
+            controller: controller.email,
             decoration: InputDecoration(
               labelText: TTexts.email,
               prefixIcon: Icon(Iconsax.direct_right),
             ),
+            validator: TValidator.validateEmail,
           ),
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
@@ -48,9 +53,7 @@ class HeaderAndForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-              onPressed: () => Get.toNamed(TRoutes.resetPassword,
-                  parameters: {'email': 'piyush72717272@gmail.com'}),
-              child: Text(TTexts.submit)),
+              onPressed: () => controller.submit(), child: Text(TTexts.submit)),
         )
       ],
     );

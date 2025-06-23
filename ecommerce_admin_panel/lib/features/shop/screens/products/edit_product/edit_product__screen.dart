@@ -11,8 +11,8 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(EditProductController());
     final product = Get.arguments;
+    final controller = EditProductController.instance;
     controller.init(product);
     return TSiteTemplate(
       desktop: EditProductDesktopScreen(

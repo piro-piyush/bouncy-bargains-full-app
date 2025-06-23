@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart' show EditProductController;
 import 'package:ecommerce_admin_panel/features/shop/models/product_model.dart' show ProductModel;
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/widgets/additional_images.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_product/widgets/attributes_widget.dart';
@@ -14,7 +15,6 @@ import 'package:ecommerce_admin_panel/features/shop/screens/products/edit_produc
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class EditProductMobileScreen extends StatelessWidget {
   final ProductModel product;
@@ -22,6 +22,7 @@ class EditProductMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = EditProductController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -110,9 +111,17 @@ class EditProductMobileScreen extends StatelessWidget {
                           height: TSizes.spaceBtwItems,
                         ),
                         ProductAdditionalImages(
-                            additionalProductImageURLs: RxList<String>.empty(),
-                            onTapToAddImages: () {},
-                            onTapToRemoveImages: (index) {})
+                            additionalProductImageURLs: controller
+                                .productImagesController
+                                .additionalProductImageUrls,
+                            onTapToAddImages: () {
+                              controller.productImagesController
+                                  .selectMultipleProductImages();
+                            },
+                            onTapToRemoveImages: (index) {
+                              controller.productImagesController
+                                  .removeImage(index);
+                            })
                       ],
                     ),
                   ),

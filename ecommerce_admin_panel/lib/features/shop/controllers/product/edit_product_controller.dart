@@ -22,16 +22,17 @@ import 'package:get/get.dart';
 class EditProductController extends GetxController {
   static EditProductController get instance => Get.find();
 
+  final _repo = ProductRepository.instance;
+  final productController = ProductController.instance;
+  final productVariationController = ProductVariationsController.instance;
+  final productAttributeController = ProductAttributesController.instance;
+  final productImagesController = ProductImagesController.instance;
+  final categoryController = CategoryController.instance;
+
   final isLoading = false.obs;
   final selectedCategoriesLoader = false.obs;
   final productType = ProductType.single.obs;
   final productVisibility = ProductVisibility.hidden.obs;
-
-  final _repo = ProductRepository.instance;
-  final productVariationsController = Get.put(ProductVariationsController());
-  final productAttributesController = Get.put(ProductAttributesController());
-  final productImagesController = Get.put(ProductImagesController());
-  final categoryController = Get.put(CategoryController());
 
   final stockFormKey = GlobalKey<FormState>();
   final titleDescriptionFormKey = GlobalKey<FormState>();
@@ -87,11 +88,11 @@ class EditProductController extends GetxController {
       }
 
       // Product Attributes & Variations  (assuming you have  a method to fetch  variations in ProductVariationController )
-      productAttributesController.productAttributes
+      productAttributeController.productAttributes
           .assignAll(product.productAttributes ?? []);
-      productVariationsController.productVariations
+      productVariationController.productVariations
           .assignAll(product.productVariations ?? []);
-      productVariationsController
+      productVariationController
           .initializeVariationControllers(product.productVariations ?? []);
 
       isLoading.value = true;
@@ -136,8 +137,9 @@ class EditProductController extends GetxController {
     brandTextField.clear();
     selectedCategories.clear();
     selectedBrand.value = null;
-    ProductVariationsController.instance.resetAllValues();
-    ProductAttributesController.instance.resetProductAttributes();
+    productVariationController.resetAllValues();
+    productAttributeController.resetProductAttributes();
+    productImagesController.resetAllImages();
     thumbnailUploader.value = false;
     additionalImagesUploader.value = false;
     productDataUploader.value = false;
@@ -246,9 +248,8 @@ class EditProductController extends GetxController {
 
       // Check variation data if ProductType = Variable
       if (productType.value == ProductType.variable) {
-        final variationCheckFailed = ProductVariationsController
-            .instance.productVariations
-            .any((element) =>
+        final variationCheckFailed =
+            productVariationController.productVariations.any((element) =>
                 element.price.isNaN ||
                 element.price < 0 ||
                 element.salePrice.isNaN ||
@@ -264,17 +265,16 @@ class EditProductController extends GetxController {
 
       // Upload Product thumbnail image
       thumbnailUploader.value = true;
-      final imagesController = ProductImagesController.instance;
-      if (imagesController.selectedThumbnailImageUrl.value == null) {
+      if (productImagesController.selectedThumbnailImageUrl.value == null) {
         throw "Select thumbnail image";
       }
 
       // additional product images
       additionalImagesUploader.value = true;
-      final variations = ProductVariationsController.instance.productVariations;
+      final variations = productVariationController.productVariations;
       if (productType.value == ProductType.single && variations.isNotEmpty) {
         // If admin added variations and then  changed the product type, remove all variations
-        ProductVariationsController.instance.resetAllValues();
+        productVariationController.resetAllValues();
         variations.value = [];
       }
 
@@ -288,9 +288,8 @@ class EditProductController extends GetxController {
       product.price = double.tryParse(price.text.trim()) ?? 0;
       product.salePrice = double.tryParse(salePrice.text.trim()) ?? 0;
       product.thumbnail =
-          imagesController.selectedThumbnailImageUrl.value ?? "";
-      product.productAttributes =
-          ProductAttributesController.instance.productAttributes;
+          productImagesController.selectedThumbnailImageUrl.value ?? "";
+      product.productAttributes = productAttributeController.productAttributes;
       product.productVariations = variations;
 
       productDataUploader.value = true;
@@ -324,7 +323,7 @@ class EditProductController extends GetxController {
       }
 
       // Update the product list
-      ProductController.instance.updateItemFromList(product);
+      productController.updateItemFromList(product);
 
       // CLose the progress loader
       TFullScreenLoader.stopLoading();
