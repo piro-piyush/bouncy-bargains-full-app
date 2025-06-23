@@ -27,6 +27,7 @@ class SettingsModel {
       'appLogo': appLogo,
     };
   }
+
   static double toDouble(dynamic value) {
     if (value is int) return value.toDouble();
     if (value is double) return value;
@@ -37,22 +38,19 @@ class SettingsModel {
   static SettingsModel empty() => SettingsModel();
 
   factory SettingsModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    if (snapshot.data() != null) {
-      final data = snapshot.data();
-      return SettingsModel(
-        id: snapshot.id,
-        taxRate: toDouble(data?['taxRate']),
-        shippingCost: toDouble(data?['shippingCost']),
-        freeShippingThreshold: toDouble(data?['freeShippingThreshold']),
-        appName: data?['appName'] ?? '',
-        appLogo: data?['appLogo'] ?? '',
-      );
-    } else {
-      return SettingsModel.empty();
-    }
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      ) {
+    final data = snapshot.data();
+    if (data == null) return SettingsModel.empty();
+
+    return SettingsModel(
+      id: snapshot.id,
+      taxRate: toDouble(data['taxRate']),
+      shippingCost: toDouble(data['shippingCost']),
+      freeShippingThreshold: toDouble(data['freeShippingThreshold']),
+      appName: data['appName'] ?? '',
+      appLogo: data['appLogo'] ?? '',
+    );
   }
-
-
 
 }
