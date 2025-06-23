@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingsModel {
-  final String? id;
+  final String id = "GlOBAL_SETTINGS";
   double taxRate;
   double shippingCost;
   double? freeShippingThreshold;
@@ -9,7 +9,6 @@ class SettingsModel {
   String appLogo;
 
   SettingsModel({
-    this.id,
     this.taxRate = 0.0,
     this.shippingCost = 0.0,
     this.freeShippingThreshold,
@@ -44,7 +43,6 @@ class SettingsModel {
     if (data == null) return SettingsModel.empty();
 
     return SettingsModel(
-      id: snapshot.id,
       taxRate: toDouble(data['taxRate']),
       shippingCost: toDouble(data['shippingCost']),
       freeShippingThreshold: toDouble(data['freeShippingThreshold']),

@@ -1,4 +1,4 @@
-import 'package:ecommerce_admin_panel/features/authentication/controllers/login_controller.dart';
+import 'package:ecommerce_admin_panel/features/authentication/controllers/auth_controller.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
@@ -14,7 +14,7 @@ class TLoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = LoginController.instance;
+    final controller = AuthController.instance;
     return Form(
         key: controller.loginFormKey,
         child: Padding(
@@ -23,7 +23,7 @@ class TLoginForm extends StatelessWidget {
             children: [
               // Email
               TextFormField(
-                controller: controller.email,
+                controller: controller.loginEmail,
                 validator: TValidator.validateEmail,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Iconsax.direct_right),
@@ -38,8 +38,8 @@ class TLoginForm extends StatelessWidget {
               // Password
               Obx(
                 () => TextFormField(
-                  controller: controller.password,
-                  obscureText: controller.hidePassword.value,
+                  controller: controller.loginPassword,
+                  obscureText: controller.hideLoginPassword.value,
                   validator: (value) =>
                       TValidator.validateEmptyText("Password", value),
                   decoration: InputDecoration(
@@ -47,10 +47,10 @@ class TLoginForm extends StatelessWidget {
                       labelText: TTexts.password,
                       suffixIcon: IconButton(
                           onPressed: () {
-                            controller.hidePassword.value =
-                                !controller.hidePassword.value;
+                            controller.hideLoginPassword.value =
+                                !controller.hideLoginPassword.value;
                           },
-                          icon: controller.hidePassword.value
+                          icon: controller.hideLoginPassword.value
                               ? Icon(Iconsax.eye_slash)
                               : Icon(Iconsax.eye))),
                 ),
@@ -92,9 +92,20 @@ class TLoginForm extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => controller.emailAndPasswordSignIn(),
+                    onPressed: () => controller.login(),
                     child: Text(TTexts.signIn)),
-              )
+              ),
+
+              const SizedBox(
+                height: TSizes.spaceBtwItems,
+              ),
+
+              // Create Account Button
+              SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                      onPressed: () => Get.toNamed(TRoutes.signUp),
+                      child: const Text(TTexts.createAccount))),
             ],
           ),
         ));
