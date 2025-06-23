@@ -8,6 +8,7 @@ class ProductBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = CreateProductController.instance;
     return TRoundedContainer(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -23,7 +24,7 @@ class ProductBottomNavigationBar extends StatelessWidget {
             width: 160,
             child: ElevatedButton(
                 onPressed: () =>
-                    CreateProductController.instance.createProduct(),
+                    controller.createProduct(),
                 child: Text("Save Changes")),
           )
         ],

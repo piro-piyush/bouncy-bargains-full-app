@@ -20,7 +20,8 @@ class CreateBrandDesktopScreen extends StatelessWidget {
               TBreadcrumbWithHeading(
                   returnToPreviousScreen: true,
                   heading: "Create Brand",
-                  breadcrumbItems: [TRoutes.brands, "Create Brand"]),
+                  breadcrumbItems: [TRoutes.brands, "Create Brand"],
+              ),
               SizedBox(
                 height: TSizes.spaceBtwSections,
               ),

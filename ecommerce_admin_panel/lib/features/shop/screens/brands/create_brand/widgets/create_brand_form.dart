@@ -2,7 +2,6 @@ import 'package:ecommerce_admin_panel/common/widgets/chips/rounded_choice_chips.
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/brand/create_brand_controller.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -16,7 +15,7 @@ class CreateBrandForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CreateBrandController());
+    final controller = CreateBrandController.instance;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),
@@ -57,7 +56,7 @@ class CreateBrandForm extends StatelessWidget {
               ),
               Obx(() => Wrap(
                   spacing: TSizes.sm,
-                  children: CategoryController.instance.allItems
+                  children: controller.categoryController.allItems
                       .map((category) => Padding(
                             padding: EdgeInsets.only(bottom: TSizes.sm),
                             child: TChoiceChip(

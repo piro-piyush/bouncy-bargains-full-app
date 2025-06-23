@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/data/repositories/product/product_repository.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
@@ -20,6 +21,13 @@ import 'package:get/get.dart';
 class CreateProductController extends GetxController {
   static CreateProductController get instance => Get.find();
 
+  final _repo = ProductRepository.instance;
+  final productController = ProductController.instance;
+  final productVariationController = ProductVariationsController.instance;
+  final productAttributeController = ProductAttributesController.instance;
+  final productImagesController = ProductImagesController.instance;
+  final categoryController = CategoryController.instance;
+
   // Obx for loading state and product details
   final isLoading = false.obs;
   final productType = ProductType.single.obs;
@@ -28,7 +36,7 @@ class CreateProductController extends GetxController {
   // Controller and keys
   final stockFormKey = GlobalKey<FormState>();
   final titleDescriptionFormKey = GlobalKey<FormState>();
-  final _repo = Get.put(ProductRepository());
+
 
   // Text editing controllers for input fields
   TextEditingController title = TextEditingController();
@@ -81,8 +89,7 @@ class CreateProductController extends GetxController {
 
       // Check variation data if ProductType = Variable
       if (productType.value == ProductType.variable) {
-        final variationCheckFailed = ProductVariationsController
-            .instance.productVariations
+        final variationCheckFailed = productVariationController.productVariations
             .any((element) =>
                 element.price.isNaN ||
                 element.price < 0 ||
@@ -99,17 +106,16 @@ class CreateProductController extends GetxController {
 
       // Upload Product thumbnail image
       thumbnailUploader.value = true;
-      final imagesController = ProductImagesController.instance;
-      if (imagesController.selectedThumbnailImageUrl.value == null) {
+      if (productImagesController.selectedThumbnailImageUrl.value == null) {
         throw "Select thumbnail image";
       }
 
       // additional product images
       additionalImagesUploader.value = true;
-      final variations = ProductVariationsController.instance.productVariations;
+      final variations =productVariationController.productVariations;
       if (productType.value == ProductType.single && variations.isNotEmpty) {
         // If admin added variations and then  changed the product type, remove all variations
-        ProductVariationsController.instance.resetAllValues();
+        productVariationController.resetAllValues();
         variations.value = [];
       }
 
@@ -126,8 +132,8 @@ class CreateProductController extends GetxController {
           stock: int.tryParse(stock.text.trim()) ?? 0,
           price: double.tryParse(price.text.trim()) ?? 0,
           salePrice: double.tryParse(salePrice.text.trim()) ?? 0,
-          images: imagesController.additionalProductImageUrls,
-          thumbnail: imagesController.selectedThumbnailImageUrl.value ?? "",
+          images: productImagesController.additionalProductImageUrls,
+          thumbnail: productImagesController.selectedThumbnailImageUrl.value ?? "",
           productAttributes: ProductAttributesController.instance.productAttributes,
           date: DateTime.now());
 
@@ -150,7 +156,7 @@ class CreateProductController extends GetxController {
       }
 
       // Update the product list
-      ProductController.instance.addItemToList(newRecord);
+      productController.addItemToList(newRecord);
 
       // CLose the progress loader
       TFullScreenLoader.stopLoading();
@@ -250,9 +256,9 @@ class CreateProductController extends GetxController {
     brandTextField.clear();
     selectedCategories.clear();
     selectedBrand.value = null;
-    ProductVariationsController.instance.resetAllValues();
-    ProductAttributesController.instance.resetProductAttributes();
-    ProductImagesController.instance.resetAllImages();
+    productVariationController.resetAllValues();
+    productAttributeController.resetProductAttributes();
+    productImagesController.resetAllImages();
     // Reset upload flags
     thumbnailUploader.value = false;
     additionalImagesUploader.value = false;

@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/additional_images.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/attributes_widget.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/brand_widget.dart';
@@ -13,13 +14,14 @@ import 'package:ecommerce_admin_panel/features/shop/screens/products/create_prod
 import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CreateProductMobileScreen extends StatelessWidget {
   const CreateProductMobileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = CreateProductController.instance;
+    final imageController = controller.productImagesController;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -108,9 +110,12 @@ class CreateProductMobileScreen extends StatelessWidget {
                           height: TSizes.spaceBtwItems,
                         ),
                         ProductAdditionalImages(
-                            additionalProductImageURLs: RxList<String>.empty(),
-                            onTapToAddImages: () {},
-                            onTapToRemoveImages: (index) {})
+                            additionalProductImageURLs:
+                            imageController.additionalProductImageUrls,
+                            onTapToAddImages: () => imageController
+                                .selectMultipleProductImages(),
+                            onTapToRemoveImages: (index) =>
+                                imageController.removeImage(index))
                       ],
                     ),
                   ),

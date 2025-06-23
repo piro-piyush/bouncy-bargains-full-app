@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class CategoryController extends TBaseController<CategoryModel> {
   static CategoryController get instance => Get.find();
 
-  final _repo = Get.put(CategoryRepository());
+  final _repo = CategoryRepository.instance;
 
   @override
   bool containsSearchQuery(CategoryModel item, String query) {

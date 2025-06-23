@@ -19,8 +19,8 @@ class ProductAttributes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attributeController = controller.productAttributesController;
-    final variationController = controller.productVariationsController;
+    final attributeController = controller.productAttributeController;
+    final variationController = controller.productVariationController;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

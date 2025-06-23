@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_panel/data/repositories/brands/brand_repository.
 import 'package:ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/brand_category_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/brand_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
@@ -12,7 +13,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CreateBrandController extends GetxController {
+
   static CreateBrandController get instance => Get.find();
+
+  final _repo = BrandRepository.instance;
+  final brandController = BrandController.instance;
+  final categoryController = CategoryController.instance;
 
   final isLoading = false.obs;
   RxString imageUrl = "".obs;
@@ -53,7 +59,6 @@ class CreateBrandController extends GetxController {
     }
   }
 
-
   // Register new Brand
   Future<void> createBrand() async {
     try {
@@ -82,7 +87,7 @@ class CreateBrandController extends GetxController {
       );
 
       // Call Repo to create new Brand
-      newRecord.id = await BrandRepository.instance.createBrand(newRecord);
+      newRecord.id = await _repo.createBrand(newRecord);
 
       // Register brand categories if any
       if (selectedCategories.isNotEmpty) {
@@ -93,8 +98,9 @@ class CreateBrandController extends GetxController {
         // Loop selected Brand Categories
         for (var category in selectedCategories) {
           // Map Data
-          final brandCategory = BrandCategoryModel(brandId: newRecord.id, categoryId: category.id);
-          await BrandRepository.instance.createBrandCategory(brandCategory);
+          final brandCategory = BrandCategoryModel(
+              brandId: newRecord.id, categoryId: category.id);
+          await _repo.createBrandCategory(brandCategory);
         }
 
         newRecord.brandCategories ??= [];
@@ -102,7 +108,7 @@ class CreateBrandController extends GetxController {
       }
 
       // Update All Data List
-      BrandController.instance.addItemToList(newRecord);
+      brandController.addItemToList(newRecord);
 
       // Reset Form
       resetFields();
