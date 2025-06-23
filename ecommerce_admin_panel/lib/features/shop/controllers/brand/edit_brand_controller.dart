@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_panel/data/repositories/brands/brand_repository.
 import 'package:ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/brand_category_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/brand_model.dart';
 import 'package:ecommerce_admin_panel/features/shop/models/category_model.dart';
@@ -14,12 +15,15 @@ import 'package:get/get.dart';
 class EditBrandController extends GetxController {
   static EditBrandController get instance => Get.find();
 
+  final _repo = BrandRepository.instance;
+  final brandController = BrandController.instance;
+  final categoryController = CategoryController.instance;
+
   final isLoading = false.obs;
   RxString imageUrl = "".obs;
   final isFeatured = false.obs;
   final name = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final _repo = Get.put(BrandRepository());
   final RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
 
   /// Init Data
@@ -104,7 +108,7 @@ class EditBrandController extends GetxController {
       if (isBrandUpdated) await updateBrandInProducts(brand);
 
       // Update all the list
-      BrandController.instance.updateItemFromList(brand);
+      brandController.updateItemFromList(brand);
 
       // Reset Form
       resetFields();
@@ -140,7 +144,7 @@ class EditBrandController extends GetxController {
 
     // remove unselected categories
     for (var category in categoriesToRemove) {
-      await BrandRepository.instance.deleteBrandCategory(category.id ?? "");
+      await _repo.deleteBrandCategory(category.id ?? "");
     }
 
     // Identify new categories to add
@@ -154,11 +158,11 @@ class EditBrandController extends GetxController {
       var brandCategory =
           BrandCategoryModel(brandId: brand.id, categoryId: category.id);
       brandCategory.id =
-          await BrandRepository.instance.createBrandCategory(brandCategory);
+          await _repo.createBrandCategory(brandCategory);
     }
 
     brand.brandCategories!.assignAll(selectedCategories);
-    BrandController.instance.updateItemFromList(brand);
+    brandController.updateItemFromList(brand);
   }
 
   // Update Products of this brand
