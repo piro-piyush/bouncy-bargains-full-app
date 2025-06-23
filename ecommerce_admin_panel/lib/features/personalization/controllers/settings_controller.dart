@@ -8,109 +8,135 @@ import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// ⚙️ SettingsController
+///
+/// Controls application-wide settings in the Admin Panel.
+/// - Loads settings from Firestore
+/// - Updates settings including app name, logo, tax rate, etc.
+/// - Integrates media controller for logo management
 class SettingsController extends GetxController {
+  /// Singleton instance via GetX
   static SettingsController get instance => Get.find();
 
-  // Obx Var
-  RxBool loading = false.obs;
-  Rx<SettingsModel> settings = SettingsModel().obs;
+  /// Repository for Firebase operations
+  final _repo = Get.put(SettingsRepository());
 
+  /// Reactive loading indicator for UI feedback
+  final RxBool loading = false.obs;
+
+  /// Reactive settings data model
+  final Rx<SettingsModel> settings = SettingsModel().obs;
+
+  /// Form key for validation
   final formKey = GlobalKey<FormState>();
+
+  //─────────────────────────────────────
+  // Form Controllers
   final appNameController = TextEditingController();
   final taxRateController = TextEditingController();
   final shippingCostController = TextEditingController();
   final freeShippingThresholdController = TextEditingController();
 
-  final _repo = Get.put(SettingsRepository());
+  //─────────────────────────────────────
 
+  /// Called on controller initialization
   @override
   void onInit() {
     super.onInit();
-    // Fetch settings details on initialization
     fetchSettingsDetails();
   }
 
-  /// Fetch settings details from the repo
+  /// 🔄 Fetches settings from Firestore and populates form fields
   Future<SettingsModel> fetchSettingsDetails() async {
     try {
       loading.value = true;
-      final settings = await _repo.getSettings();
-      this.settings.value = settings;
 
-      appNameController.text = settings.appName;
-      taxRateController.text = settings.taxRate.toString();
-      shippingCostController.text = settings.shippingCost.toString();
+      final fetchedSettings = await _repo.getSettings();
+      settings.value = fetchedSettings;
+
+      // Set initial form field values
+      appNameController.text = fetchedSettings.appName;
+      taxRateController.text = fetchedSettings.taxRate.toString();
+      shippingCostController.text = fetchedSettings.shippingCost.toString();
       freeShippingThresholdController.text =
-          settings.freeShippingThreshold == null
-              ? ""
-              : settings.freeShippingThreshold.toString();
-      loading.value = false;
-      return settings;
+          fetchedSettings.freeShippingThreshold?.toString() ?? "";
+
+      return fetchedSettings;
     } catch (e) {
       TLoaders.errorSnackBar(
-          title: "Something went wrong.", message: e.toString());
-      return SettingsModel();
-    }finally{
+          title: "Something went wrong", message: e.toString());
+      return SettingsModel(); // fallback empty model
+    } finally {
       loading.value = false;
     }
   }
 
-  /// Pick thumbnail app image from media
-  void updateAppLogo() async {
+  /// 🖼️ Pick and update app logo using MediaController
+  Future<void> updateAppLogo() async {
     try {
       loading.value = true;
 
-      final controller = Get.put(MediaController());
-      List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
+      final mediaController = Get.put(MediaController());
+      final List<ImageModel>? selectedImages =
+      await mediaController.selectImagesFromMedia();
+
       if (selectedImages != null && selectedImages.isNotEmpty) {
-        // Set the  selected image to the main logo  or perform any other action
-        ImageModel selectedImage = selectedImages.first;
+        final ImageModel selectedImage = selectedImages.first;
 
-        // Update app logo in the firestore
-        await _repo.updateSingleField({
-          'appLogo': selectedImage.url,
-        });
+        // Update logo URL in Firestore
+        await _repo.updateSingleField({'appLogo': selectedImage.url});
 
-        // Update the main image using the selected image
+        // Reflect in UI
         settings.value.appLogo = selectedImage.url;
         settings.refresh();
 
         TLoaders.successSnackBar(
-            title: "Congratulations", message: "App Logo has been updated.");
+            title: "Success", message: "App logo updated successfully.");
       }
     } catch (e) {
       TLoaders.errorSnackBar(
-          title: "Something went wrong.", message: e.toString());
+          title: "Failed", message: e.toString());
+    } finally {
+      loading.value = false;
     }
   }
 
-  void updateSettingsInfo() async {
+  /// 💾 Validates and updates all settings to Firestore
+  Future<void> updateSettingsInfo() async {
     try {
-      // Check the internet connection
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
         return;
       }
-      // Form validation
+
+      // Validate form
       if (!formKey.currentState!.validate()) {
         TFullScreenLoader.stopLoading();
         return;
       }
 
       loading.value = true;
-      settings.value.appName = appNameController.text;
-      settings.value.taxRate = double.parse(taxRateController.text);
-      settings.value.shippingCost = double.parse(shippingCostController.text);
-      settings.value.freeShippingThreshold = double.tryParse(freeShippingThresholdController.text.trim()) ?? 0.0;
+
+      // Update local settings from form inputs
+      settings.value.appName = appNameController.text.trim();
+      settings.value.taxRate = double.parse(taxRateController.text.trim());
+      settings.value.shippingCost =
+          double.parse(shippingCostController.text.trim());
+      settings.value.freeShippingThreshold =
+          double.tryParse(freeShippingThresholdController.text.trim()) ?? 0.0;
+
+      // Push to Firestore
       await _repo.updateSettings(settings.value);
       settings.refresh();
-      loading.value = false;
+
       TLoaders.successSnackBar(
-          title: "Congratulations", message: "Settings has been updated.");
+          title: "Success", message: "Settings updated successfully.");
     } catch (e) {
       TLoaders.errorSnackBar(
-          title: "Something went wrong.", message: e.toString());
+          title: "Update Failed", message: e.toString());
+    } finally {
+      loading.value = false;
     }
   }
 }

@@ -10,9 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderRows extends DataTableSource {
+  final controller = DashboardController.instance;
   @override
   DataRow? getRow(int index) {
-    final order = DashboardController.orders[index];
+    final orderController = controller.orderController;
+    final order = orderController.filteredItems[index];
     return DataRow2(
         onTap: () => Get.toNamed(TRoutes.orderDetails, arguments: order),
         selected: false,
@@ -54,8 +56,8 @@ class OrderRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => DashboardController.orders.length;
+  int get rowCount => controller.orderController.filteredItems.length;
 
   @override
-  int get selectedRowCount => 0;
+  int get selectedRowCount => controller.orderController.selectedRows.where((element) => element).length;
 }

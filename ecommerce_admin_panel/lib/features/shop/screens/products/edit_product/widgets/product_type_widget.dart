@@ -10,7 +10,6 @@ class ProductTypeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = EditProductController.instance;
-
     return Obx(() {
       return Row(
         children: [
