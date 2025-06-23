@@ -1,7 +1,6 @@
 import 'package:ecommerce_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/settings/settings_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:ecommerce_admin_panel/features/personalization/controllers/user_controller.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/settings_model.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/user_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
@@ -24,6 +23,10 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final loginFormKey = GlobalKey<FormState>();
+
+  final authRepo = AuthenticationRepository.instance;
+  final userRepo = UserRepository.instance;
+  final settingsRepo = SettingsRepository.instance;
 
 
   @override
@@ -67,24 +70,25 @@ class LoginController extends GetxController {
       }
 
       // Login user with Email & password Authentication
-      await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      await authRepo.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Create Admin record in the firestore
-      final user = await UserController.instance.fetchUserDetails();
+      final user = await userRepo.fetchUserDetails(
+        authRepo.authUser?.uid ?? "",
+      );
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
 
       // If the user is not admin, logout and return
       if (user.role != AppRole.admin) {
-        await AuthenticationRepository.instance.logout();
+        await authRepo.logout();
         TLoaders.errorSnackBar(
             title: "Not Authorized",
             message: "You are not authorized or do have access. Contact Admin");
       } else {
         // Redirect
-        AuthenticationRepository.instance.screenRedirect();
+        authRepo.screenRedirect();
       }
     } catch (e) {
       TFullScreenLoader.stopLoading();
@@ -106,14 +110,12 @@ class LoginController extends GetxController {
       }
 
       // Register user with Email & password Authentication
-      await AuthenticationRepository.instance.registerWithEmailAndPassword(
+      await authRepo.registerWithEmailAndPassword(
           TTexts.adminEmail, TTexts.adminPassword);
 
       // Create Admin record in the firestore
-      final userRepository = Get.put(UserRepository());
-
-      await userRepository.createAdmin(UserModel(
-        id: AuthenticationRepository.instance.authUser!.uid,
+      await userRepo.createAdmin(UserModel(
+        id: authRepo.authUser!.uid,
         firstName: "Bouncy Bargains",
         lastName: "Admin",
         email: TTexts.adminEmail,
@@ -121,9 +123,8 @@ class LoginController extends GetxController {
         createdAt: DateTime.now(),
       ));
 
-      final settingsRepo = Get.put(SettingsRepository());
       await settingsRepo.registerSettings(SettingsModel(
-        appName: "Bouncy Bargains",
+        appName: "My App",
         appLogo: "",
         taxRate: 0,
         shippingCost: 0
@@ -132,7 +133,7 @@ class LoginController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       // Redirect
-      AuthenticationRepository.instance.screenRedirect();
+      authRepo.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());

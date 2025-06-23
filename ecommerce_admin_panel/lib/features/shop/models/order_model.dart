@@ -7,7 +7,7 @@ class OrderModel {
   final String id;
   final String userId;
   final String docId;
-  final OrderStatus status;
+   OrderStatus status;
   final double totalAmount;
   final DateTime orderDate;
   final String paymentMethod;

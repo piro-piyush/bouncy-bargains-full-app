@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class ProductController extends TBaseController<ProductModel> {
   static ProductController get instance => Get.find();
 
-  final _repo = Get.put(ProductRepository());
+  final _repo = ProductRepository.instance;
 
   @override
   bool containsSearchQuery(ProductModel item, String query) {
