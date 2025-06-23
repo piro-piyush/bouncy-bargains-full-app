@@ -14,7 +14,7 @@ class BrandsMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BrandController());
+    final controller = BrandController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -36,6 +36,7 @@ class BrandsMobileScreen extends StatelessWidget {
                     TTableHeader(
                       buttonText: "Create New Brand",
                       onPressed: () => Get.toNamed(TRoutes.createBrand),
+                      onSearchChange: (query) => controller.searchQuery(query),
                     ),
                     SizedBox(
                       height: TSizes.spaceBtwItems,

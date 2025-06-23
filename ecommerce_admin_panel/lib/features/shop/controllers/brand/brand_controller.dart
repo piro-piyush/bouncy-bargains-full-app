@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 
 class BrandController extends TBaseController<BrandModel> {
   static BrandController get instance => Get.find();
-  final _repo = Get.put(BrandRepository());
-  final categoryController = Get.put(CategoryController());
+  final _repo = BrandRepository.instance;
+  final categoryController = CategoryController.instance;
 
   @override
   bool containsSearchQuery(item, String query) {
