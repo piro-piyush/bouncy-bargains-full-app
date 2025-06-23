@@ -49,6 +49,7 @@ class TImages {
   static const String staticSuccessIllustration = "assets/images/animations/sammy-line-success.png";
   static const String deliveredInPlaneIllustration = "assets/images/animations/sammy-line-come-back-later.png";
   static const String deliveredEmailIllustration = "assets/images/animations/sammy-line-man-receives-a-mail.png";
+  static const String pendingVerificationIllustration = "assets/images/animations/pending-verification.png";
   static const String uploadingImageIllustration = "assets/images/animations/uploading-files-from-computer-to-cloud-storage.gif";
   static const String verifyIllustration = "assets/images/animations/sammy-line-travel-backpack-with-passport-and-air-ticket.gif";
 

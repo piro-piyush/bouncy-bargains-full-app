@@ -12,10 +12,10 @@ class ProfileForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
-    controller.firstNameController.text = controller.user.value.firstName;
-    controller.emailController.text = controller.user.value.email;
-    controller.lastNameController.text = controller.user.value.lastName;
-    controller.phoneController.text = controller.user.value.phoneNumber;
+    controller.firstNameController.text = controller.admin.value.firstName;
+    controller.emailController.text = controller.admin.value.email;
+    controller.lastNameController.text = controller.admin.value.lastName;
+    controller.phoneController.text = controller.admin.value.phoneNumber;
 
     return Column(
       children: [

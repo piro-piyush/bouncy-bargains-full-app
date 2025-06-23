@@ -1,4 +1,4 @@
-import 'package:ecommerce_admin_panel/features/authentication/controllers/forget_password_controller.dart';
+import 'package:ecommerce_admin_panel/features/authentication/controllers/auth_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
@@ -13,7 +13,7 @@ class HeaderAndForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ForgetPasswordController.instance;
+    final controller = AuthController.instance;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,9 +37,9 @@ class HeaderAndForm extends StatelessWidget {
 
         // Form
         Form(
-          key: controller.resetKey,
+          key: controller.resetFormKey,
           child: TextFormField(
-            controller: controller.email,
+            controller: controller.resetEmail,
             decoration: InputDecoration(
               labelText: TTexts.email,
               prefixIcon: Icon(Iconsax.direct_right),
@@ -53,7 +53,7 @@ class HeaderAndForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-              onPressed: () => controller.submit(), child: Text(TTexts.submit)),
+              onPressed: () => controller.resetPassword(), child: Text(TTexts.submit)),
         )
       ],
     );

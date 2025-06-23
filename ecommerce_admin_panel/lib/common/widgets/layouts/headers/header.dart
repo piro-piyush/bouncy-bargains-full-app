@@ -27,87 +27,89 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
       ),
       padding: EdgeInsets.symmetric(horizontal: TSizes.md, vertical: TSizes.sm),
       child: AppBar(
-        // Mobile Menu
-        leading: !TDeviceUtils.isDesktopScreen(context)
-            ? IconButton(
-                onPressed: () {
-                  scaffoldKey?.currentState?.openDrawer();
-                },
-                icon: Icon(Iconsax.menu))
-            : null,
+          // Mobile Menu
+          leading: !TDeviceUtils.isDesktopScreen(context)
+              ? IconButton(
+                  onPressed: () {
+                    scaffoldKey?.currentState?.openDrawer();
+                  },
+                  icon: Icon(Iconsax.menu))
+              : null,
 
-        // Text Field
-        title: TDeviceUtils.isDesktopScreen(context)
-            ? SizedBox(
-                width: 400,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Iconsax.search_normal),
-                      hintText: "Search anything ..."),
-                ),
-              )
-            : null,
-
-        // Actions
-        actions: [
-          if (!TDeviceUtils.isDesktopScreen(context))
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Iconsax.search_normal),
-            ),
-
-          // Notification Icon
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Iconsax.notification),
-          ),
-          const SizedBox(
-            width: TSizes.spaceBtwItems / 2,
-          ),
-
-          // User Data
-          Row(
-            children: [
-              Obx(
-                () => TRoundedImage(
-                  width: 40,
-                  padding: 2,
-                  height: 40,
-                  imageType: controller.user.value.profilePicture.isNotEmpty
-                      ? ImageType.network
-                      : ImageType.asset,
-                  image: controller.user.value.profilePicture.isNotEmpty
-                      ? controller.user.value.profilePicture
-                      : TImages.user,
-                ),
-              ),
-              SizedBox(
-                width: TSizes.sm,
-              ),
-              if (!TDeviceUtils.isMobileScreen(context))
-                Obx(
-                  () => Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      controller.loading.value
-                          ? const TShimmerEffect(width: 50, height: 13)
-                          : Text(
-                              controller.user.value.fullName,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                      controller.loading.value
-                          ? const TShimmerEffect(width: 50, height: 13)
-                          : Text(
-                              controller.user.value.email,
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                    ],
+          // Text Field
+          title: TDeviceUtils.isDesktopScreen(context)
+              ? SizedBox(
+                  width: 400,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Iconsax.search_normal),
+                        hintText: "Search anything ..."),
                   ),
                 )
-            ],
-          )
-        ],
-      ),
+              : null,
+
+          // Actions
+          actions: [
+            if (!TDeviceUtils.isDesktopScreen(context))
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Iconsax.search_normal),
+              ),
+
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Iconsax.notification),
+            ),
+            const SizedBox(width: TSizes.spaceBtwItems / 2),
+
+            // User Info Row
+            Obx(() {
+              final isLoading = controller.loading.value;
+              final admin = controller.admin.value;
+
+              return Row(
+                children: [
+                  if (!TDeviceUtils.isMobileScreen(context))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        isLoading
+                            ? const TShimmerEffect(width: 80, height: 13)
+                            : Text(
+                                admin.fullName,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                        const SizedBox(height: 4),
+                        isLoading
+                            ? const TShimmerEffect(width: 130, height: 13)
+                            : Text(
+                                admin.email,
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                      ],
+                    ),
+                  const SizedBox(width: TSizes.sm),
+                  if (admin.profilePicture != null)
+                    TRoundedImage(
+                      width: 40,
+                      height: 40,
+                      padding: 2,
+                      imageType: ImageType.network,
+                      image: admin.profilePicture,
+                    )
+                  else
+                    TRoundedImage(
+                      width: 40,
+                      height: 40,
+                      padding: 2,
+                      imageType: ImageType.asset,
+                      image: TImages.user,
+                    ),
+                ],
+              );
+            }),
+          ]),
     );
   }
 

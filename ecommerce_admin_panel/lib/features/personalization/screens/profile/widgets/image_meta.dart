@@ -23,11 +23,11 @@ class ImageAndMeta extends StatelessWidget {
             children: [
               Obx(() {
                 return TImageUploader(
-                  imageType: controller.user.value.profilePicture.isNotEmpty
+                  imageType: controller.admin.value.profilePicture!=null
                       ? ImageType.network
                       : ImageType.asset,
-                  image: controller.user.value.profilePicture.isNotEmpty
-                      ? controller.user.value.profilePicture
+                  image: controller.admin.value.profilePicture!=null
+                      ? controller.admin.value.profilePicture
                       : TImages.user,
                   right: 10,
                   bottom: 20,
@@ -45,7 +45,7 @@ class ImageAndMeta extends StatelessWidget {
               ),
               Obx(() {
                 return Text(
-                  controller.user.value.fullName,
+                  controller.admin.value.fullName,
                   style: Theme
                       .of(context)
                       .textTheme
@@ -53,7 +53,7 @@ class ImageAndMeta extends StatelessWidget {
                 );
               }),
               Obx(() {
-                return Text(controller.user.value.email);
+                return Text(controller.admin.value.email);
               }),
               SizedBox(
                 height: TSizes.spaceBtwItems,

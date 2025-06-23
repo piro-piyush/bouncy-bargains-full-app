@@ -1,48 +1,79 @@
+import 'package:ecommerce_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:ecommerce_admin_panel/routes/routes.dart';
+import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/firebase_exceptions.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:ecommerce_admin_panel/utils/exceptions/platform_exceptions.dart';
+import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthenticationRepository extends GetxController {
+  /// Singleton instance for global access
   static AuthenticationRepository get instance => Get.find();
 
-  // Variables
-  final deviceStorage = GetStorage();
-  final _auth = FirebaseAuth.instance;
+  /// Firebase Auth instance to manage authentication
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Get authenticated user data
+  /// Repository to manage Firestore-based user records
+  final UserRepository userRepo = Get.put(UserRepository());
+
+  /// Local storage handler
+  final GetStorage deviceStorage = GetStorage();
+
+  /// Currently authenticated Firebase user
   User? get authUser => _auth.currentUser;
 
-  // Get isAuthenticated User
+  /// Boolean indicating if user is already logged in
   bool get isAuthenticated => _auth.currentUser != null;
 
-  // Called from main.dart on app launch
+  /// Called automatically on app startup
   @override
   void onReady() {
     _auth.setPersistence(Persistence.LOCAL);
     screenRedirect();
   }
 
-  void screenRedirect() async {
-    final user = _auth.currentUser;
+  /// Redirect user based on login and profile status
+  Future<void> screenRedirect() async {
+    try {
+      final firebaseUser = _auth.currentUser;
+      if (firebaseUser != null) {
+        final admin = await userRepo.fetchAdmin();
 
-    // If the user is logged in
-    if (user != null) {
-      // Navigate to the dashboard
-      Get.offAllNamed(TRoutes.dashboard);
-    } else {
+        if (admin.role == AppRole.admin) {
+          if (admin.hasBeenApproved) {
+            Get.offAllNamed(TRoutes.dashboard);
+          } else {
+            TLoaders.warningSnackBar(
+              title: "Approval Pending",
+              message: "Your admin account is not approved yet.",
+            );
+            Get.offAllNamed(
+              TRoutes.accountApproval,
+            );
+          }
+        } else {
+          await logout();
+          TLoaders.errorSnackBar(
+            title: "Not Authorized",
+            message: "You are not an admin. Contact administrator.",
+          );
+        }
+      } else {
+        Get.offAllNamed(TRoutes.login);
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(title: "Error", message: e.toString());
       Get.offAllNamed(TRoutes.login);
     }
   }
 
-/*-------------------------------- Email & Password sign-in ------------------*/
-
-  // [EmailAuthentication] - Login
+  /// Login with email and password using Firebase Auth
   Future<UserCredential> loginWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -56,12 +87,12 @@ class AuthenticationRepository extends GetxController {
       throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again';
+    } catch (_) {
+      throw 'Something went wrong. Please try again.';
     }
   }
 
-  // [EmailAuthentication] - Register
+  /// Register a new user with Firebase using email and password
   Future<UserCredential> registerWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -75,104 +106,29 @@ class AuthenticationRepository extends GetxController {
       throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again';
+    } catch (_) {
+      throw 'Something went wrong. Please try again.';
     }
   }
 
-  /// [EmailVerification] - Mail Verification
-// Future<void> sendEmailVerification() async {
-//   try {
-//     await _auth.currentUser?.sendEmailVerification();
-//   } on FirebaseAuthException catch (e) {
-//     throw XFirebaseAuthException(e.code).message;
-//   } on FirebaseException catch (e) {
-//     throw XFirebaseException(e.code).message;
-//   } on FormatException catch (_) {
-//     throw const XFormatException();
-//   } on PlatformException catch (e) {
-//     throw XPlatformException(e.code).message;
-//   } catch (e) {
-//     throw 'Something went wrong. Please try again';
-//   }
-// }
-
-  /// [ReAuthenticate] - ReAuthenticate User
-// Future<void> reAuthenticateEmailAndPasswordUser(String email, String password) async {
-//   try {
-//     // Create a credential
-//     AuthCredential credential =
-//     EmailAuthProvider.credential(email: email, password: password);
-//
-//     // ReAuthenticate
-//     await _auth.currentUser!.reauthenticateWithCredential(credential);
-//   } on FirebaseAuthException catch (e) {
-//     throw XFirebaseAuthException(e.code).message;
-//   } on FirebaseException catch (e) {
-//     throw XFirebaseException(e.code).message;
-//   } on FormatException catch (_) {
-//     throw const XFormatException();
-//   } on PlatformException catch (e) {
-//     throw XPlatformException(e.code).message;
-//   } catch (e) {
-//     throw 'Something went wrong. Please try again';
-//   }
-// }
-
-  /// [EmailAuthentication] - Forget Password
-Future<void> sendPasswordResetEmail(String email,) async {
-  try {
-    await _auth.sendPasswordResetEmail(email: email);
-  } on FirebaseAuthException catch (e) {
-    throw TFirebaseAuthException(e.code).message;
-  } on FirebaseException catch (e) {
-    throw TFirebaseException(e.code).message;
-  } on FormatException catch (_) {
-    throw const TFormatException();
-  } on PlatformException catch (e) {
-    throw TPlatformException(e.code).message;
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
+  /// Sends a password reset email to the user
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (_) {
+      throw 'Something went wrong. Please try again.';
+    }
   }
-}
 
-/*-------------------------------- Federated identity & social sign-in ------------------*/
-
-  /// [GoogleAuthentication] -   Google
-// Future<UserCredential?> signInWithGoogle() async {
-//   try {
-//     // Trigger the authentication flow
-//     final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
-//
-//     // Obtain the auth details from the request
-//     final GoogleSignInAuthentication? googleAuth =
-//     await userAccount?.authentication;
-//
-//     // Create a new credential
-//     final credentials = GoogleAuthProvider.credential(
-//         accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-//
-//     // Once signed in , return the user credential
-//     return await _auth.signInWithCredential(credentials);
-//   } on FirebaseAuthException catch (e) {
-//     throw XFirebaseAuthException(e.code).message;
-//   } on FirebaseException catch (e) {
-//     throw XFirebaseException(e.code).message;
-//   } on FormatException catch (_) {
-//     throw const XFormatException();
-//   } on PlatformException catch (e) {
-//     throw XPlatformException(e.code).message;
-//   } catch (e) {
-//     if (kDebugMode) print('Something went wrong : $e');
-//     return null;
-//   }
-// }
-
-  /// [FacebookAuthentication] - Facebook
-
-/*-------------------------------- Federated identity & social sign-in ------------------*/
-
-  /// [LogoutUser] - Valid for any Authentication
+  /// Logout the current user from Firebase
   Future<void> logout() async {
     try {
       await _auth.signOut();
@@ -185,26 +141,69 @@ Future<void> sendPasswordResetEmail(String email,) async {
       throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again';
+    } catch (_) {
+      throw 'Something went wrong. Please try again.';
     }
   }
 
-  /// [DeleteUser] - Remove User Auth and Firestore Account
-// Future<void> deleteAccount() async {
-//   try {
-//     await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
-//     await _auth.currentUser?.delete();
-//   } on FirebaseAuthException catch (e) {
-//     throw XFirebaseAuthException(e.code).message;
-//   } on FirebaseException catch (e) {
-//     throw XFirebaseException(e.code).message;
-//   } on FormatException catch (_) {
-//     throw const XFormatException();
-//   } on PlatformException catch (e) {
-//     throw XPlatformException(e.code).message;
-//   } catch (e) {
-//     throw 'Something went wrong. Please try again';
-//   }
-// }
+  /// Completely delete user account from Firebase Auth and Firestore
+  Future<void> deleteAccount() async {
+    try {
+      await userRepo.deleteAdminRecord();
+      await _auth.currentUser?.delete();
+      Get.offAllNamed(TRoutes.login);
+    } catch (e) {
+      throw 'Something went wrong while deleting account.';
+    }
+  }
+
+  /// Show a confirmation dialog before logout
+  Future<void> logoutConfirmationDialog() async {
+    return showDialog(
+      context: Get.context!,
+      builder: (_) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Get.back();
+              await logout();
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Show a confirmation dialog before deleting the account
+  Future<void> deleteAccountConfirmationDialog() async {
+    return showDialog(
+      context: Get.context!,
+      builder: (_) => AlertDialog(
+        title: const Text('Delete Account'),
+        content: const Text(
+            'This will permanently delete your account. Are you sure?'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Get.back();
+              await deleteAccount();
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
 }
