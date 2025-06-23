@@ -16,7 +16,7 @@ class CreateBannerForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CreateBannerController());
+    final controller =CreateBannerController.instance;
     return TRoundedContainer(
       width: 500,
       padding: EdgeInsets.all(TSizes.defaultSpace),

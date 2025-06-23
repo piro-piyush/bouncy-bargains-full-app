@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 
 class CreateBannerController extends GetxController {
   static CreateBannerController get instance => Get.find();
-
+  final _repo = BannerRepository.instance;
   final imageUrl = ''.obs;
   final RxString targetScreen = AppScreens.allAppScreenItems[0].obs;
   final isActive = false.obs;
@@ -65,7 +65,7 @@ class CreateBannerController extends GetxController {
 
       // Call repo  to create new banner and update id
       newRecord.id =
-          await BannerRepository.instance.createBanner(banner: newRecord);
+          await _repo.createBanner(banner: newRecord);
 
       // Update All Data List
       BannerController.instance.addItemToList(newRecord);
