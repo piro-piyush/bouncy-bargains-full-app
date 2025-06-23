@@ -14,7 +14,7 @@ class BannersDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BannerController());
+    final controller = BannerController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(

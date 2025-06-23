@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class BannerController extends TBaseController<BannerModel> {
   static BannerController get instance => Get.find();
-  final _repo = Get.put(BannerRepository());
+  final _repo = BannerRepository.instance;
 
   @override
   bool containsSearchQuery(BannerModel item, String query) {
