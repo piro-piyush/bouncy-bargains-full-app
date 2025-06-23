@@ -15,8 +15,8 @@ class CustomerDetailsController extends GetxController {
   final RxBool sortAscending = true.obs;
   final RxList<bool> selectedRows = <bool>[].obs;
   final Rx<UserModel> customer = UserModel.empty().obs;
-  final addressRepo = Get.put(AddressRepository());
-  final userRepo = Get.put(UserRepository());
+  final addressRepo = AddressRepository.instance;
+  final userRepo =UserRepository.instance;
   final searchTextController = TextEditingController();
   RxList<OrderModel> allOrders = <OrderModel>[].obs;
   RxList<OrderModel> filteredOrders = <OrderModel>[].obs;

@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/layouts/templates/site_layout.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/banner/edit_banner_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/edit_banner/responsive_screens/edit_banner_desktop_screen.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/banners/edit_banner/responsive_screens/edit_banner_mobile_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class EditBannerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final banner = Get.arguments;
+    final controller = EditBannerController.instance;
+    controller.init(banner);
     return TSiteTemplate(
       desktop: EditBannerDesktopScreen(
         banner: banner,

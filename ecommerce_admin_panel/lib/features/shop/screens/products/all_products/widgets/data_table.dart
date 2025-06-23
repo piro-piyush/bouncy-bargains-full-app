@@ -7,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductsTable extends StatelessWidget {
-  const ProductsTable({super.key});
-
+   ProductsTable({super.key});
+  final controller = ProductController.instance;
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductController());
     return Obx(() {
       Text(controller.filteredItems.length.toString());
       Text(controller.selectedRows.length.toString());

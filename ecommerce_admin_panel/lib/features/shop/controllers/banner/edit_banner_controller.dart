@@ -11,13 +11,13 @@ import 'package:get/get.dart';
 
 class EditBannerController extends GetxController {
   static EditBannerController get instance => Get.find();
-
+  final _repo = BannerRepository.instance;
+  final bannerController = BannerController.instance;
   final imageUrl = ''.obs;
   final RxString targetScreen = "".obs;
   final isActive = false.obs;
   final loading = false.obs;
   final formKey = GlobalKey<FormState>();
-  final repository = Get.put(BannerRepository());
 
   /// Init Data
   void init(BannerModel banner) {
@@ -74,11 +74,11 @@ class EditBannerController extends GetxController {
         banner.active = isActive.value;
 
         // Call repo to update banner
-        await repository.updateBanner(banner: banner);
+        await _repo.updateBanner(banner: banner);
       }
 
       // Update the List
-      BannerController.instance.updateItemFromList(banner);
+      bannerController.updateItemFromList(banner);
 
       // // Reset Fields
       // resetFields();

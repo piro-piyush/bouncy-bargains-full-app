@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:ecommerce_admin_panel/common/widgets/icons/t_circular_icon.dart';
 import 'package:ecommerce_admin_panel/common/widgets/texts/section_heading.dart';
 import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -9,17 +10,22 @@ class TDashboardCard extends StatelessWidget {
   const TDashboardCard({
     super.key,
     required this.title,
+    required this.context,
     required this.subTitle,
-    this.icon = Iconsax.arrow_up_3,
+    required this.growthWidget,
+    required this.lastMonth,
+    this.headingIcon = Iconsax.arrow_up_3,
     this.color = TColors.success,
     this.onTap,
-    required this.stats,
+    required this.headingIconColor,
+    required this.headingBgColor,
   });
 
-  final String title, subTitle;
-  final IconData icon;
-  final Color color;
-  final int stats;
+  final BuildContext context;
+  final Widget growthWidget;
+  final String title, subTitle, lastMonth;
+  final IconData headingIcon;
+  final Color color, headingIconColor, headingBgColor;
   final void Function()? onTap;
 
   @override
@@ -30,9 +36,17 @@ class TDashboardCard extends StatelessWidget {
       child: Column(
         children: [
           // Heading
-          TSectionHeading(
-            title: title,
-            textColor: TColors.textSecondary,
+          Row(
+            spacing: TSizes.spaceBtwItems,
+            children: [
+              TCircularIcon(icon: headingIcon,backgroundColor: headingBgColor,
+              color: headingIconColor,
+              size: TSizes.md,),
+              TSectionHeading(
+                title: title,
+                textColor: TColors.textSecondary,
+              ),
+            ],
           ),
           SizedBox(
             height: TSizes.spaceBtwSections,
@@ -51,25 +65,11 @@ class TDashboardCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   // Indicator
-                  Row(
-                    children: [
-                      Icon(
-                        icon,
-                        color: TColors.success,
-                        size: TSizes.iconSm,
-                      ),
-                      Text(
-                        '$stats%',
-                        style: Theme.of(context).textTheme.titleLarge!.apply(
-                            color: TColors.success,
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                    ],
-                  ),
+                  growthWidget,
                   SizedBox(
                     width: 135,
                     child: Text(
-                      'Compared to Dec 2025',
+                      'Compared to $lastMonth',
                       style: Theme.of(context).textTheme.labelMedium,
                       overflow: TextOverflow.ellipsis,
                     ),

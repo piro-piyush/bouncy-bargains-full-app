@@ -1,6 +1,6 @@
 import 'package:ecommerce_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
+import 'package:ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/additional_images.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/attributes_widget.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/products/create_product/widgets/bottom_navigation_widget.dart';
@@ -16,14 +16,14 @@ import 'package:ecommerce_admin_panel/routes/routes.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CreateProductDesktopScreen extends StatelessWidget {
   const CreateProductDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final imageController = Get.put(ProductImagesController());
+    final controller = CreateProductController.instance;
+    final imageController = controller.productImagesController;
     return Scaffold(
       bottomNavigationBar: ProductBottomNavigationBar(),
       body: SingleChildScrollView(

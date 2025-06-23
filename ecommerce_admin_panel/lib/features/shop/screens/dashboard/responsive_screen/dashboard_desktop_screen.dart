@@ -1,15 +1,20 @@
+import 'package:ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_recent_orders.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = DashboardController.instance;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -27,47 +32,72 @@ class DashboardDesktopScreen extends StatelessWidget {
               ),
 
               // Cards
-              Row(
-                children: [
-                  Expanded(
-                    child: TDashboardCard(
-                      stats: 25,
-                      title: 'Sales Total',
-                      subTitle: '\$333.3',
+              Obx(() {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: TDashboardCard(
+                        headingIcon: Iconsax.note,
+                        headingIconColor: Colors.blue,
+                        headingBgColor: Colors.blue.withValues(alpha: 0.1),
+                        growthWidget: controller.getSalesGrowthWidget(context),
+                        title: 'Sales Total',
+                        context: context,
+                        subTitle: '\$${controller.getTotalSales()}',
+                        lastMonth: controller.getLastMonthFormatted(),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: TSizes.spaceBtwItems,
-                  ),
-                  Expanded(
-                    child: TDashboardCard(
-                      stats: 15,
-                      title: 'Average order Value',
-                      subTitle: '\$24',
+                    SizedBox(
+                      width: TSizes.spaceBtwItems,
                     ),
-                  ),
-                  SizedBox(
-                    width: TSizes.spaceBtwItems,
-                  ),
-                  Expanded(
-                    child: TDashboardCard(
-                      stats: 44,
-                      title: 'Total orders',
-                      subTitle: '32',
+                    Expanded(
+                      child: TDashboardCard(
+                        headingIcon: Iconsax.external_drive,
+                        headingIconColor: Colors.green,
+                        headingBgColor: Colors.green.withValues(alpha: 0.1),
+                        context: context,
+                        title: 'Average order Value',
+                        subTitle: '\$${controller.getAverageOrderValue()}',
+                        lastMonth: controller.getLastMonthFormatted(),
+                        growthWidget: controller.getAvgOrderValueGrowthWidget(context),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: TSizes.spaceBtwItems,
-                  ),
-                  Expanded(
-                    child: TDashboardCard(
-                      stats: 2,
-                      title: 'Visitors',
-                      subTitle: '23,322',
+                    SizedBox(
+                      width: TSizes.spaceBtwItems,
                     ),
-                  ),
-                ],
-              ),
+                    Expanded(
+                      child: TDashboardCard(
+                        headingIcon: Iconsax.box,
+                        headingIconColor: Colors.deepPurple,
+                        headingBgColor:
+                            Colors.deepPurple.withValues(alpha: 0.1),
+                        context: context,
+                        growthWidget: controller.getOrderCountGrowthWidget(context),
+                        title: 'Total orders',
+                        subTitle: '\$${controller.getTotalOrders()}',
+                        lastMonth: controller.getLastMonthFormatted(),
+
+                      ),
+                    ),
+                    SizedBox(
+                      width: TSizes.spaceBtwItems,
+                    ),
+                    Expanded(
+                      child: TDashboardCard(
+                        headingIcon: Iconsax.user,
+                        headingIconColor: Colors.deepOrange,
+                        headingBgColor:
+                            Colors.deepOrange.withValues(alpha: 0.1),
+                        context: context,
+                        growthWidget: controller.getCustomerGrowthWidget(context),
+                        title: 'Visitors',
+                        subTitle: '\$${controller.getTotalCustomers()}',
+                        lastMonth: controller.getLastMonthFormatted(),
+                      ),
+                    ),
+                  ],
+                );
+              }),
               const SizedBox(
                 height: TSizes.spaceBtwSections,
               ),
