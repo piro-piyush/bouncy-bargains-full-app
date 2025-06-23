@@ -13,26 +13,27 @@ class UserModel {
   String phoneNumber;
   String profilePicture;
   AppRole role;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
   List<OrderModel>? orders;
   List<AddressModel>? addresses;
 
   // Constructor for user model
-  UserModel(
-      {this.id,
-        required this.email,
-      this.firstName = '',
-      this.lastName = '',
-        this.username = '',
-      this.phoneNumber = '',
-      this.profilePicture = '',
-      this.role = AppRole.user,
-      this.createdAt,
-      this.updatedAt,
-      this.orders,
-      this.addresses,
-      });
+  UserModel({
+    this.id,
+    required this.email,
+    this.firstName = '',
+    this.lastName = '',
+    this.username = '',
+    this.phoneNumber = '',
+    this.profilePicture = '',
+    this.role = AppRole.user,
+    this.orders,
+    this.addresses,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  })  : createdAt = createdAt ?? DateTime.now(),
+        updatedAt = updatedAt ?? DateTime.now();
 
   // Helper function to get full name
   String get fullName => '$firstName $lastName';
@@ -67,7 +68,7 @@ class UserModel {
   // Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
-      'Id':id,
+      'Id': id,
       'FirstName': firstName,
       'LastName': lastName,
       'Username': username,
@@ -83,7 +84,8 @@ class UserModel {
   }
 
   // Factory method to create a UserModel from a Firebase document snapshot.
-  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory UserModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
       return UserModel(
@@ -92,11 +94,22 @@ class UserModel {
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
         username: data.containsKey('Username') ? data['Username'] ?? '' : '',
         email: data.containsKey('Email') ? data['Email'] ?? '' : '',
-        phoneNumber: data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
-        profilePicture: data.containsKey('ProfilePicture') ? data['ProfilePicture'] ?? '' : '',
-        role: data.containsKey('Role') ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString() ? AppRole.admin : AppRole.user : AppRole.user,
-        createdAt: data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() ?? DateTime.now() : DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() ?? DateTime.now() : DateTime.now(),
+        phoneNumber:
+            data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
+        profilePicture: data.containsKey('ProfilePicture')
+            ? data['ProfilePicture'] ?? ''
+            : '',
+        role: data.containsKey('Role')
+            ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
+                ? AppRole.admin
+                : AppRole.user
+            : AppRole.user,
+        createdAt: data.containsKey('CreatedAt')
+            ? data['CreatedAt']?.toDate() ?? DateTime.now()
+            : DateTime.now(),
+        updatedAt: data.containsKey('UpdatedAt')
+            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
+            : DateTime.now(),
       );
     } else {
       return empty();

@@ -19,7 +19,7 @@ class ProductVariations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variationController = controller.productVariationsController;
+    final variationController = controller.productVariationController;
     return Obx(() => controller.productType.value == ProductType.variable
         ? TRoundedContainer(
             child: Column(
@@ -34,8 +34,8 @@ class ProductVariations extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     TextButton(
-                        onPressed: () => controller.productVariationsController
-                            .removeVariation(context),
+                        onPressed: () =>
+                            variationController.removeVariation(context),
                         child: Text("Remove Variations"))
                   ],
                 ),

@@ -11,7 +11,6 @@ class ProductsVisibilityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = CreateProductController.instance;
-
     Widget buildVisibilityRadioButton(ProductVisibility value, String label) {
       return Obx(() => RadioListTile<ProductVisibility>(
             value: value,

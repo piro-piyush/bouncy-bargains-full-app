@@ -18,7 +18,7 @@ class ProductVariations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variationController = ProductVariationsController.instance;
+    final variationController =  CreateProductController.instance.productVariationController;
     return Obx(() => CreateProductController.instance.productType.value == ProductType.variable
         ? TRoundedContainer(
             child: Column(

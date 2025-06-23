@@ -3,15 +3,13 @@ import 'package:ecommerce_admin_panel/features/shop/controllers/product/create_p
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProductTitleAndDescription extends StatelessWidget {
   const ProductTitleAndDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CreateProductController());
-
+    final controller = CreateProductController.instance;
     return TRoundedContainer(
       child: Form(
           key: controller.titleDescriptionFormKey,

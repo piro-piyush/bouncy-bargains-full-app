@@ -28,7 +28,7 @@ class BrandRows extends DataTableSource {
                 width: 50,
                 height: 50,
                 padding: TSizes.sm,
-                image: brand.image != "" ? brand.image : TImages.defaultImage,
+                image: brand.image.isNotEmpty ? brand.image : TImages.defaultImage,
                 imageType: brand.image.isNotEmpty
                     ? ImageType.network
                     : ImageType.asset,
