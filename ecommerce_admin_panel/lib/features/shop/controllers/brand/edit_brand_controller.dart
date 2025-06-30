@@ -124,12 +124,12 @@ class EditBrandController extends GetxController {
           title: "Congratulations", message: "Your record has been updated");
     } catch (e) {
       TFullScreenLoader.stopLoading();
-      TLoaders.errorSnackBar(title: "Oh snap!", message: e.toString);
+      TLoaders.errorSnackBar(title: "Oh snap!", message: e.toString());
     }
   }
 
   // Update categories of this brand
-  updateBrandCategories(BrandModel brand) async {
+  Future<void> updateBrandCategories(BrandModel brand) async {
     // Fetch all BrandCategories
     final brandCategories = await _repo.getCategoriesOfSpecificBrand(brand.id);
 
@@ -166,5 +166,5 @@ class EditBrandController extends GetxController {
   }
 
   // Update Products of this brand
-  updateBrandInProducts(BrandModel brand) async {}
+  Future<void> updateBrandInProducts(BrandModel brand) async {}
 }

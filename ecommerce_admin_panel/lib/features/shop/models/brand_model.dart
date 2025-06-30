@@ -52,7 +52,7 @@ class BrandModel {
   }
 
   // Method to convert BrandModel to JSON
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'Id': id,
       'Name': name,

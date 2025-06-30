@@ -7,7 +7,6 @@ import 'package:ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
-import 'package:ecommerce_admin_panel/utils/constants/text_strings.dart';
 import 'package:ecommerce_admin_panel/utils/popups/dialogs.dart';
 import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';

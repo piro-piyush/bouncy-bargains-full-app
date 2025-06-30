@@ -55,7 +55,7 @@ class ProductModel {
       id: "", title: "", stock: 0, price: 0, thumbnail: '', productType: '');
 
   // Convert model to JSON structure for storing data in Firebase or APIs
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'SKU': sku,

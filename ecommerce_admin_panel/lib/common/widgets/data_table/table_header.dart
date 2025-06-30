@@ -25,7 +25,6 @@ class TTableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktop = TDeviceUtils.isDesktopScreen(context);
-    final isTablet = TDeviceUtils.isTabletScreen(context);
 
     if (isDesktop) {
       // 💻 Desktop layout

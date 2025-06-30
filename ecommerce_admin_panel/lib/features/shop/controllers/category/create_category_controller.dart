@@ -90,7 +90,7 @@ class CreateCategoryController extends GetxController {
           title: "Congratulations", message: "New record has been added");
     } catch (e) {
       TFullScreenLoader.stopLoading();
-      TLoaders.errorSnackBar(title: "Oh snap!", message: e.toString);
+      TLoaders.errorSnackBar(title: "Oh snap!", message: e.toString());
     }
   }
 }

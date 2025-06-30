@@ -6,9 +6,9 @@ import '../constants/colors.dart';
 import '../helpers/helper_functions.dart';
 
 class TLoaders {
-  static hideSnackBar() => ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
+  static void hideSnackBar() => ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
 
-  static customToast({required message}) {
+  static void customToast({required String message}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       SnackBar(
         width: 500,
@@ -29,7 +29,7 @@ class TLoaders {
     );
   }
 
-  static successSnackBar({required title, message = '', duration = 3}) {
+  static void successSnackBar({required String title,String message = '', duration = 3}) {
     Get.snackbar(
       title,
       message,
@@ -45,7 +45,7 @@ class TLoaders {
     );
   }
 
-  static warningSnackBar({required title, message = ''}) {
+  static void warningSnackBar({required String title, String message = ''}) {
     Get.snackbar(
       title,
       message,
@@ -61,7 +61,7 @@ class TLoaders {
     );
   }
 
-  static errorSnackBar({required title, message = ''}) {
+  static void errorSnackBar({required String title, String message = ''}) {
     Get.snackbar(
       title,
       message,

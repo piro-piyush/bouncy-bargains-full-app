@@ -90,7 +90,7 @@ abstract class TBaseController<T> extends GetxController {
   }
 
   ///  Method to be implemented by subclass for
-  confirmAndDeleteItem(T item) {
+  void confirmAndDeleteItem(T item) {
     Get.defaultDialog(
         title: "Delete Item",
         content: Text("Are you sure you want to delete this item?"),
@@ -123,7 +123,7 @@ abstract class TBaseController<T> extends GetxController {
   }
 
   ///  Method to be implemented by subclass for handling confirmation before deleting an item.
-  deleteOnConfirm(T item) async {
+  Future<void> deleteOnConfirm(T item) async {
     try {
       // Remove the Confirmation dialog
       TFullScreenLoader.stopLoading();

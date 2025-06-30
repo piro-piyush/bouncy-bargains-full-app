@@ -3,7 +3,6 @@ import 'package:ecommerce_admin_panel/features/media/controllers/media_controlle
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/settings_model.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/network_manager.dart';
-import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -51,7 +51,7 @@ class CategoryModel {
   }
 
   // Method to convert CategoryModel to JSON
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'Name': name,
       'Image': image,

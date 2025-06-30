@@ -63,7 +63,7 @@ class ProductVariationModel {
   }
 
   /// Json Format
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'Id': id,
       'Stock': stock,
