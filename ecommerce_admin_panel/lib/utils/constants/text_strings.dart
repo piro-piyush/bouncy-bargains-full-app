@@ -12,7 +12,8 @@ class TTexts {
   static const String categoriesStoragePath = "/Categories";
   static const String productsStoragePath = "/Products";
   static const String usersStoragePath = "/Users";
-  static const String appLogoImagePath = "/App";
+  static const String appLogosImagePath = "/AppLogos";
+  static const String otherImagePath = "/Others";
 
   // -- GLOBAL Texts
   static const String and = "and";

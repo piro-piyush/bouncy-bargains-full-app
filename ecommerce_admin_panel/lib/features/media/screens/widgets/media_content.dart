@@ -64,7 +64,7 @@ class MediaContent extends StatelessWidget {
 
           // Show Media
           Obx(() {
-            Text(controller.allAppImages.toString());
+            // Text(controller.allAppLogosImages.toString());
             // Get Selected Folder Images
             List<ImageModel> images = _getSelectedFolderImages(controller);
 
@@ -161,30 +161,36 @@ class MediaContent extends StatelessWidget {
   }
 
   List<ImageModel> _getSelectedFolderImages(MediaController controller) {
-    List<ImageModel> images = [];
-    if (controller.selectedPath.value == MediaCategory.banners) {
-      images = controller.allBannerImages
-          .where((image) => image.url.isNotEmpty)
-          .toList();
-    } else if (controller.selectedPath.value == MediaCategory.brands) {
-      images = controller.allBrandImages
-          .where((image) => image.url.isNotEmpty)
-          .toList();
-    } else if (controller.selectedPath.value == MediaCategory.categories) {
-      images = controller.allCategoryImages
-          .where((image) => image.url.isNotEmpty)
-          .toList();
-    } else if (controller.selectedPath.value == MediaCategory.products) {
-      images = controller.allProductImages
-          .where((image) => image.url.isNotEmpty)
-          .toList();
-    } else if (controller.selectedPath.value == MediaCategory.users) {
-      images = controller.allUserImages
-          .where((image) => image.url.isNotEmpty)
-          .toList();
+    final MediaCategory category = controller.selectedPath.value;
+
+    RxList<ImageModel> list;
+
+    switch (category) {
+      case MediaCategory.banners:
+        list = controller.allBannerImages;
+        break;
+      case MediaCategory.brands:
+        list = controller.allBrandImages;
+        break;
+      case MediaCategory.categories:
+        list = controller.allCategoryImages;
+        break;
+      case MediaCategory.products:
+        list = controller.allProductImages;
+        break;
+      case MediaCategory.users:
+        list = controller.allUserImages;
+        break;
+      case MediaCategory.appLogos:
+        list = controller.allAppLogosImages;
+        break;
+      default:
+        return [];
     }
-    return images;
+
+    return list.where((image) => image.url.isNotEmpty).toList();
   }
+
 
   Widget _buildEmptyAnimationWidget(BuildContext context) {
     return Padding(

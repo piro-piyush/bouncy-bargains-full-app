@@ -34,7 +34,7 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
 
-  final RxList<ImageModel> allAppImages = <ImageModel>[].obs;
+  final RxList<ImageModel> allAppLogosImages = <ImageModel>[].obs;
 
   final MediaRepository mediaRepository = MediaRepository.instance;
 
@@ -43,30 +43,22 @@ class MediaController extends GetxController {
     try {
       loading.value = true;
       RxList<ImageModel> targetList = <ImageModel>[].obs;
-      if (selectedPath.value == MediaCategory.banners &&
-          allBannerImages.isEmpty) {
+      if (selectedPath.value == MediaCategory.banners && allBannerImages.isEmpty) {
         targetList = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands &&
-          allBrandImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.brands && allBrandImages.isEmpty) {
         targetList = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories &&
-          allCategoryImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.categories && allCategoryImages.isEmpty) {
         targetList = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products &&
-          allProductImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.products && allProductImages.isEmpty) {
         targetList = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users &&
-          allUserImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.users && allUserImages.isEmpty) {
         targetList = allUserImages;
-      } else if (selectedPath.value == MediaCategory.app &&
-          allAppImages.isEmpty) {
-        targetList = allAppImages;
+      } else if (selectedPath.value == MediaCategory.appLogos && allAppLogosImages.isEmpty) {
+        targetList = allAppLogosImages;
       }
 
-      final images = await mediaRepository.fetchImagesFromDatabase(
-          selectedPath.value, initialLoadCount);
+      final images = await mediaRepository.fetchImagesFromDatabase(selectedPath.value, initialLoadCount);
       targetList.assignAll(images);
-
       loading.value = false;
     } catch (e) {
       if (kDebugMode) print("Error in getMediaImages : ${e.toString()}");
@@ -93,8 +85,8 @@ class MediaController extends GetxController {
         targetList = allProductImages;
       } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
-      } else if (selectedPath.value == MediaCategory.app) {
-        targetList = allAppImages;
+      } else if (selectedPath.value == MediaCategory.appLogos) {
+        targetList = allAppLogosImages;
       }
 
       final images = await mediaRepository.loadMoreImagesFromDatabase(
@@ -179,8 +171,9 @@ class MediaController extends GetxController {
           break;
         case MediaCategory.users:
           targetList = allUserImages;
-        case MediaCategory.app:
-          targetList = allAppImages;
+          break;
+        case MediaCategory.appLogos:
+          targetList = allAppLogosImages;
           break;
         default:
           return;
@@ -190,21 +183,21 @@ class MediaController extends GetxController {
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
         // Upload Image to the Storage
-        final ImageModel uploadedImage =
-            await mediaRepository.uploadImageFileInStorage(
+        final ImageModel uploadedImage = await mediaRepository.uploadImageFileInStorage(
           fileData: selectedImage.localImageToDisplay!,
           mimeType: selectedImage.contentType!,
-          path: getSelectedPath(),
+          path: selectedCategory.path,
           imageName: selectedImage.fileName,
         );
         // Upload Image to the Firestore
         uploadedImage.mediaCategory = selectedCategory.name;
-        final id =
-            await mediaRepository.uploadImageFileInDatabase(uploadedImage);
+        final id = await mediaRepository.uploadImageFileInDatabase(uploadedImage);
         uploadedImage.id = id;
         selectedImagesToUpload.removeAt(i);
         targetList.add(uploadedImage);
+        targetList.refresh();
       }
+
       // Stop Loader after successful upload
       TFullScreenLoader.stopLoading();
     } catch (e) {
@@ -239,32 +232,7 @@ class MediaController extends GetxController {
             )));
   }
 
-  String getSelectedPath() {
-    String path = '';
-    switch (selectedPath.value) {
-      case MediaCategory.banners:
-        path = TTexts.bannersStoragePath;
-        break;
-      case MediaCategory.brands:
-        path = TTexts.brandsStoragePath;
-        break;
-      case MediaCategory.categories:
-        path = TTexts.categoriesStoragePath;
-        break;
-      case MediaCategory.products:
-        path = TTexts.productsStoragePath;
-        break;
-      case MediaCategory.users:
-        path = TTexts.usersStoragePath;
-        break;
-      case MediaCategory.app:
-        path = TTexts.appLogoImagePath;
-        break;
-      default:
-        path = "Others";
-    }
-    return path;
-  }
+
 
   // Popup confirmation to remove cloud image
   void removeCloudImageConfirmation(ImageModel image) {
@@ -319,8 +287,9 @@ class MediaController extends GetxController {
         case MediaCategory.users:
           targetList = allUserImages;
           break;
-        case MediaCategory.app:
-          targetList = allAppImages;
+        case MediaCategory.appLogos:
+          targetList = allAppLogosImages;
+          break;
         default:
           return;
       }
