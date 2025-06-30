@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "604269957403-7up8obn484egs2rnfq5l6rgr9el1ppgc.apps.googleusercontent.com",
+              "client_id": "604269957403-0pl908uvnbev3pc33cb2uus5qpa04vjv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.bouncyBargains"
+                "bundle_id": "com.example.ytEcommerceAdminPanel"
               }
             }
           ]
@@ -76,10 +76,46 @@
               "client_type": 3
             },
             {
-              "client_id": "604269957403-7up8obn484egs2rnfq5l6rgr9el1ppgc.apps.googleusercontent.com",
+              "client_id": "604269957403-0pl908uvnbev3pc33cb2uus5qpa04vjv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.bouncyBargains"
+                "bundle_id": "com.example.ytEcommerceAdminPanel"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604269957403:android:d876bfb5c4b8245fbf03be",
+        "android_client_info": {
+          "package_name": "com.example.med_mate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXGkbushli6IIDUE3Ql6rXquCtDcvteo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604269957403-jg29r3bke1f697shjg2idvlhgco1a9f0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604269957403-0pl908uvnbev3pc33cb2uus5qpa04vjv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ytEcommerceAdminPanel"
               }
             }
           ]

@@ -257,6 +257,9 @@ class MediaController extends GetxController {
       case MediaCategory.users:
         path = TTexts.usersStoragePath;
         break;
+      case MediaCategory.app:
+        path = TTexts.appLogoImagePath;
+        break;
       default:
         path = "Others";
     }

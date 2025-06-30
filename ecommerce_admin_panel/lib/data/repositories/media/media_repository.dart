@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
+import 'package:ecommerce_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +35,8 @@ class MediaRepository extends GetxController {
       final FullMetadata metadata = await ref.getMetadata();
       return ImageModel.fromFirebaseMetaData(
           metadata, path, imageName, downloadURL);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw e.message!;
     } on SocketException catch (e) {
@@ -51,6 +55,8 @@ class MediaRepository extends GetxController {
           .collection("Images")
           .add(image.toJson());
       return data.id;
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw e.message!;
     } on SocketException catch (e) {
@@ -79,6 +85,8 @@ class MediaRepository extends GetxController {
       }
 
       return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw e.message!;
     } on SocketException catch (e) {
@@ -86,7 +94,7 @@ class MediaRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      if(kDebugMode )print("Unable to fetch images, from db");
+      if (kDebugMode) print("Unable to fetch images, from db");
       throw e.toString();
     }
   }
@@ -104,6 +112,8 @@ class MediaRepository extends GetxController {
           .limit(loadCount)
           .get();
       return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw e.message!;
     } on SocketException catch (e) {
@@ -123,6 +133,8 @@ class MediaRepository extends GetxController {
           .collection("Images")
           .doc(image.id)
           .delete();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw e.message ?? "Something went wrong while deleting image.";
     } on SocketException catch (e) {
