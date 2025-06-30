@@ -183,9 +183,9 @@ class AuthController extends GetxController {
       // Optional: Create default settings
       await _settingsRepo.registerSettings(SettingsModel(
         appLogo: "",
-        appName: "",
+        appName: "My App",
         shippingCost: 0.0,
-        taxRate: 1,
+        taxRate: 0,
         freeShippingThreshold: 400,
       ));
 
