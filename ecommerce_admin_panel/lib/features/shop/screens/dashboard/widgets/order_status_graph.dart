@@ -4,6 +4,7 @@ import 'package:ecommerce_admin_panel/common/widgets/icons/t_circular_icon.dart'
 import 'package:ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/enums.dart';
+import 'package:ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -47,7 +48,11 @@ class OrderStatusPieChart extends StatelessWidget {
                 height: 400,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [TLoaderAnimation()],
+                  children: [
+                    TLoaderAnimation(
+                      animation: TImages.loadingCargoAnimation,
+                    )
+                  ],
                 ),
               );
             }

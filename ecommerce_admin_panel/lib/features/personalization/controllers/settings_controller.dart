@@ -119,7 +119,6 @@ class SettingsController extends GetxController {
 
       // Validate form
       if (!formKey.currentState!.validate()) {
-        TFullScreenLoader.stopLoading();
         return;
       }
 
@@ -135,7 +134,6 @@ class SettingsController extends GetxController {
               settings.value.shippingCost != shippingCost ||
               settings.value.freeShippingThreshold != freeShippingThreshold;
       if (!hasChanged) {
-        TFullScreenLoader.stopLoading();
         TLoaders.warningSnackBar(
           title: "No Changes",
           message: "All settings are already up to date.",

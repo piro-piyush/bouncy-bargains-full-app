@@ -43,26 +43,33 @@ class MediaController extends GetxController {
     try {
       loading.value = true;
       RxList<ImageModel> targetList = <ImageModel>[].obs;
-      if (selectedPath.value == MediaCategory.banners && allBannerImages.isEmpty) {
+      if (selectedPath.value == MediaCategory.banners &&
+          allBannerImages.isEmpty) {
         targetList = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands && allBrandImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.brands &&
+          allBrandImages.isEmpty) {
         targetList = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories && allCategoryImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.categories &&
+          allCategoryImages.isEmpty) {
         targetList = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products && allProductImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.products &&
+          allProductImages.isEmpty) {
         targetList = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users && allUserImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.users &&
+          allUserImages.isEmpty) {
         targetList = allUserImages;
-      } else if (selectedPath.value == MediaCategory.app && allAppImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.app &&
+          allAppImages.isEmpty) {
         targetList = allAppImages;
       }
 
-      final images = await mediaRepository.fetchImagesFromDatabase(selectedPath.value, initialLoadCount);
+      final images = await mediaRepository.fetchImagesFromDatabase(
+          selectedPath.value, initialLoadCount);
       targetList.assignAll(images);
 
       loading.value = false;
     } catch (e) {
-      if(kDebugMode )print("Error in getMediaImages : ${e.toString()}");
+      if (kDebugMode) print("Error in getMediaImages : ${e.toString()}");
       loading.value = false;
       TLoaders.errorSnackBar(
           title: "Oh snap",
@@ -86,7 +93,7 @@ class MediaController extends GetxController {
         targetList = allProductImages;
       } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
-      }else if (selectedPath.value == MediaCategory.app) {
+      } else if (selectedPath.value == MediaCategory.app) {
         targetList = allAppImages;
       }
 
@@ -307,15 +314,17 @@ class MediaController extends GetxController {
           targetList = allProductImages;
           break;
         case MediaCategory.users:
-          targetList = allBannerImages;
+          targetList = allUserImages;
           break;
+        case MediaCategory.app:
+          targetList = allAppImages;
         default:
           return;
       }
 
       // Remove from the list
       targetList.remove(image);
-      update();
+      targetList.refresh(); // 🔥 important for Obx() rebuild
 
       TFullScreenLoader.stopLoading();
       TLoaders.successSnackBar(

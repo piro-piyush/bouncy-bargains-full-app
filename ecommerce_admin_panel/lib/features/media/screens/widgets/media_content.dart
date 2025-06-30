@@ -64,6 +64,7 @@ class MediaContent extends StatelessWidget {
 
           // Show Media
           Obx(() {
+            Text(controller.allAppImages.toString());
             // Get Selected Folder Images
             List<ImageModel> images = _getSelectedFolderImages(controller);
 
