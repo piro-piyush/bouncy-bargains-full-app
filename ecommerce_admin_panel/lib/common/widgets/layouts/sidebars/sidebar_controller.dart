@@ -34,10 +34,9 @@ class SidebarController extends GetxController {
     }
   }
 
-  void logout()async {
+  void logout() async {
     try {
       await AuthenticationRepository.instance.logoutConfirmationDialog();
-      TLoaders.successSnackBar(title: "Success", message: "Log out Success !");
     } catch (e) {
       TLoaders.errorSnackBar(title: "Error", message: e.toString());
     }

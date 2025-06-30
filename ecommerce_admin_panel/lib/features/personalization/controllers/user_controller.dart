@@ -3,7 +3,6 @@ import 'package:ecommerce_admin_panel/features/media/controllers/media_controlle
 import 'package:ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:ecommerce_admin_panel/features/personalization/models/admin_model.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/network_manager.dart';
-import 'package:ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:ecommerce_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,6 +32,7 @@ class UserController extends GetxController {
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
+
   //────────────────────────────────────────────
 
   /// User repository instance
@@ -72,11 +72,17 @@ class UserController extends GetxController {
   /// 🖼️ Pick image and update profile picture in Firestore
   Future<void> updateProfilePicture() async {
     try {
-      loading.value = true;
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TLoaders.errorSnackBar(
+          title: "No Internet",
+          message: "No internet connection. Please check your connection.",
+        );
+      }
 
-      final mediaController = Get.put(MediaController());
+      loading.value = true;
       List<ImageModel>? selectedImages =
-      await mediaController.selectImagesFromMedia();
+          await MediaController.instance.selectImagesFromMedia();
 
       if (selectedImages != null && selectedImages.isNotEmpty) {
         final ImageModel selectedImage = selectedImages.first;
@@ -92,8 +98,7 @@ class UserController extends GetxController {
             title: "Success", message: "Profile picture updated successfully.");
       }
     } catch (e) {
-      TLoaders.errorSnackBar(
-          title: "Update Failed", message: e.toString());
+      TLoaders.errorSnackBar(title: "Update Failed", message: e.toString());
     } finally {
       loading.value = false;
     }
@@ -102,29 +107,40 @@ class UserController extends GetxController {
   /// ✏️ Update first name, last name, and phone number
   Future<void> updateUserInfo() async {
     try {
-      loading.value = true;
-
       // Check internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        TFullScreenLoader.stopLoading();
-        return;
+        TLoaders.errorSnackBar(
+          title: "No Internet",
+          message: "No internet connection. Please check your connection.",
+        );
       }
-
       // Validate form
       if (!formKey.currentState!.validate()) {
         return;
       }
-
-      // Assign updated values
-      admin.value.firstName = firstNameController.text.trim();
-      admin.value.lastName = lastNameController.text.trim();
-      admin.value.phoneNumber = phoneController.text.trim();
-
+      final firstName = firstNameController.text.trim();
+      final lastName = lastNameController.text.trim();
+      final phone = phoneController.text.trim();
+      // Check if all values are already the same
+      final hasName = admin.value.firstName != firstName ||
+          admin.value.lastName != lastName ||
+          admin.value.phoneNumber != phone;
+      if (!hasName) {
+        TLoaders.warningSnackBar(
+          title: "No Changes",
+          message: "Nothing to update. All values are same.",
+        );
+        return;
+      }
+      // Assign updated values only if changed
+      admin.value.firstName = firstName;
+      admin.value.lastName = lastName;
+      admin.value.phoneNumber = phone;
+      loading.value = true;
       // Update in Firestore
       await _repo.updateAdminDetails(admin.value);
       admin.refresh();
-
       TLoaders.successSnackBar(
           title: "Success", message: "User details updated successfully.");
     } catch (e) {

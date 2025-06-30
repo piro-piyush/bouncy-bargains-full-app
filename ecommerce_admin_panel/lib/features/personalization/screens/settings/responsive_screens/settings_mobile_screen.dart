@@ -14,28 +14,16 @@ class SettingsMobileScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
+            spacing: TSizes.spaceBtwSections,
             children: [
               // Breadcrumbs
               TBreadcrumbWithHeading(
                   heading: "Settings", breadcrumbItems: ["Settings"]),
-              SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
 
-              // Body
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile Pic and Meta
-                  Expanded(child: ImageAndMeta()),
-                  SizedBox(
-                    width: TSizes.spaceBtwSections,
-                  ),
+              ImageAndMeta(),
 
-                  // Form
-                  Expanded(flex: 2, child: SettingsForm())
-                ],
-              )
+              // Form
+              SettingsForm()
             ],
           ),
         ),

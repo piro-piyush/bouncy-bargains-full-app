@@ -74,12 +74,17 @@ class SettingsController extends GetxController {
   /// 🖼️ Pick and update app logo using MediaController
   Future<void> updateAppLogo() async {
     try {
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TLoaders.errorSnackBar(
+          title: "No Internet",
+          message: "No internet connection. Please check your connection.",
+        );
+      }
+
       loading.value = true;
 
-      final mediaController = Get.put(MediaController());
-      final List<ImageModel>? selectedImages =
-      await mediaController.selectImagesFromMedia();
-
+      final List<ImageModel>? selectedImages = await MediaController.instance.selectImagesFromMedia();
       if (selectedImages != null && selectedImages.isNotEmpty) {
         final ImageModel selectedImage = selectedImages.first;
 
@@ -106,8 +111,10 @@ class SettingsController extends GetxController {
     try {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        TFullScreenLoader.stopLoading();
-        return;
+        TLoaders.errorSnackBar(
+          title: "No Internet",
+          message: "No internet connection. Please check your connection.",
+        );
       }
 
       // Validate form
@@ -116,25 +123,37 @@ class SettingsController extends GetxController {
         return;
       }
 
+      final appName = appNameController.text.trim();
+      final taxRate = double.parse(taxRateController.text.trim());
+      final shippingCost = double.parse(shippingCostController.text.trim());
+      final freeShippingThreshold = double.tryParse(freeShippingThresholdController.text.trim()) ?? 0.0;
+
+      // Check if any value has changed
+      final hasChanged =
+          settings.value.appName != appName ||
+              settings.value.taxRate != taxRate ||
+              settings.value.shippingCost != shippingCost ||
+              settings.value.freeShippingThreshold != freeShippingThreshold;
+      if (!hasChanged) {
+        TFullScreenLoader.stopLoading();
+        TLoaders.warningSnackBar(
+          title: "No Changes",
+          message: "All settings are already up to date.",
+        );
+        return;
+      }
+      // ✅ Update only if values changed
+      settings.value.appName = appName;
+      settings.value.taxRate = taxRate;
+      settings.value.shippingCost = shippingCost;
+      settings.value.freeShippingThreshold = freeShippingThreshold;
       loading.value = true;
-
-      // Update local settings from form inputs
-      settings.value.appName = appNameController.text.trim();
-      settings.value.taxRate = double.parse(taxRateController.text.trim());
-      settings.value.shippingCost =
-          double.parse(shippingCostController.text.trim());
-      settings.value.freeShippingThreshold =
-          double.tryParse(freeShippingThresholdController.text.trim()) ?? 0.0;
-
       // Push to Firestore
       await _repo.updateSettings(settings.value);
       settings.refresh();
-
-      TLoaders.successSnackBar(
-          title: "Success", message: "Settings updated successfully.");
+      TLoaders.successSnackBar(title: "Success", message: "Settings updated successfully.");
     } catch (e) {
-      TLoaders.errorSnackBar(
-          title: "Update Failed", message: e.toString());
+      TLoaders.errorSnackBar(title: "Update Failed", message: e.toString());
     } finally {
       loading.value = false;
     }
