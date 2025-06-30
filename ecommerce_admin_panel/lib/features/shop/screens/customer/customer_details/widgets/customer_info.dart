@@ -52,7 +52,7 @@ class CustomerInfo extends StatelessWidget {
                 imageType: customer.profilePicture!=null
                     ? ImageType.network
                     : ImageType.asset,
-                image: customer.profilePicture!=null
+                image: customer.profilePicture!=null || customer.profilePicture!.isNotEmpty
                     ? customer.profilePicture
                     : TImages.user,
                 padding: 0,

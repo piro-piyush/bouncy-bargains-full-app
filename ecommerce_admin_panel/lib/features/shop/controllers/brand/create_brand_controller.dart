@@ -47,7 +47,7 @@ class CreateBrandController extends GetxController {
 
   // Pick Thumbnail Image from Media
   void pickImage() async {
-    final controller = Get.put(MediaController());
+    final controller = MediaController.instance;
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
 
     // Handle the selected Images

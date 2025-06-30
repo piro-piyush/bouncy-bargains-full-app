@@ -15,7 +15,7 @@ class CustomersMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CustomerController());
+    final controller =CustomerController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(

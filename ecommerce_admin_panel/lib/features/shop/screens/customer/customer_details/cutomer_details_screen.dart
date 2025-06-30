@@ -12,7 +12,7 @@ class CustomerDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customer = Get.arguments;
-    final controller = Get.put(CustomerDetailsController());
+    final controller = CustomerDetailsController.instance;
      controller.init(customer);
     return TSiteTemplate(
       desktop: CustomerDetailsDesktopScreen(customer: customer),

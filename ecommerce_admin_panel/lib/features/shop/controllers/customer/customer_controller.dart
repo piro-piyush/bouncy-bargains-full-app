@@ -11,7 +11,7 @@ class CustomerController extends TBaseController<UserModel> {
   static CustomerController get instance => Get.find();
 
   /// 📦 User repository for CRUD operations
-  final UserRepository _repo = Get.put(UserRepository());
+  final UserRepository _repo = UserRepository.instance;
 
   /// 🔍 Filters user list based on search query (matches full name)
   @override

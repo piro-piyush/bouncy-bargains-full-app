@@ -14,7 +14,8 @@ class CustomersTabletScreen extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) { final controller = Get.put(CustomerController());
+  Widget build(BuildContext context) {
+    final controller = CustomerController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
