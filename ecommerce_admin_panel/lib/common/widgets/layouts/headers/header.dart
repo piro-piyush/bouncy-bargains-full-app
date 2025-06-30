@@ -90,7 +90,8 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     ),
                   const SizedBox(width: TSizes.sm),
-                  if (admin.profilePicture != null)
+                  if (admin.profilePicture != null &&
+                      admin.profilePicture!.isNotEmpty)
                     TRoundedImage(
                       width: 40,
                       height: 40,

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:ecommerce_admin_panel/utils/helpers/network_manager.dart';
 
 // Repositories
-import 'package:ecommerce_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/banner/banner_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/brands/brand_repository.dart';
 import 'package:ecommerce_admin_panel/data/repositories/category/category_repository.dart';

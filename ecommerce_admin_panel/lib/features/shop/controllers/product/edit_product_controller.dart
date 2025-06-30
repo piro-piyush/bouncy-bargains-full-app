@@ -108,7 +108,7 @@ class EditProductController extends GetxController {
     selectedCategoriesLoader.value = true;
     // Product Categories
     final productCategories = await _repo.getProductCategories(productId);
-    final categoriesController = Get.put(CategoryController());
+    final categoriesController = CategoryController.instance;
     if (categoriesController.allItems.isEmpty) {
       await categoriesController.fetchItems();
     }

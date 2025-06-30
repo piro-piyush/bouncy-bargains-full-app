@@ -34,6 +34,8 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
 
+  final RxList<ImageModel> allAppImages = <ImageModel>[].obs;
+
   final MediaRepository mediaRepository = MediaRepository.instance;
 
   // Get Images
@@ -41,25 +43,21 @@ class MediaController extends GetxController {
     try {
       loading.value = true;
       RxList<ImageModel> targetList = <ImageModel>[].obs;
-      if (selectedPath.value == MediaCategory.banners &&
-          allBannerImages.isEmpty) {
+      if (selectedPath.value == MediaCategory.banners && allBannerImages.isEmpty) {
         targetList = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands &&
-          allBrandImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.brands && allBrandImages.isEmpty) {
         targetList = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories &&
-          allCategoryImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.categories && allCategoryImages.isEmpty) {
         targetList = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products &&
-          allProductImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.products && allProductImages.isEmpty) {
         targetList = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users &&
-          allUserImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.users && allUserImages.isEmpty) {
         targetList = allUserImages;
+      } else if (selectedPath.value == MediaCategory.app && allAppImages.isEmpty) {
+        targetList = allAppImages;
       }
 
-      final images = await mediaRepository.fetchImagesFromDatabase(
-          selectedPath.value, initialLoadCount);
+      final images = await mediaRepository.fetchImagesFromDatabase(selectedPath.value, initialLoadCount);
       targetList.assignAll(images);
 
       loading.value = false;
@@ -88,6 +86,8 @@ class MediaController extends GetxController {
         targetList = allProductImages;
       } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
+      }else if (selectedPath.value == MediaCategory.app) {
+        targetList = allAppImages;
       }
 
       final images = await mediaRepository.loadMoreImagesFromDatabase(
@@ -172,6 +172,8 @@ class MediaController extends GetxController {
           break;
         case MediaCategory.users:
           targetList = allUserImages;
+        case MediaCategory.app:
+          targetList = allAppImages;
           break;
         default:
           return;

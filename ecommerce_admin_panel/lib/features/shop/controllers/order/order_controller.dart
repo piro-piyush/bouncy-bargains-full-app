@@ -19,7 +19,7 @@ class OrderController extends TBaseController<OrderModel> {
   var orderStatus = OrderStatus.delivered.obs;
 
   /// 📥 Repository to communicate with Firestore
-  final OrderRepository _repo = Get.put(OrderRepository());
+  final OrderRepository _repo = OrderRepository.instance;
 
   /// 🔍 Search logic for filtering orders by ID
   @override
