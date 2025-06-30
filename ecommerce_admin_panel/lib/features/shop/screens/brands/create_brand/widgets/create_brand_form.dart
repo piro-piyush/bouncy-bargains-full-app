@@ -47,27 +47,31 @@ class CreateBrandForm extends StatelessWidget {
               ),
 
               // Categories
-              Text(
-                'Select Categories',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              SizedBox(
-                height: TSizes.spaceBtwInputFields / 2,
-              ),
-              Obx(() => Wrap(
-                  spacing: TSizes.sm,
-                  children: controller.categoryController.allItems
-                      .map((category) => Padding(
-                            padding: EdgeInsets.only(bottom: TSizes.sm),
-                            child: TChoiceChip(
-                              text: category.name,
-                              selected: controller.selectedCategories
-                                  .contains(category),
-                              onSelected: (value) =>
-                                  controller.toggleSelection(category),
-                            ),
-                          ))
-                      .toList())),
+              if (controller.categoryController.allItems.isNotEmpty) ...[
+                Column(
+                  spacing: TSizes.spaceBtwInputFields / 2,
+                  children: [
+                    Text(
+                      'Select Categories',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Obx(() => Wrap(
+                        spacing: TSizes.sm,
+                        children: controller.categoryController.allItems
+                            .map((category) => Padding(
+                                  padding: EdgeInsets.only(bottom: TSizes.sm),
+                                  child: TChoiceChip(
+                                    text: category.name,
+                                    selected: controller.selectedCategories
+                                        .contains(category),
+                                    onSelected: (value) =>
+                                        controller.toggleSelection(category),
+                                  ),
+                                ))
+                            .toList())),
+                  ],
+                )
+              ],
               SizedBox(
                 height: TSizes.spaceBtwInputFields * 2,
               ),

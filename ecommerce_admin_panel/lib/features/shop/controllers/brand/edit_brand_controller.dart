@@ -15,9 +15,9 @@ import 'package:get/get.dart';
 class EditBrandController extends GetxController {
   static EditBrandController get instance => Get.find();
 
-  final _repo = BrandRepository.instance;
-  final brandController = BrandController.instance;
-  final categoryController = CategoryController.instance;
+  final BrandRepository _repo = BrandRepository.instance;
+  final BrandController brandController = BrandController.instance;
+  final CategoryController categoryController = CategoryController.instance;
 
   final isLoading = false.obs;
   RxString imageUrl = "".obs;
