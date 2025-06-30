@@ -1,6 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:ecommerce_admin_panel/features/shop/bindings/brand/brand_bindings.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -15,8 +14,6 @@ class ProductsBrand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = EditProductController.instance;
-    // BrandBindings().dependencies();
-    // final brandController = Get.put(BrandController());
     final brandController =BrandController.instance;
     return TRoundedContainer(
       child: Column(

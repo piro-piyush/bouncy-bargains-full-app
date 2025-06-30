@@ -21,7 +21,7 @@ class CreateBannerController extends GetxController {
 
   /// Pick Thumbnail Images from media.
   void pickImage() async {
-    final controller = Get.put(MediaController());
+    final controller = MediaController.instance;
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
     // Handle the selected Images
     if (selectedImages != null && selectedImages.isNotEmpty) {

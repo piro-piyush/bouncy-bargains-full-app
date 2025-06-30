@@ -1,6 +1,5 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:ecommerce_admin_panel/features/shop/bindings/brand/brand_bindings.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
