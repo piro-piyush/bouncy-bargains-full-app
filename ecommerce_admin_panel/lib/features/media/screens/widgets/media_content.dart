@@ -41,13 +41,12 @@ class MediaContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
+                spacing: TSizes.spaceBtwItems,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Gallery Folders",
                     style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  SizedBox(
-                    width: TSizes.spaceBtwItems,
                   ),
                   MediaFolderDropdown(
                     onChanged: (MediaCategory? newValue) {
