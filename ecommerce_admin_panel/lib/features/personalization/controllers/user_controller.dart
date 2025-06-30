@@ -36,7 +36,7 @@ class UserController extends GetxController {
   //────────────────────────────────────────────
 
   /// User repository instance
-  final _repo = Get.put(UserRepository());
+  final _repo = UserRepository.instance;
 
   /// Init lifecycle hook — fetch user details
   @override

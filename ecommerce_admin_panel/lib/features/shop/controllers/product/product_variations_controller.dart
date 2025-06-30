@@ -21,8 +21,7 @@ class ProductVariationsController extends GetxController {
   List<Map<ProductVariationModel, TextEditingController>>
       descriptionControllersList = [];
 
-  // final _repo = Get.put(ProductRepository());
-  final attributeController = Get.put(ProductAttributesController());
+  final attributeController =ProductAttributesController.instance;
 
   void initializeVariationControllers(List<ProductVariationModel> variations) {
     // Clear existing lists

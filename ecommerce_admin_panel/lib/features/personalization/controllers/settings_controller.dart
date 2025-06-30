@@ -19,7 +19,7 @@ class SettingsController extends GetxController {
   static SettingsController get instance => Get.find();
 
   /// Repository for Firebase operations
-  final _repo = Get.put(SettingsRepository());
+  final _repo = SettingsRepository.instance;
 
   /// Reactive loading indicator for UI feedback
   final RxBool loading = false.obs;

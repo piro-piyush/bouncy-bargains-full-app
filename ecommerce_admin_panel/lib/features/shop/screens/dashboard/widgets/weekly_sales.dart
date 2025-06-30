@@ -95,6 +95,11 @@ class TWeeklySalesGraph extends StatelessWidget {
   }
 }
 
+String getDayFromValue(double value) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return days[value.toInt() % days.length];
+}
+
 FlTitlesData buildFlTitlesData(List<double> weeklySales) {
   // Calculate step height for the left padding
   double maxOrder = weeklySales.reduce((a, b) => a > b ? a : b).toDouble();
@@ -105,23 +110,19 @@ FlTitlesData buildFlTitlesData(List<double> weeklySales) {
           sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                // Map index to the desired day of the week
-                final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-                // Calculate the index and ensure it wraps around for the correct day
-                final index = value.toInt() % days.length;
-
                 // Get the day corresponding to the calculated index
-                final day = days[index];
+                final day = getDayFromValue(value);
                 return SideTitleWidget(
-                  axisSide: AxisSide.bottom,
+                  meta: meta,
                   space: 0,
                   child: Text(day),
                 );
               })),
       leftTitles: AxisTitles(
           sideTitles: SideTitles(
-              showTitles: true, interval: stepHeight <= 0 ? 500: stepHeight, reservedSize: 50)),
+              showTitles: true,
+              interval: stepHeight <= 0 ? 500 : stepHeight,
+              reservedSize: 50)),
       rightTitles: AxisTitles(
           sideTitles: SideTitles(
         showTitles: false,
