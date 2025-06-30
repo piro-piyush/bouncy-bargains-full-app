@@ -64,7 +64,6 @@ class TAppRoute {
     GetPage(
       name: TRoutes.dashboard,
       page: () => const DashboardScreen(),
-      binding: DashboardBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
@@ -77,19 +76,16 @@ class TAppRoute {
     GetPage(
       name: TRoutes.categories,
       page: () => const CategoriesScreen(),
-      binding: CategoryBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.createCategory,
       page: () => const CreateCategoryScreen(),
-      binding: CreateCategoryBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.editCategory,
       page: () => const EditCategoryScreen(),
-      binding: EditCategoryBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
 
@@ -97,19 +93,16 @@ class TAppRoute {
     GetPage(
       name: TRoutes.brands,
       page: () => const BrandsScreen(),
-      binding: BrandBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.createBrand,
       page: () => const CreateBrandScreen(),
-      binding: CreateBrandBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.editBrand,
       page: () => const EditBrandScreen(),
-      binding: EditBrandBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
 
@@ -137,32 +130,32 @@ class TAppRoute {
     GetPage(
       name: TRoutes.products,
       page: () => const ProductsScreen(),
-      binding: ProductsBindings(),
+      // binding: ProductsBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.createProduct,
       page: () => const CreateProductScreen(),
-      binding: ProductsBindings(),
+      // binding: ProductsBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.editProduct,
       page: () => const EditProductScreen(),
-      binding: ProductsBindings(),
+      // binding: ProductsBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
 
     // Customers
     GetPage(
       name: TRoutes.customers,
-      binding: DashboardBindings(),
+      // binding: DashboardBindings(),
       page: () => const CustomersScreen(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.customerDetails,
-      binding: DashboardBindings(),
+      // binding: DashboardBindings(),
       page: () => const CustomerDetailsScreen(),
       middlewares: [TRoutesMiddleware()],
     ),
@@ -171,13 +164,13 @@ class TAppRoute {
     GetPage(
       name: TRoutes.orders,
       page: () => const OrdersScreen(),
-      binding: DashboardBindings(),
+      // binding: DashboardBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
     GetPage(
       name: TRoutes.orderDetails,
       page: () => const OrderDetailsScreen(),
-      binding: DashboardBindings(),
+      // binding: DashboardBindings(),
       middlewares: [TRoutesMiddleware()],
     ),
 

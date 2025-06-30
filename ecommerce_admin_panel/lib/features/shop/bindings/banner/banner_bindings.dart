@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 class BannerBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put(BannerRepository());
     Get.put(BannerController());
   }
 }

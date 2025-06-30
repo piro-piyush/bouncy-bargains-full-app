@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 class AuthBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put(SettingsRepository());
-    Get.put(UserRepository());
+    // Get.put(SettingsRepository());
+    // Get.put(UserRepository());
     Get.put(AuthController());
   }
 }

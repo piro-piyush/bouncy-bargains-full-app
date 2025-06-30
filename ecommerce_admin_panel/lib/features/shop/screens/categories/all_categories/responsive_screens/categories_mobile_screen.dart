@@ -30,8 +30,7 @@ class CategoriesMobileScreen extends StatelessWidget {
               ),
 
               // Table Body
-              Obx(() {
-                return TRoundedContainer(
+             TRoundedContainer(
                   child: Column(
                     children: [
                       // Table Header
@@ -53,8 +52,7 @@ class CategoriesMobileScreen extends StatelessWidget {
                       })
                     ],
                   ),
-                );
-              })
+                )
             ],
           ),
         ),

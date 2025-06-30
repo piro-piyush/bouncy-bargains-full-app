@@ -15,8 +15,9 @@ class ProductsBrand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = EditProductController.instance;
-    BrandBindings().dependencies();
-    final brandController = Get.put(BrandController());
+    // BrandBindings().dependencies();
+    // final brandController = Get.put(BrandController());
+    final brandController =BrandController.instance;
     return TRoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

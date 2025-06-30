@@ -13,8 +13,9 @@ class ProductsCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CategoryBindings().dependencies();
-    final categoryController = Get.put(CategoryController());
+    // CategoryBindings().dependencies();
+    // final categoryController = Get.put(CategoryController());
+    final categoryController = CategoryController.instance;
 
     // Fetch categories if the list is empty
     if (categoryController.allItems.isEmpty) {

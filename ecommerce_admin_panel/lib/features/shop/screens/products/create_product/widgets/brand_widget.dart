@@ -16,8 +16,8 @@ class ProductsBrand extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get instance of controllers
     final controller = CreateProductController.instance;
-    BrandBindings().dependencies();
-    final brandController = Get.put(BrandController());
+    // BrandBindings().dependencies();
+    final brandController = BrandController.instance;
 
     // Fetch brands if the list is empty
     if (brandController.allItems.isEmpty) {
