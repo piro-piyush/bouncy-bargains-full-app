@@ -1,6 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/features/personalization/controllers/user_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
+import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,75 +35,124 @@ class ProfileForm extends StatelessWidget {
               ),
 
               // First And Last Name
+
               Form(
                 key: controller.formKey,
                 child: Column(
+                  spacing: TSizes.spaceBtwInputFields,
                   children: [
-                    Row(
-                      children: [
-                        // First Name
-                        Expanded(
-                            child: TextFormField(
-                          controller: controller.firstNameController,
-                          decoration: InputDecoration(
-                            label: Text("First Name"),
-                            hintText: "First Name",
-                            prefixIcon: Icon(Iconsax.user),
+                    TDeviceUtils.isMobileScreen(context)
+                        ? Column(
+                            spacing: TSizes.spaceBtwInputFields,
+                            children: [
+                              TextFormField(
+                                controller: controller.firstNameController,
+                                decoration: InputDecoration(
+                                  label: Text("First Name"),
+                                  hintText: "First Name",
+                                  prefixIcon: Icon(Iconsax.user),
+                                ),
+                                validator: (value) =>
+                                    TValidator.validateEmptyText(
+                                        "First Name", value),
+                              ),
+                              TextFormField(
+                                controller: controller.lastNameController,
+                                decoration: InputDecoration(
+                                  label: Text("Last Name"),
+                                  hintText: "Last Name",
+                                  prefixIcon: Icon(Iconsax.user),
+                                ),
+                                validator: (value) =>
+                                    TValidator.validateEmptyText(
+                                        "Last Name", value),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            spacing: TSizes.spaceBtwInputFields,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: controller.firstNameController,
+                                  decoration: InputDecoration(
+                                    label: Text("First Name"),
+                                    hintText: "First Name",
+                                    prefixIcon: Icon(Iconsax.user),
+                                  ),
+                                  validator: (value) =>
+                                      TValidator.validateEmptyText(
+                                          "First Name", value),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: controller.lastNameController,
+                                  decoration: InputDecoration(
+                                    label: Text("Last Name"),
+                                    hintText: "Last Name",
+                                    prefixIcon: Icon(Iconsax.user),
+                                  ),
+                                  validator: (value) =>
+                                      TValidator.validateEmptyText(
+                                          "Last Name", value),
+                                ),
+                              ),
+                            ],
                           ),
-                          validator: (value) =>
-                              TValidator.validateEmptyText("First Name", value),
-                        )),
-                        SizedBox(
-                          width: TSizes.spaceBtwInputFields,
-                        ),
-
-                        // Last Name
-                        Expanded(
-                            child: TextFormField(
-                          controller: controller.lastNameController,
-                          decoration: InputDecoration(
-                            label: Text("Last Name"),
-                            hintText: "Last Name",
-                            prefixIcon: Icon(Iconsax.user),
+                    TDeviceUtils.isMobileScreen(context)
+                        ? Column(
+                            spacing: TSizes.spaceBtwInputFields,
+                            children: [
+                              TextFormField(
+                                controller: controller.emailController,
+                                decoration: InputDecoration(
+                                  label: Text("Email"),
+                                  hintText: "Email",
+                                  prefixIcon: Icon(Iconsax.forward),
+                                  enabled: false,
+                                ),
+                              ),
+                              TextFormField(
+                                controller: controller.phoneController,
+                                decoration: InputDecoration(
+                                  label: Text("Mobile"),
+                                  hintText: "Mobile",
+                                  prefixIcon: Icon(Iconsax.mobile),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            spacing: TSizes.spaceBtwInputFields,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: controller.emailController,
+                                  decoration: InputDecoration(
+                                    label: Text("Email"),
+                                    hintText: "Email",
+                                    prefixIcon: Icon(Iconsax.forward),
+                                    enabled: false,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: controller.phoneController,
+                                  decoration: InputDecoration(
+                                    label: Text("Mobile"),
+                                    hintText: "Mobile",
+                                    prefixIcon: Icon(Iconsax.mobile),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          validator: (value) =>
-                              TValidator.validateEmptyText("Last Name", value),
-                        )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: TSizes.spaceBtwInputFields,
-                    ),
-                    Row(
-                      children: [
-                        // Email
-                        Expanded(
-                            child: TextFormField(
-                          controller: controller.emailController,
-                          decoration: InputDecoration(
-                              label: Text("Email"),
-                              hintText: "Email",
-                              prefixIcon: Icon(Iconsax.forward),
-                              enabled: false),
-                        )),
-                        SizedBox(
-                          width: TSizes.spaceBtwInputFields,
-                        ),
-                        // Mobile
-                        Expanded(
-                            child: TextFormField(
-                          controller: controller.phoneController,
-                          decoration: InputDecoration(
-                            label: Text("Mobile"),
-                            hintText: "Mobile",
-                            prefixIcon: Icon(Iconsax.mobile),
-                          ),
-                        )),
-                      ],
-                    ),
                   ],
                 ),
               ),
+
               SizedBox(
                 height: TSizes.spaceBtwSections,
               ),

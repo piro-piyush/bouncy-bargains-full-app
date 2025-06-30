@@ -14,28 +14,17 @@ class ProfileTabletScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
+            spacing: TSizes.spaceBtwSections,
             children: [
               // Breadcrumbs
               TBreadcrumbWithHeading(
                   heading: "Profile", breadcrumbItems: ["Profile"]),
-              SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
 
               // Body
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile Pic and Meta
-                  Expanded(child: ImageAndMeta()),
-                  SizedBox(
-                    width: TSizes.spaceBtwSections,
-                  ),
+              ImageAndMeta(),
 
-                  // Form
-                  Expanded(flex: 2, child: ProfileForm())
-                ],
-              )
+              // Form
+              ProfileForm()
             ],
           ),
         ),

@@ -34,7 +34,7 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
 
-  final MediaRepository mediaRepository = MediaRepository();
+  final MediaRepository mediaRepository = MediaRepository.instance;
 
   // Get Images
   void getMediaImages() async {

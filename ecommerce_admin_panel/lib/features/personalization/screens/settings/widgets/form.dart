@@ -1,6 +1,7 @@
 import 'package:ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:ecommerce_admin_panel/features/personalization/controllers/settings_controller.dart';
 import 'package:ecommerce_admin_panel/utils/constants/sizes.dart';
+import 'package:ecommerce_admin_panel/utils/device/device_utility.dart';
 import 'package:ecommerce_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,50 +45,84 @@ class SettingsForm extends StatelessWidget {
                 ),
 
                 // First And Last Name
-                Row(
-                  children: [
-                    // Tax Rate
-                    Expanded(
-                        child: TextFormField(
-                      controller: controller.taxRateController,
-                      decoration: InputDecoration(
-                        label: Text("Tax Rate (%)"),
-                        hintText: "Tax %",
-                        prefixIcon: Icon(Iconsax.tag),
-                      ),
-                    )),
-                    SizedBox(
-                      width: TSizes.spaceBtwInputFields,
-                    ),
+                TDeviceUtils.isMobileScreen(context)
+                    ? Column(
+                        spacing: TSizes.spaceBtwInputFields,
+                        children: [
+                          TextFormField(
+                            controller: controller.taxRateController,
+                            decoration: InputDecoration(
+                              label: Text("Tax Rate (%)"),
+                              hintText: "Tax %",
+                              prefixIcon: Icon(Iconsax.tag),
+                            ),
+                          ),
+                          TextFormField(
+                            controller: controller.shippingCostController,
+                            decoration: InputDecoration(
+                              label: Text("Shipping Cost (\$)"),
+                              hintText: "Shipping Cost",
+                              prefixIcon: Icon(Iconsax.ship),
+                            ),
+                            validator: (value) => TValidator.validateEmptyText(
+                                "Shipping Cost", value),
+                          ),
+                          TextFormField(
+                            controller:
+                                controller.freeShippingThresholdController,
+                            decoration: InputDecoration(
+                              label: Text("Free Shipping Threshold (\$)"),
+                              hintText: "Free Shipping After (\$)",
+                              prefixIcon: Icon(Iconsax.ship),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        spacing: TSizes.spaceBtwInputFields,
+                        children: [
+                          // Tax Rate
+                          Expanded(
+                            child: TextFormField(
+                              controller: controller.taxRateController,
+                              decoration: InputDecoration(
+                                label: Text("Tax Rate (%)"),
+                                hintText: "Tax %",
+                                prefixIcon: Icon(Iconsax.tag),
+                              ),
+                            ),
+                          ),
 
-                    // Shipping Cost
-                    Expanded(
-                        child: TextFormField(
-                      controller: controller.shippingCostController,
-                      decoration: InputDecoration(
-                        label: Text("Shipping Cost (\$)"),
-                        hintText: "Shipping Cost",
-                        prefixIcon: Icon(Iconsax.ship),
-                      ),
-                      validator: (value) =>
-                          TValidator.validateEmptyText("Last Name", value),
-                    )),
-                    SizedBox(
-                      width: TSizes.spaceBtwInputFields,
-                    ),
+                          // Shipping Cost
+                          Expanded(
+                            child: TextFormField(
+                              controller: controller.shippingCostController,
+                              decoration: InputDecoration(
+                                label: Text("Shipping Cost (\$)"),
+                                hintText: "Shipping Cost",
+                                prefixIcon: Icon(Iconsax.ship),
+                              ),
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      "Shipping Cost", value),
+                            ),
+                          ),
 
-                    // Free Shipping Threshold
-                    Expanded(
-                        child: TextFormField(
-                      controller: controller.freeShippingThresholdController,
-                      decoration: InputDecoration(
-                        label: Text("Free Shipping Threshold (\$)"),
-                        hintText: "Free Shipping After (\$)",
-                        prefixIcon: Icon(Iconsax.ship),
+                          // Free Shipping Threshold
+                          Expanded(
+                            child: TextFormField(
+                              controller:
+                                  controller.freeShippingThresholdController,
+                              decoration: InputDecoration(
+                                label: Text("Free Shipping Threshold (\$)"),
+                                hintText: "Free Shipping After (\$)",
+                                prefixIcon: Icon(Iconsax.ship),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    )),
-                  ],
-                ),
+
                 SizedBox(
                   height: TSizes.spaceBtwInputFields,
                 ),

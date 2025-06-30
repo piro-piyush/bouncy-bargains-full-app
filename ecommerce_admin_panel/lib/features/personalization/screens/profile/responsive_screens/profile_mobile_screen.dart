@@ -14,19 +14,14 @@ class ProfileMobileScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
+            spacing: TSizes.spaceBtwSections,
             children: [
               // Breadcrumbs
               TBreadcrumbWithHeading(
                   heading: "Profile", breadcrumbItems: ["Profile"]),
-              SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
 
               // Body
               ImageAndMeta(),
-              SizedBox(
-                width: TSizes.spaceBtwSections,
-              ),
 
               // Form
               ProfileForm()
