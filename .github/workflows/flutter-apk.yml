@@ -19,8 +19,10 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
-
+          channel: stable          # 👈 latest stable channel
+          flutter-version: 3.24.0  # 👈 optional, pin exact version for consistency
+          cache: true              # 👈 enable caching for faster builds
+          
       # Step 3: Install dependencies inside subfolder
       - name: Install dependencies
         working-directory: bouncy_bargains_app
