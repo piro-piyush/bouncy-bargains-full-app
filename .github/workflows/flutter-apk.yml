@@ -1,0 +1,39 @@
+name: Build Flutter APK (Subfolder)
+
+on:
+  workflow_dispatch:   # manually trigger from Actions tab
+  push:
+    branches:
+      - main           # run on push to main (optional)
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      # Step 2: Setup Flutter (latest stable)
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      # Step 3: Install dependencies inside subfolder
+      - name: Install dependencies
+        working-directory: bouncy_bargains_app
+        run: flutter pub get
+
+      # Step 4: Build APK (release)
+      - name: Build APK
+        working-directory: bouncy_bargains_app
+        run: flutter build apk --release
+
+      # Step 5: Upload APK as artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: bouncy_bargains_app/build/app/outputs/flutter-apk/app-release.apk
