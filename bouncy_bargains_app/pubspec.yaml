@@ -45,7 +45,7 @@ dependencies:
   cloud_firestore: ^5.6.9
 
   #google
-  google_sign_in: ^6.3.0
+  google_sign_in: ^6.2.0
   image_picker: ^1.1.2
   cached_network_image: ^3.4.1
 
