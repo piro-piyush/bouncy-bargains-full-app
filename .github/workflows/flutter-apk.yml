@@ -20,7 +20,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable          # 👈 latest stable channel
-          flutter-version: 3.24.0  # 👈 optional, pin exact version for consistency
+          flutter-version: 3.24.3  # 👈 optional, pin exact version for consistency
           cache: true              # 👈 enable caching for faster builds
 
       # Step 3: Install dependencies inside subfolder
