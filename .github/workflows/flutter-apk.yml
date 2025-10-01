@@ -19,9 +19,9 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: dev          # latest stable channel
-          flutter-version: 3.25.0-0.0.pre  # Dart 3.8+ bundled
-          cache: false             # disable cache to force fresh install
+          channel: stable
+          flutter-version: 3.24.3   # 👈 last stable release
+          cache: false            # disable cache to force fresh install
 
       # Step 2b: Check Flutter & Dart version
       - name: Check Flutter & Dart version
