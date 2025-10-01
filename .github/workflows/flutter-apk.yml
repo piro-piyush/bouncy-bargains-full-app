@@ -13,21 +13,13 @@ jobs:
     steps:
       # Step 1: Checkout repo
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # Step 2: Setup Flutter (latest stable OR pinned version)
+      # Step 2: Setup Flutter (latest stable)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          flutter-version: 3.24.3   # 👈 last stable release
-          cache: false            # disable cache to force fresh install
-
-      # Step 2b: Check Flutter & Dart version
-      - name: Check Flutter & Dart version
-        run: |
-          flutter --version
-          dart --version
+          flutter-version: 'stable'
 
       # Step 3: Install dependencies inside subfolder
       - name: Install dependencies
